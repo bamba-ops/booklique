@@ -1,3 +1,4 @@
+
 # Booklique 📚
 
 **Booklique** est une application mobile intuitive et ergonomique qui permet aux utilisateurs d’accéder à une bibliothèque numérique depuis leur téléphone. Grâce à **Booklique**, 
@@ -12,7 +13,6 @@ vous pouvez :
 L’application repose sur une **API externe** fournie dans le cadre du cours *Échange de données* et assure une gestion fluide et sécurisée des transactions.
 
 ---
-
 ## **Technologies utilisées**
 
 - **Android Studio** : Environnement de développement intégré pour l’application.
@@ -87,3 +87,4 @@ L’application **Booklique** est distribuée sous la **même licence que l'API*
 ---
 
 **Booklique** : Parce que chaque livre mérite d’être à portée de clic 📲.
+
