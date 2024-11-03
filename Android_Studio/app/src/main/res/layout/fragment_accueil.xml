@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Présentation.Accueil.Vue">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Barre Rouge en Haut -->
+            <View
+                android:id="@+id/barre_rouge"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#D32F2F" />
+
+            <!-- Titre "Librairie" -->
+            <TextView
+                android:id="@+id/titre_librairie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Librairie"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:layout_gravity="start" />
+
+            <!-- Parcourir les Genres -->
+            <LinearLayout
+                android:id="@+id/section_genres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
+
+                <ImageView
+                    android:id="@+id/ic_menu_genres"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_menu_24" />
+
+                <TextView
+                    android:id="@+id/texte_parcourir_genres"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Parcourir les genres"
+                    android:textSize="18sp"
+                    android:layout_weight="1"
+                    android:paddingStart="8dp" />
+
+                <ImageView
+                    android:id="@+id/ic_fleche_genres"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_arrow_right_24" />
+            </LinearLayout>
+
+            <!-- Parcourir par Auteur -->
+            <TextView
+                android:id="@+id/texte_parcourir_auteur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Parcourir par auteur"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
+                android:id="@+id/section_par_auteur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:background="#F5F5DC"
+                android:paddingEnd="16dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Carte d'auteur -->
+                    <LinearLayout
+                        android:id="@+id/carte_auteur"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/fond_rond"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:id="@+id/nom_auteur"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Olivia Wilson"
+                            android:textSize="16sp"
+                            android:paddingBottom="8dp" />
+
+                        <ImageView
+                            android:id="@+id/image_auteur"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:scaleType="centerCrop" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/carte_auteur_2"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/fond_rond"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:id="@+id/nom_auteur_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Olivia Wilson"
+                            android:textSize="16sp"
+                            android:paddingBottom="8dp" />
+
+                        <ImageView
+                            android:id="@+id/image_auteur_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:scaleType="centerCrop" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/carte_auteur_3"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/fond_rond"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:id="@+id/nom_auteur_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Olivia Wilson"
+                            android:textSize="16sp"
+                            android:paddingBottom="8dp" />
+
+                        <ImageView
+                            android:id="@+id/image_auteur_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:scaleType="centerCrop" />
+                    </LinearLayout>
+
+                    <!-- Ajoutez d'autres cartes d'auteur ici si nécessaire -->
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- Section Nouveautés -->
+            <LinearLayout
+                android:id="@+id/section_nouveautes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/texte_nouveautes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nouveautés"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/ic_fleche_nouveautes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_arrow_right_24" />
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/liste_nouveautes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Image Nouveauté 1 -->
+                    <ImageView
+                        android:id="@+id/image_nouveaute_1"
+                        android:layout_width="100dp"
+                        android:layout_height="150dp"
+                        android:layout_marginEnd="8dp"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                    <!-- Image Nouveauté 2 -->
+                    <ImageView
+                        android:id="@+id/image_nouveaute_2"
+                        android:layout_width="100dp"
+                        android:layout_height="150dp"
+                        android:layout_marginEnd="8dp"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                    <!-- Image Nouveauté 3 -->
+                    <ImageView
+                        android:id="@+id/image_nouveaute_3"
+                        android:layout_width="100dp"
+                        android:layout_height="150dp"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                    <ImageView
+                        android:id="@+id/image_nouveaute_4"
+                        android:layout_width="100dp"
+                        android:layout_height="150dp"
+                        android:clickable="true"
+                        android:focusable="true"/>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

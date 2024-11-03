@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/accueil">
+
+    <fragment
+        android:id="@+id/accueil"
+        android:name="com.crosemont.booklique.Présentation.Accueil.Vue"
+        android:label="fragment_accueil"
+        tools:layout="@layout/fragment_accueil" >
+        <action
+            android:id="@+id/action_accueil_a_vue"
+            app:destination="@id/recherche" />
+    </fragment>
+    <fragment
+        android:id="@+id/recherche"
+        android:name="com.crosemont.booklique.Vue"
+        android:label="fragment_recherche"
+        tools:layout="@layout/fragment_recherche" />
+</navigation>
