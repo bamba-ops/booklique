@@ -12,10 +12,9 @@
         android:layout_width="407dp"
         android:layout_height="295dp"
         android:background="#FFFFFF"
-        android:margin="4dp"
+        android:layout_margin="4dp"
         tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="-1dp">
-
+        tools:layout_editor_absoluteY="2dp">
 
         <CheckBox
             android:id="@+id/checkBox"
@@ -32,12 +31,11 @@
             tools:layout_editor_absoluteX="34dp"
             tools:layout_editor_absoluteY="34dp" />
 
-
         <TextView
             android:id="@+id/textView"
-            android:layout_width="191dp"
-            android:layout_height="32dp"
-            android:text="Titre: WALK INTO THE SHADOW"
+            android:layout_width="42dp"
+            android:layout_height="21dp"
+            android:text="Titre : "
             android:textStyle="bold"
             tools:layout_editor_absoluteX="206dp"
             tools:layout_editor_absoluteY="45dp" />
@@ -46,22 +44,22 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Genre: Fantasy"
-            tools:layout_editor_absoluteX="206dp"
-            tools:layout_editor_absoluteY="128dp" />
+            android:text="Genre : "
+            tools:layout_editor_absoluteX="202dp"
+            tools:layout_editor_absoluteY="138dp" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Auteur: Mike Ricksecker"
-            tools:layout_editor_absoluteX="206dp"
-            tools:layout_editor_absoluteY="95dp" />
+            android:text="Auteur : "
+            tools:layout_editor_absoluteX="202dp"
+            tools:layout_editor_absoluteY="94dp" />
 
         <RatingBar
             android:id="@+id/ratingBar"
-            android:layout_width="98dp"
-            android:layout_height="41dp"
+            android:layout_width="149dp"
+            android:layout_height="42dp"
             android:numStars="5"
             android:rating="3"
             android:stepSize="1"
@@ -72,7 +70,7 @@
             android:id="@+id/button"
             android:layout_width="118dp"
             android:layout_height="49dp"
-            android:text="Button"
+            android:text="Ajouter"
             tools:layout_editor_absoluteX="274dp"
             tools:layout_editor_absoluteY="239dp" />
 
@@ -81,9 +79,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            tools:layout_editor_absoluteX="274dp"
-            tools:layout_editor_absoluteY="208dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            tools:layout_editor_absoluteX="282dp"
+            tools:layout_editor_absoluteY="209dp" />
 
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="143dp"
+            android:layout_height="37dp"
+            android:text="TextView"
+            tools:layout_editor_absoluteX="254dp"
+            tools:layout_editor_absoluteY="45dp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="142dp"
+            android:layout_height="35dp"
+            android:text="TextView"
+            tools:layout_editor_absoluteX="254dp"
+            tools:layout_editor_absoluteY="93dp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="141dp"
+            android:layout_height="20dp"
+            android:text="TextView"
+            tools:layout_editor_absoluteX="254dp"
+            tools:layout_editor_absoluteY="138dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

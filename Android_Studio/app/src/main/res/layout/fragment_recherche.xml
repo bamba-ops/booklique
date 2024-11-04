@@ -8,22 +8,6 @@
     tools:context=".Vue">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:background="#FF0000">
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:src="@drawable/panier"
-            tools:layout_editor_absoluteX="363dp"
-            tools:layout_editor_absoluteY="12dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <!-- Second LinearLayout (Search Bar below the Navigation Bar) -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
@@ -35,45 +19,70 @@
             android:id="@+id/btnSelect2"
             android:layout_width="110dp"
             android:layout_height="58dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="9dp"
             android:text="Trier par..."
             android:textColorLink="#673AB7"
-            tools:layout_editor_absoluteX="293dp"
-            tools:layout_editor_absoluteY="58dp" />
+            app:layout_constraintStart_toEndOf="@+id/btnEfaccer"
+            app:layout_constraintTop_toBottomOf="@+id/editText" />
 
         <EditText
             android:id="@+id/editText"
             android:layout_width="328dp"
             android:layout_height="40dp"
-            android:drawableStart=""
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="9dp"
+            android:drawableStart="@color/black"
             android:hint="Search"
-            tools:layout_editor_absoluteX="75dp"
-            tools:layout_editor_absoluteY="9dp" />
+            app:layout_constraintBottom_toTopOf="@+id/btnSelect2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageButton"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnSelect"
             android:layout_width="128dp"
             android:layout_height="58dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="9dp"
             android:text="Tout sélectionner"
             android:textColorLink="#673AB7"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="58dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnEfaccer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="52dp"
             android:layout_height="43dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginBottom="8dp"
             android:background="#F8FFFFFF"
             android:src="@drawable/search"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="7dp" />
+            app:layout_constraintBottom_toTopOf="@+id/btnSelect"
+            app:layout_constraintEnd_toStartOf="@+id/editText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnEfaccer"
             android:layout_width="128dp"
             android:layout_height="58dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="9dp"
             android:text="Tout effacer"
-            tools:layout_editor_absoluteX="155dp"
-            tools:layout_editor_absoluteY="58dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnSelect2"
+            app:layout_constraintStart_toEndOf="@+id/btnSelect"
+            app:layout_constraintTop_toBottomOf="@+id/editText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
