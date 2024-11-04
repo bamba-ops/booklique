@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/accueil" android:id="@+id/nav_accueil"
+        android:icon="@drawable/baseline_home_24" />
+    <item android:title="@string/reservation" android:id="@+id/nav_reservation"
+        android:icon="@drawable/baseline_calendar_month_24" />
+    <item android:title="@string/recherche" android:id="@+id/nav_recherche"
+        android:icon="@drawable/baseline_book_24" />
+    <item android:title="@string/historique" android:id="@+id/nav_historique"
+        android:icon="@drawable/baseline_format_list_bulleted_24" />
+</menu>

@@ -1,25 +1,16 @@
-/**
- * Vue Accueil
- *
- * Auteur: Walid Gharbi
- * Date: 3 novembre 2024
- * Version: 1.0
- *
- */
-
 package com.crosemont.booklique.Présentation.Accueil
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.squareup.picasso.Picasso
 import com.crosemont.booklique.R
+import com.squareup.picasso.Picasso
 
 class Vue : Fragment() {
 
@@ -121,39 +112,39 @@ class Vue : Fragment() {
         Picasso.get().isLoggingEnabled = true
 
         sectionGenres.setOnClickListener {
-            findNavController().navigate(R.id.action_accueil_a_vue)
+            findNavController().navigate(R.id.accueil)
         }
 
         sectionAuteur.setOnClickListener{
-            findNavController().navigate(R.id.action_accueil_a_vue)
+            findNavController().navigate(R.id.accueil)
         }
 
         sectionAuteur2.setOnClickListener{
-            findNavController().navigate(R.id.action_accueil_a_vue)
+            findNavController().navigate(R.id.accueil)
         }
 
         sectionAuteur3.setOnClickListener{
-            findNavController().navigate(R.id.action_accueil_a_vue)
+            findNavController().navigate(R.id.accueil)
         }
 
         sectionNouveautes.setOnClickListener {
-            findNavController().navigate(R.id.action_accueil_a_vue)
+            findNavController().navigate(R.id.accueil)
         }
 
         imageNouveaute1.setOnClickListener{
-            findNavController().navigate(R.id.action_accueil_a_vue)
+            findNavController().navigate(R.id.accueil)
         }
 
         imageNouveaute2.setOnClickListener{
-            findNavController().navigate(R.id.action_accueil_a_vue)
+            findNavController().navigate(R.id.accueil)
         }
 
         imageNouveaute3.setOnClickListener {
-            findNavController().navigate(R.id.action_accueil_a_vue)
+            findNavController().navigate(R.id.accueil)
         }
 
         imageNouveaute4.setOnClickListener {
-            findNavController().navigate(R.id.action_accueil_a_vue)
+            findNavController().navigate(R.id.accueil)
         }
     }
 

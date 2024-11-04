@@ -11,12 +11,24 @@
         android:label="fragment_accueil"
         tools:layout="@layout/fragment_accueil" >
         <action
-            android:id="@+id/action_accueil_a_vue"
+            android:id="@+id/action_accueil_to_recherche"
             app:destination="@id/recherche" />
+        <action
+            android:id="@+id/action_accueil_to_reservation"
+            app:destination="@id/reservation" />
     </fragment>
     <fragment
         android:id="@+id/recherche"
-        android:name="com.crosemont.booklique.Vue"
+        android:name="com.crosemont.booklique.Présentation.Accueil.Vue"
         android:label="fragment_recherche"
         tools:layout="@layout/fragment_recherche" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.crosemont.booklique.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/reservation"
+        android:name="com.crosemont.booklique.Reservation"
+        android:label="Reservation" />
 </navigation>

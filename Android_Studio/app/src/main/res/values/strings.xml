@@ -2,4 +2,26 @@
     <string name="app_name">Booklique</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    Accueil  -->
+    <string name="recherche">recherche</string>
+    <string name="accueil">Accueil</string>
+    <string name="profil">profil</string>
+    <string name="livres">livres</string>
+    <string name="genres">genres</string>
+    <string name="auteur">auteur</string>
+    <string name="nouveautes">nouveautes</string>
+    <string name="nouveaute">nouveaute</string>
+
+    <!--    Reservation-->
+    <string name="reservation">reservation</string>
+    <string name="liste_reservation">liste_reservation</string>
+    <string name="favoris">favoris</string>
+    <string name="annuler">annuler</string>
+
+    <!--    Historique-->
+    <string name="historique">historique</string>
+    <string name="liste_historique">liste_historique</string>
+    <string name="supprimer">supprimer</string>
+
 </resources>
