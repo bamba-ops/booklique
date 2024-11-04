@@ -12,10 +12,9 @@
         android:layout_width="407dp"
         android:layout_height="295dp"
         android:background="#FFFFFF"
-        android:margin="4dp"
+        android:layout_margin="4dp"
         tools:layout_editor_absoluteX="2dp"
         tools:layout_editor_absoluteY="2dp">
-
 
         <CheckBox
             android:id="@+id/checkBox"
@@ -31,7 +30,6 @@
             android:src="@drawable/placeholder_image"
             tools:layout_editor_absoluteX="34dp"
             tools:layout_editor_absoluteY="34dp" />
-
 
         <TextView
             android:id="@+id/textView"
@@ -108,6 +106,5 @@
             tools:layout_editor_absoluteX="254dp"
             tools:layout_editor_absoluteY="138dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
