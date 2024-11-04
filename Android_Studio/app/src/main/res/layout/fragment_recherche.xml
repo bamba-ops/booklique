@@ -8,22 +8,6 @@
     tools:context=".Vue">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:background="#FF0000">
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:src="@drawable/panier"
-            tools:layout_editor_absoluteX="363dp"
-            tools:layout_editor_absoluteY="12dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <!-- Second LinearLayout (Search Bar below the Navigation Bar) -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
