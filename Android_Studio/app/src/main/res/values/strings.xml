@@ -23,5 +23,7 @@
     <string name="historique">historique</string>
     <string name="liste_historique">liste_historique</string>
     <string name="supprimer">supprimer</string>
+    <string name="bouton_de_recherche">bouton de recherche</string>
+    <string name="search">Search</string>
 
 </resources>
