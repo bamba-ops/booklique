@@ -17,16 +17,14 @@ class Reservation : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_reservation, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Initialisez imageView après avoir gonflé la vue
+
         imageView = view.findViewById(R.id.image_livre_reservation)
 
-        // Chargez l'image avec Glide
         Glide.with(this)
             .load(imageUrl)
             .into(imageView)
