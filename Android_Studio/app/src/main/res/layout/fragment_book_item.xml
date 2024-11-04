@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Vue">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="407dp"
+        android:layout_height="295dp"
+        android:background="#FFFFFF"
+        android:margin="4dp"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="-1dp">
+
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="-1dp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="161dp"
+            android:layout_height="209dp"
+            android:src="@drawable/placeholder_image"
+            tools:layout_editor_absoluteX="34dp"
+            tools:layout_editor_absoluteY="34dp" />
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="191dp"
+            android:layout_height="32dp"
+            android:text="Titre: WALK INTO THE SHADOW"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="45dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Genre: Fantasy"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="128dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Auteur: Mike Ricksecker"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="95dp" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="98dp"
+            android:layout_height="41dp"
+            android:numStars="5"
+            android:rating="3"
+            android:stepSize="1"
+            tools:layout_editor_absoluteX="34dp"
+            tools:layout_editor_absoluteY="244dp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="118dp"
+            android:layout_height="49dp"
+            android:text="Button"
+            tools:layout_editor_absoluteX="274dp"
+            tools:layout_editor_absoluteY="239dp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            tools:layout_editor_absoluteX="274dp"
+            tools:layout_editor_absoluteY="208dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
