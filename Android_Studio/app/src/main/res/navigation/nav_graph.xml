@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/accueil">
+    app:startDestination="@id/accueil"
+    tools:context=".MainActivity">
 
     <fragment
         android:id="@+id/accueil"
@@ -11,24 +12,20 @@
         android:label="fragment_accueil"
         tools:layout="@layout/fragment_accueil" >
         <action
-            android:id="@+id/action_accueil_to_recherche"
-            app:destination="@id/recherche" />
-        <action
             android:id="@+id/action_accueil_to_reservation"
             app:destination="@id/reservation" />
+        <action
+            android:id="@+id/action_accueil_to_genres"
+            app:destination="@id/genres" />
     </fragment>
     <fragment
-        android:id="@+id/recherche"
-        android:name="com.crosemont.booklique.Présentation.Accueil.Vue"
-        android:label="fragment_recherche"
-        tools:layout="@layout/fragment_recherche" />
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.crosemont.booklique.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
-    <fragment
         android:id="@+id/reservation"
-        android:name="com.crosemont.booklique.Reservation"
-        android:label="Reservation" />
+        android:name="com.crosemont.booklique.Présentation.Réservation.Vue"
+        android:label="fragment_reservation"
+        tools:layout="@layout/fragment_reservation"/>
+    <fragment
+        android:id="@+id/genres"
+        android:name="com.crosemont.booklique.Présentation.Genres.Vue"
+        android:label="fragment_genres"
+        tools:layout="@layout/fragment_genres" />
 </navigation>

@@ -18,10 +18,11 @@
     <!-- Conteneur de fragment -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.crosemont.booklique.Présentation.Accueil.Vue"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:navGraph="@navigation/nav_graph"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"/>
 
     <!-- Barre de navigation en bas -->
     <com.google.android.material.bottomnavigation.BottomNavigationView

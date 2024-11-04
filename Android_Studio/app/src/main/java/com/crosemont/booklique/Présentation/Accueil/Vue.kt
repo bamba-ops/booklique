@@ -112,39 +112,39 @@ class Vue : Fragment() {
         Picasso.get().isLoggingEnabled = true
 
         sectionGenres.setOnClickListener {
-            findNavController().navigate(R.id.accueil)
+            findNavController().navigate(R.id.action_accueil_to_genres)
         }
 
         sectionAuteur.setOnClickListener{
-            findNavController().navigate(R.id.accueil)
+            //findNavController().navigate(R.id.accueil)
         }
 
         sectionAuteur2.setOnClickListener{
-            findNavController().navigate(R.id.accueil)
+            //findNavController().navigate(R.id.accueil)
         }
 
         sectionAuteur3.setOnClickListener{
-            findNavController().navigate(R.id.accueil)
+            //findNavController().navigate(R.id.accueil)
         }
 
         sectionNouveautes.setOnClickListener {
-            findNavController().navigate(R.id.accueil)
+            //findNavController().navigate(R.id.accueil)
         }
 
         imageNouveaute1.setOnClickListener{
-            findNavController().navigate(R.id.accueil)
+            findNavController().navigate(R.id.action_accueil_to_reservation)
         }
 
         imageNouveaute2.setOnClickListener{
-            findNavController().navigate(R.id.accueil)
+            findNavController().navigate(R.id.action_accueil_to_reservation)
         }
 
         imageNouveaute3.setOnClickListener {
-            findNavController().navigate(R.id.accueil)
+            findNavController().navigate(R.id.action_accueil_to_reservation)
         }
 
         imageNouveaute4.setOnClickListener {
-            findNavController().navigate(R.id.accueil)
+            findNavController().navigate(R.id.action_accueil_to_reservation)
         }
     }
 

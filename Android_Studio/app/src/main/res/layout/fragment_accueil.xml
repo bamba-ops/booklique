@@ -15,12 +15,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Barre Rouge en Haut -->
-            <View
-                android:id="@+id/barre_rouge"
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:background="#D32F2F" />
 
             <!-- Titre "Librairie" -->
             <TextView
