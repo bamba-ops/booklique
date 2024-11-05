@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recherche"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    tools:context=".Présentation.Recherche.Vue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="57dp"
-        android:background="#FF0000"/>
+        android:background="#FF0000" />
 
-    <!-- Second LinearLayout (Search Bar below the Navigation Bar) -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="9dp"
             android:text="Trier par..."
-            android:textColorLink="#673AB7"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnEfaccer"
@@ -43,14 +43,14 @@
             android:layout_marginTop="9dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="9dp"
-            android:autofillHints="Faire une recherche"
-            android:drawableStart=""
+            android:drawableStart="@drawable/baseline_search_24"
             android:hint="@string/search"
-            android:inputType=""
+            android:inputType="text"
             app:layout_constraintBottom_toTopOf="@+id/btnSelect2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageButton"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <Button
             android:id="@+id/btnSelect"
@@ -59,7 +59,7 @@
             android:layout_marginEnd="6dp"
             android:layout_marginBottom="9dp"
             android:text="Tout sélectionner"
-            android:textColorLink="#673AB7"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnEfaccer"
             app:layout_constraintStart_toStartOf="parent" />
@@ -74,11 +74,12 @@
             android:layout_marginBottom="8dp"
             android:background="#F8FFFFFF"
             android:contentDescription="@string/bouton_de_recherche"
-            android:src="@drawable/search"
+            android:src="@drawable/baseline_search_24"
             app:layout_constraintBottom_toTopOf="@+id/btnSelect"
             app:layout_constraintEnd_toStartOf="@+id/editText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <Button
             android:id="@+id/btnEfaccer"
@@ -101,6 +102,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />
-
 
 </LinearLayout>

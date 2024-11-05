@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_accueil_to_genres"
             app:destination="@id/genres" />
+        <action
+            android:id="@+id/action_accueil_to_vue_recherche"
+            app:destination="@id/vue" />
     </fragment>
     <fragment
         android:id="@+id/reservation"
@@ -28,4 +31,9 @@
         android:name="com.crosemont.booklique.Présentation.Genres.Vue"
         android:label="fragment_genres"
         tools:layout="@layout/fragment_genres" />
+    <fragment
+        android:id="@+id/vue"
+        android:name="com.crosemont.booklique.Présentation.Recherche.Vue"
+        android:label="fragment_recherche"
+        tools:layout="@layout/fragment_recherche" />
 </navigation>
