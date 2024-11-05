@@ -4,6 +4,7 @@ import java.util.Date
 
 class Livre(
     val isbn : String,
+    val image_url : String,
     val titre : String,
     val description : String,
     val auteur : String,
