@@ -10,7 +10,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
+import com.crosemont.booklique.domaine.entité.Livre
 import com.squareup.picasso.Picasso
+import com.crosemont.booklique.domaine.mork_data.Data
 
 class Vue : Fragment() {
 
@@ -50,66 +52,29 @@ class Vue : Fragment() {
         val imageNouveaute3: ImageView = view.findViewById(R.id.image_nouveaute_3)
         val imageNouveaute4: ImageView = view.findViewById(R.id.image_nouveaute_4)
 
+        // Récupération des livres depuis data
+        val livres = Data.obtenirLivresDemo()
+
         titreLibrairie.text = "Librairie"
         texteParcourirGenres.text = "Parcourir les genres"
-        nomAuteur.text = "Olivia Wilson"
         texteNouveautes.text = "Nouveautés"
-        nomAuteur2.text = "Lorna Alvarado"
-        nomAuteur3.text = "Avery Davis"
 
-        val auteurImageUrl = "https://i.imghippo.com/files/Al2125oNk.png"
-        val auteurImageUrl2 = "https://i.imghippo.com/files/FJtq5630MY.png"
-        val auteurImageUrl3 = "https://i.imghippo.com/files/YFa6767kO.png"
-        val nouveauteImageUrl1 = "https://i.imghippo.com/files/XF7523fok.png"
-        val nouveauteImageUrl2 = "https://i.imghippo.com/files/AP7294k.png"
-        val nouveauteImageUrl3 = "https://i.imghippo.com/files/Xg9432qo.png"
-        val nouveauteImageUrl4 = "https://i.imghippo.com/files/Uvff8490Ak.png"
+        // Associer chaque livre aux images et au texte
+        if (livres.size >= 4) {
+            afficherLivre(livres[0], imageNouveaute1, view.findViewById(R.id.nom_auteur))
+            afficherLivre(livres[1], imageNouveaute2, view.findViewById(R.id.nom_auteur_2))
+            afficherLivre(livres[2], imageNouveaute3, view.findViewById(R.id.nom_auteur_3))
+            afficherLivre(livres[3], imageNouveaute4, null)
+        }
 
 
-        Picasso.get()
-            .load(auteurImageUrl)
-            .placeholder(R.drawable.placeholder_image)
-            .error(R.drawable.error_image)
-            .into(imageAuteur)
 
-        Picasso.get()
-            .load(auteurImageUrl2)
-            .placeholder(R.drawable.placeholder_image)
-            .error(R.drawable.error_image)
-            .into(imageAuteur2)
+        if(livres.size >= 3){
+            afficherLivreParAuteur(livres[2], imageAuteur, nomAuteur)
+            afficherLivreParAuteur(livres[1], imageAuteur2, nomAuteur2)
+            afficherLivreParAuteur(livres[3], imageAuteur3, nomAuteur3)
+        }
 
-        Picasso.get()
-            .load(auteurImageUrl3)
-            .placeholder(R.drawable.placeholder_image)
-            .error(R.drawable.error_image)
-            .into(imageAuteur3)
-
-        Picasso.get()
-            .load(nouveauteImageUrl1)
-            .placeholder(R.drawable.placeholder_image)
-            .error(R.drawable.error_image)
-            .into(imageNouveaute1)
-
-        Picasso.get()
-            .load(nouveauteImageUrl2)
-            .placeholder(R.drawable.placeholder_image)
-            .error(R.drawable.error_image)
-            .into(imageNouveaute2)
-
-        Picasso.get()
-            .load(nouveauteImageUrl3)
-            .placeholder(R.drawable.placeholder_image)
-            .error(R.drawable.error_image)
-            .into(imageNouveaute3)
-
-        Picasso.get()
-            .load(nouveauteImageUrl4)
-            .placeholder(R.drawable.placeholder_image)
-            .error(R.drawable.error_image)
-            .into(imageNouveaute4)
-
-        Picasso.get().setIndicatorsEnabled(true)
-        Picasso.get().isLoggingEnabled = true
 
         sectionGenres.setOnClickListener {
             findNavController().navigate(R.id.action_accueil_to_genres)
@@ -146,6 +111,27 @@ class Vue : Fragment() {
         imageNouveaute4.setOnClickListener {
             findNavController().navigate(R.id.action_accueil_to_reservation)
         }
+    }
+
+    // Fonction pour afficher un livre dans une image et mettre à jour le nom de l'auteur
+    private fun afficherLivre(livre: Livre, imageView: ImageView, auteurTextView: TextView?) {
+        Picasso.get()
+            .load(livre.image_url)
+            .placeholder(R.drawable.placeholder_image)
+            .error(R.drawable.error_image)
+            .into(imageView)
+        auteurTextView?.text = livre.auteur
+        Picasso.get().setIndicatorsEnabled(true)
+        Picasso.get().isLoggingEnabled = true
+    }
+
+    private fun afficherLivreParAuteur(livre: Livre, imageView: ImageView, auteurTextView: TextView?) {
+        Picasso.get()
+            .load(livre.image_url)
+            .placeholder(R.drawable.placeholder_image)
+            .error(R.drawable.error_image)
+            .into(imageView)
+        auteurTextView?.text = livre.auteur
     }
 
 }
