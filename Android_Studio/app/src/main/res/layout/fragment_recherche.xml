@@ -1,106 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recherche"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Présentation.Recherche.Vue">
+    android:background="@android:color/white"
+    android:padding="16dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout2"
+    <LinearLayout
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:background="#FF0000" />
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@drawable/barre_de_recherche_rond"
+        android:elevation="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="center_vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:background="#F0D8B4">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_recherche"
+            android:contentDescription="Icône de recherche" />
 
-        <Button
-            android:id="@+id/btnSelect2"
-            android:layout_width="110dp"
-            android:layout_height="58dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="9dp"
-            android:text="Trier par..."
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnEfaccer"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+        <AutoCompleteTextView
+            android:id="@+id/entree_recherche"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Rechercher un livre ou un auteur"
+            android:padding="12dp"
+            android:background="@drawable/barre_de_recherche_rond"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray" />
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="328dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="9dp"
-            android:drawableStart="@drawable/baseline_search_24"
-            android:hint="@string/search"
-            android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/btnSelect2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageButton"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TouchTargetSizeCheck" />
 
-        <Button
-            android:id="@+id/btnSelect"
-            android:layout_width="128dp"
-            android:layout_height="58dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginBottom="9dp"
-            android:text="Tout sélectionner"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnEfaccer"
-            app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="52dp"
-            android:layout_height="43dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="7dp"
-            android:layout_marginBottom="8dp"
-            android:background="#F8FFFFFF"
-            android:contentDescription="@string/bouton_de_recherche"
-            android:src="@drawable/baseline_search_24"
-            app:layout_constraintBottom_toTopOf="@+id/btnSelect"
-            app:layout_constraintEnd_toStartOf="@+id/editText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TouchTargetSizeCheck" />
 
-        <Button
-            android:id="@+id/btnEfaccer"
-            android:layout_width="128dp"
-            android:layout_height="58dp"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="9dp"
-            android:text="Tout effacer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnSelect2"
-            app:layout_constraintStart_toEndOf="@+id/btnSelect"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+    <TextView
+        android:id="@+id/text_recherche_par_defaut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_bar"
+        android:layout_marginTop="32dp"
+        android:layout_centerHorizontal="true"
+        android:text="Aucun livre"
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray"
+        android:visibility="visible" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <ScrollView
+        android:id="@+id/affichage_defilement_resultat_de_recherche"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_below="@id/search_bar"
+        android:layout_marginTop="16dp"
+        android:visibility="gone">
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/resultat_de_recherche_conteneur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+</RelativeLayout>

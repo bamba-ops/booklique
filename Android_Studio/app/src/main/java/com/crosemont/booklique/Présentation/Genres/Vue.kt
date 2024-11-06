@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
 
 class Vue : Fragment() {
@@ -22,5 +24,10 @@ class Vue : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val genreAffaires: LinearLayout = view.findViewById(R.id.genre_affaires)
+
+        genreAffaires.setOnClickListener {
+            findNavController().navigate(R.id.action_genres_to_recherche)
+        }
     }
 }

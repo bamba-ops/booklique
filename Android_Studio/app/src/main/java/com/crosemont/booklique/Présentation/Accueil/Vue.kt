@@ -116,19 +116,19 @@ class Vue : Fragment() {
         }
 
         sectionAuteur.setOnClickListener{
-            //findNavController().navigate(R.id.accueil)
+            findNavController().navigate(R.id.action_accueil_to_recherche)
         }
 
         sectionAuteur2.setOnClickListener{
-            //findNavController().navigate(R.id.accueil)
+            findNavController().navigate(R.id.action_accueil_to_recherche)
         }
 
         sectionAuteur3.setOnClickListener{
-            //findNavController().navigate(R.id.accueil)
+            findNavController().navigate(R.id.action_accueil_to_recherche)
         }
 
         sectionNouveautes.setOnClickListener {
-            //findNavController().navigate(R.id.accueil)
+            findNavController().navigate(R.id.action_accueil_to_recherche)
         }
 
         imageNouveaute1.setOnClickListener{
