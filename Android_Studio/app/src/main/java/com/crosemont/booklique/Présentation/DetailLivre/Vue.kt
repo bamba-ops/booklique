@@ -1,4 +1,4 @@
-package com.crosemont.booklique.Présentation.Réservation
+package com.crosemont.booklique.Présentation.DetailLivre
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -18,7 +18,7 @@ class Vue : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_reservation, container, false)
+        return inflater.inflate(R.layout.fragment_detail_livre, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
