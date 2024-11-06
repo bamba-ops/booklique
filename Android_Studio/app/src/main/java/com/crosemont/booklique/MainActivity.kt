@@ -23,9 +23,9 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.accueil -> {
-                    // Vérifiez si vous êtes déjà dans le fragment Home
+                    // Vérifiez si vous êtes déjà dans le fragment "Accueil"
                     if (navController.currentDestination?.id == R.id.accueil) {
-                        // Rechargez le fragment Home
+                        // Rechargez le fragment Accueil
                         navController.popBackStack(R.id.accueil, true)
                         navController.navigate(R.id.accueil)
                     } else {
@@ -34,15 +34,36 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.reservation -> {
-                    navController.navigate(R.id.action_accueil_to_liste_reservation)
+                    // Vérifiez si vous êtes déjà dans le fragment "Réservation"
+                    if (navController.currentDestination?.id == R.id.reservation) {
+                        // Rechargez le fragment Réservation
+                        navController.popBackStack(R.id.reservation, true)
+                        navController.navigate(R.id.reservation)
+                    } else {
+                        navController.navigate(R.id.action_accueil_to_reservation)
+                    }
                     true
                 }
                 R.id.recherche -> {
-                    navController.navigate(R.id.recherche)
+                    // Vérifiez si vous êtes déjà dans le fragment "Recherche"
+                    if (navController.currentDestination?.id == R.id.recherche) {
+                        // Rechargez le fragment Recherche
+                        navController.popBackStack(R.id.recherche, true)
+                        navController.navigate(R.id.recherche)
+                    } else {
+                        navController.navigate(R.id.action_accueil_to_recherche)
+                    }
                     true
                 }
                 R.id.historique -> {
-                    navController.navigate(R.id.historique)
+                    // Vérifiez si vous êtes déjà dans le fragment "Historique"
+                    if (navController.currentDestination?.id == R.id.historique) {
+                        // Rechargez le fragment Historique
+                        navController.popBackStack(R.id.historique, true)
+                        navController.navigate(R.id.historique)
+                    } else {
+                        navController.navigate(R.id.historique)
+                    }
                     true
                 }
                 else -> false

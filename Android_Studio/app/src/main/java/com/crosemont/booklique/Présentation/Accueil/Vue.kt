@@ -93,32 +93,32 @@ class Vue : Fragment() {
         }
 
         sectionNouveautes.setOnClickListener {
-            findNavController().navigate(R.id.action_accueil_to_recherche)
+           findNavController().navigate(R.id.action_accueil_to_recherche)
         }
 
         imageNouveaute1.setOnClickListener {
             val livreSelectionne = livres[0]
             val action = Vue.newInstance(livreSelectionne)
-            findNavController().navigate(R.id.action_accueil_to_reservation, action.arguments)
+           findNavController().navigate(R.id.action_accueil_to_detail_livre, action.arguments)
         }
 
 
         imageNouveaute2.setOnClickListener{
             val livreSelectionne = livres[1]
             val action = Vue.newInstance(livreSelectionne)
-            findNavController().navigate(R.id.action_accueil_to_reservation, action.arguments)
+           findNavController().navigate(R.id.action_accueil_to_detail_livre, action.arguments)
         }
 
         imageNouveaute3.setOnClickListener {
             val livreSelectionne = livres[2]
             val action = Vue.newInstance(livreSelectionne)
-            findNavController().navigate(R.id.action_accueil_to_reservation, action.arguments)
+            findNavController().navigate(R.id.action_accueil_to_detail_livre, action.arguments)
         }
 
         imageNouveaute4.setOnClickListener {
             val livreSelectionne = livres[3]
             val action = Vue.newInstance(livreSelectionne)
-            findNavController().navigate(R.id.action_accueil_to_reservation, action.arguments)
+            findNavController().navigate(R.id.action_accueil_to_detail_livre, action.arguments)
         }
     }
 

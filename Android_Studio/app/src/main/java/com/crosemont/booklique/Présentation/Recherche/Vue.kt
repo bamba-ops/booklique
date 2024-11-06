@@ -1,5 +1,6 @@
 package com.crosemont.booklique.Présentation.Recherche
 
+import Livre
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
-import com.crosemont.booklique.domaine.entité.Livre
 import com.squareup.picasso.Picasso
 import java.util.Date
 
@@ -82,7 +82,7 @@ class Vue : Fragment() {
 
 
                     itemView.setOnClickListener {
-                        findNavController().navigate(R.id.action_recherche_to_reservation)
+                        //findNavController().navigate(R.id.action_recherche_to_reservation)
                     }
 
                     resultatRechercheConteneur.addView(itemView)

@@ -6,42 +6,64 @@
     app:startDestination="@id/accueil"
     tools:context=".MainActivity">
 
+    <!-- Fragment Accueil -->
     <fragment
         android:id="@+id/accueil"
         android:name="com.crosemont.booklique.Présentation.Accueil.Vue"
         android:label="fragment_accueil"
         tools:layout="@layout/fragment_accueil" >
-        <action
-            android:id="@+id/action_accueil_to_reservation"
-            app:destination="@id/reservation" />
-        <action
-            android:id="@+id/action_accueil_to_genres"
-            app:destination="@id/genres" />
-        <action
-            android:id="@+id/action_accueil_to_recherche"
-            app:destination="@id/recherche" />
+        <action android:id="@+id/action_accueil_to_genres" app:destination="@id/genres" />
+        <action android:id="@+id/action_accueil_to_reservation" app:destination="@id/reservation" />
+        <action android:id="@+id/action_accueil_to_detail_livre" app:destination="@id/detail_livre" />
+        <action android:id="@+id/action_accueil_to_recherche" app:destination="@id/recherche" />
     </fragment>
-    <fragment
-        android:id="@+id/reservation"
-        android:name="com.crosemont.booklique.Présentation.DetailLivre.Vue"
-        android:label="fragment_reservation"
-        tools:layout="@layout/fragment_detail_livre"/>
+
+    <!-- Fragment Genres -->
     <fragment
         android:id="@+id/genres"
         android:name="com.crosemont.booklique.Présentation.Genres.Vue"
         android:label="fragment_genres"
         tools:layout="@layout/fragment_genres" >
-        <action
-            android:id="@+id/action_genres_to_recherche"
-            app:destination="@id/recherche" />
+        <action android:id="@+id/action_genres_to_accueil" app:destination="@id/accueil" />
+        <action android:id="@+id/action_genres_to_recherche" app:destination="@id/recherche" />
+        <action android:id="@+id/action_genres_to_reservation" app:destination="@id/reservation" />
+        <action android:id="@+id/action_genres_to_detail_livre" app:destination="@id/detail_livre" />
     </fragment>
+
+    <!-- Fragment Recherche -->
     <fragment
-        android:id="@+id/vue"
+        android:id="@+id/recherche"
         android:name="com.crosemont.booklique.Présentation.Recherche.Vue"
         android:label="fragment_recherche"
-        tools:layout="@layout/fragment_recherche" >
-        <action
-            android:id="@+id/action_recherche_to_reservation"
-            app:destination="@id/reservation" />
+        tools:layout="@layout/fragment_recherche">
+        <action android:id="@+id/action_recherche_to_accueil" app:destination="@id/accueil" />
+        <action android:id="@+id/action_recherche_to_genres" app:destination="@id/genres" />
+        <action android:id="@+id/action_recherche_to_reservation" app:destination="@id/reservation" />
+        <action android:id="@+id/action_recherche_to_detail_livre" app:destination="@id/detail_livre" />
     </fragment>
+
+    <!-- Fragment Detail Livre -->
+    <fragment
+        android:id="@+id/detail_livre"
+        android:name="com.crosemont.booklique.Présentation.DetailLivre.Vue"
+        android:label="fragment_detail_livre"
+        tools:layout="@layout/fragment_detail_livre">
+        <action android:id="@+id/action_detail_livre_to_accueil" app:destination="@id/accueil" />
+        <action android:id="@+id/action_detail_livre_to_genres" app:destination="@id/genres" />
+        <action android:id="@+id/action_detail_livre_to_recherche" app:destination="@id/recherche" />
+        <action android:id="@+id/action_detail_livre_to_reservation" app:destination="@id/reservation" />
+    </fragment>
+
+    <!-- Fragment Reservation -->
+    <fragment
+        android:id="@+id/reservation"
+        android:name="com.crosemont.booklique.Presentation.Reservation.Vue"
+        android:label="fragment_reservation"
+        tools:layout="@layout/fragment_liste_reservation">
+        <action android:id="@+id/action_reservation_to_accueil" app:destination="@id/accueil" />
+        <action android:id="@+id/action_reservation_to_genres" app:destination="@id/genres" />
+        <action android:id="@+id/action_reservation_to_recherche" app:destination="@id/recherche" />
+        <action android:id="@+id/action_reservation_to_detail_livre" app:destination="@id/detail_livre" />
+    </fragment>
+
 </navigation>

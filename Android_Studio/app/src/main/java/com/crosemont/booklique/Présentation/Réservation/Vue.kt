@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.mork_data.Data
 
-class Liste_reservation : Fragment() {
+class Vue : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
