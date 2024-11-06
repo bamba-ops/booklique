@@ -55,7 +55,6 @@
                         android:id="@+id/titre_livre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Titre du livre"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -69,8 +68,7 @@
                     <TextView
                         android:id="@+id/textView6"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Description : C'est un livre super bien écrit avec beaucoup de contenu" />
+                        android:layout_height="wrap_content" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -90,18 +88,6 @@
                             android:text="Favoris"
                             android:textSize="12sp" />
 
-                        <Button
-                            android:id="@+id/bouton_noter"
-                            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="14dp"
-                            android:layout_weight="1"
-                            android:background="@color/black"
-                            android:minWidth="84dip"
-                            android:minHeight="40dip"
-                            android:text="Noter"
-                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -110,12 +96,17 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
         android:id="@+id/description_livre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
-        android:text="Description : ce livre est super bien écrit avec beaucoup
-         de contenu et tres jolie pour etre lu par tout les lecteurs c'est le meillieur je vous la recomande fortement " />
+        android:paddingBottom="4dp" />
 
     <View
         android:layout_width="match_parent"
@@ -123,11 +114,23 @@
         android:layout_marginVertical="8dp"
         android:background="@android:color/darker_gray" />
 
-    <TextView
-        android:id="@+id/auteur_livre"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Auteur : Auteur du livre" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Auteur : "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/auteur_livre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -135,11 +138,23 @@
         android:layout_marginVertical="8dp"
         android:background="@android:color/darker_gray" />
 
-    <TextView
-        android:id="@+id/echeance_livre"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Échéance : 01/01/2025" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Échéance : "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/echeance_livre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -152,18 +167,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Langue : Français" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginVertical="8dp"
-        android:background="@android:color/darker_gray" />
-
-    <TextView
-        android:id="@+id/sujets_livre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sujets : Sujet 1, Sujet 2" />
 
     <LinearLayout
         android:layout_width="match_parent"
