@@ -1,5 +1,6 @@
 package com.crosemont.booklique.domaine.entité
 
+import Livre
 import java.util.Date
 
 class Reservation(

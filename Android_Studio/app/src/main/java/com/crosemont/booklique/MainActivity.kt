@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.reservation -> {
-                    navController.navigate(R.id.reservation)
+                    navController.navigate(R.id.action_accueil_to_liste_reservation)
                     true
                 }
                 R.id.recherche -> {

@@ -23,9 +23,9 @@
     </fragment>
     <fragment
         android:id="@+id/reservation"
-        android:name="com.crosemont.booklique.Présentation.Réservation.Vue"
+        android:name="com.crosemont.booklique.Présentation.DetailLivre.Vue"
         android:label="fragment_reservation"
-        tools:layout="@layout/fragment_reservation"/>
+        tools:layout="@layout/fragment_detail_livre"/>
     <fragment
         android:id="@+id/genres"
         android:name="com.crosemont.booklique.Présentation.Genres.Vue"
@@ -36,7 +36,7 @@
             app:destination="@id/recherche" />
     </fragment>
     <fragment
-        android:id="@+id/recherche"
+        android:id="@+id/vue"
         android:name="com.crosemont.booklique.Présentation.Recherche.Vue"
         android:label="fragment_recherche"
         tools:layout="@layout/fragment_recherche" >

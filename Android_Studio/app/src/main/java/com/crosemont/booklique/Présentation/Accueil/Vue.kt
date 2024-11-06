@@ -1,5 +1,6 @@
 package com.crosemont.booklique.Présentation.Accueil
 
+import Livre
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
-import com.crosemont.booklique.domaine.entité.Livre
 import com.squareup.picasso.Picasso
 import com.crosemont.booklique.domaine.mork_data.Data
 
@@ -96,20 +96,29 @@ class Vue : Fragment() {
             findNavController().navigate(R.id.action_accueil_to_recherche)
         }
 
-        imageNouveaute1.setOnClickListener{
-            findNavController().navigate(R.id.action_accueil_to_reservation)
+        imageNouveaute1.setOnClickListener {
+            val livreSelectionne = livres[0]
+            val action = Vue.newInstance(livreSelectionne)
+            findNavController().navigate(R.id.action_accueil_to_reservation, action.arguments)
         }
 
+
         imageNouveaute2.setOnClickListener{
-            findNavController().navigate(R.id.action_accueil_to_reservation)
+            val livreSelectionne = livres[1]
+            val action = Vue.newInstance(livreSelectionne)
+            findNavController().navigate(R.id.action_accueil_to_reservation, action.arguments)
         }
 
         imageNouveaute3.setOnClickListener {
-            findNavController().navigate(R.id.action_accueil_to_reservation)
+            val livreSelectionne = livres[2]
+            val action = Vue.newInstance(livreSelectionne)
+            findNavController().navigate(R.id.action_accueil_to_reservation, action.arguments)
         }
 
         imageNouveaute4.setOnClickListener {
-            findNavController().navigate(R.id.action_accueil_to_reservation)
+            val livreSelectionne = livres[3]
+            val action = Vue.newInstance(livreSelectionne)
+            findNavController().navigate(R.id.action_accueil_to_reservation, action.arguments)
         }
     }
 
@@ -133,5 +142,19 @@ class Vue : Fragment() {
             .into(imageView)
         auteurTextView?.text = livre.auteur
     }
+
+    companion object {
+        private const val ARG_LIVRE = "livre"
+
+        fun newInstance(livre: Livre): Vue {
+            val fragment = Vue()
+            val args = Bundle().apply {
+                putParcelable(ARG_LIVRE, livre)
+            }
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
 
 }

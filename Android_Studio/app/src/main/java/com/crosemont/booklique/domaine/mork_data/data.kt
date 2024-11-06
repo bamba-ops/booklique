@@ -1,6 +1,6 @@
 package com.crosemont.booklique.domaine.mork_data
 
-import com.crosemont.booklique.domaine.entité.Livre
+import Livre
 import com.crosemont.booklique.domaine.entité.Reservation
 import java.util.Date
 
