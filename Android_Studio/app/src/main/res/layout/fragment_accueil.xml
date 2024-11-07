@@ -83,94 +83,17 @@
                 android:scrollbars="none">
 
                 <LinearLayout
+                    android:id="@+id/carte_auteurs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <!-- Carte d'auteur -->
-                    <LinearLayout
-                        android:id="@+id/carte_auteur"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/fond_rond"
-                        android:clickable="true"
-                        android:focusable="true">
 
-                        <TextView
-                            android:id="@+id/nom_auteur"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Olivia Wilson"
-                            android:textSize="16sp"
-                            android:paddingBottom="8dp" />
 
-                        <ImageView
-                            android:id="@+id/image_auteur"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:scaleType="centerCrop" />
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/carte_auteur_2"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/fond_rond"
-                        android:clickable="true"
-                        android:focusable="true">
 
-                        <TextView
-                            android:id="@+id/nom_auteur_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Olivia Wilson"
-                            android:textSize="16sp"
-                            android:paddingBottom="8dp" />
 
-                        <ImageView
-                            android:id="@+id/image_auteur_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:scaleType="centerCrop" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/carte_auteur_3"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/fond_rond"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <TextView
-                            android:id="@+id/nom_auteur_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Olivia Wilson"
-                            android:textSize="16sp"
-                            android:paddingBottom="8dp" />
-
-                        <ImageView
-                            android:id="@+id/image_auteur_3"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:scaleType="centerCrop" />
-                    </LinearLayout>
 
                     <!-- Ajoutez d'autres cartes d'auteur ici si nécessaire -->
                 </LinearLayout>
@@ -203,7 +126,7 @@
             </LinearLayout>
 
             <HorizontalScrollView
-                android:id="@+id/liste_nouveautes"
+                android:id="@+id/before_liste_nouveautes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
@@ -211,43 +134,13 @@
                 android:scrollbars="none">
 
                 <LinearLayout
+                    android:id="@+id/liste_nouveautes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
-                    <!-- Image Nouveauté 1 -->
-                    <ImageView
-                        android:id="@+id/image_nouveaute_1"
-                        android:layout_width="100dp"
-                        android:layout_height="150dp"
-                        android:layout_marginEnd="8dp"
-                        android:clickable="true"
-                        android:focusable="true"/>
-
-                    <!-- Image Nouveauté 2 -->
-                    <ImageView
-                        android:id="@+id/image_nouveaute_2"
-                        android:layout_width="100dp"
-                        android:layout_height="150dp"
-                        android:layout_marginEnd="8dp"
-                        android:clickable="true"
-                        android:focusable="true"/>
-
-                    <!-- Image Nouveauté 3 -->
-                    <ImageView
-                        android:id="@+id/image_nouveaute_3"
-                        android:layout_width="100dp"
-                        android:layout_height="150dp"
-                        android:clickable="true"
-                        android:focusable="true"/>
-
-                    <ImageView
-                        android:id="@+id/image_nouveaute_4"
-                        android:layout_width="100dp"
-                        android:layout_height="150dp"
-                        android:clickable="true"
-                        android:focusable="true"/>
                 </LinearLayout>
+
+
             </HorizontalScrollView>
 
         </LinearLayout>
