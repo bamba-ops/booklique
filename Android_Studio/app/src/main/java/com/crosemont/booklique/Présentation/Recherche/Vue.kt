@@ -60,6 +60,13 @@ class Vue : Fragment() {
                         afficherLivreParGenre(genre)
                     }
                 }
+
+                bundle.containsKey("obtenirLivreParAuteur") -> {
+                    val nomAuteur = bundle.getString("auteur")
+                    if(nomAuteur != null) {
+                        afficherLivreParNomAuteur(nomAuteur)
+                    }
+                }
             }
         }
 
@@ -78,6 +85,28 @@ class Vue : Fragment() {
 //            val resultat = obtenirResultatRecherche("", genre)  // Empty query, filter by genre
 //            updateUI(resultat, resultatRechercheConteneur, affichageDefilementResultatRecherche, textRechercheParDefaut)
 //        }
+    }
+
+    fun afficherLivreParNomAuteur(nomAuteur: String){
+        var cmbLivreExiste = 0
+
+
+        for(livre in livres){
+            textRechercheParDefaut.visibility = View.GONE
+            affichageDefilementResultatRecherche.visibility = View.VISIBLE
+            txtRechercheUtilisateur.text = "Recherche : ${nomAuteur}"
+            txtRechercheUtilisateur.visibility = View.VISIBLE
+
+            if(livre.auteur.contains(nomAuteur)){
+                afficherLivre(livre)
+                cmbLivreExiste = cmbLivreExiste + 1
+            }
+        }
+
+        if(cmbLivreExiste == 0){
+            textRechercheParDefaut.visibility = View.VISIBLE
+            affichageDefilementResultatRecherche.visibility = View.GONE
+        }
     }
 
     fun afficherLivreParGenre(genre: String){
