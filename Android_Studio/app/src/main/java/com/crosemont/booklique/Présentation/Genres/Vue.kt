@@ -11,7 +11,11 @@ import com.crosemont.booklique.R
 
 class Vue : Fragment() {
 
-
+    private lateinit var genreAffaires: LinearLayout
+    private lateinit var genreBiographies: LinearLayout
+    private lateinit var genreDeveloppementPersonnel: LinearLayout
+    private lateinit var genreFiction: LinearLayout
+    private lateinit var genreHistoire: LinearLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,10 +28,24 @@ class Vue : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val genreAffaires: LinearLayout = view.findViewById(R.id.genre_affaires)
+        genreAffaires = view.findViewById(R.id.genre_affaires)
+        genreBiographies = view.findViewById(R.id.genre_biographies)
+        genreDeveloppementPersonnel = view.findViewById(R.id.genre_developpement_personnel)
+        genreFiction = view.findViewById(R.id.genre_fiction)
+        genreHistoire = view.findViewById(R.id.genre_histoire)
 
-        genreAffaires.setOnClickListener {
-            findNavController().navigate(R.id.action_genres_to_recherche)
+        genreAffaires.setOnClickListener { navigateToRecherche("Afffaires") }
+        genreBiographies.setOnClickListener { navigateToRecherche("Biographies") }
+        genreDeveloppementPersonnel.setOnClickListener { navigateToRecherche("Développement personnel") }
+        genreFiction.setOnClickListener { navigateToRecherche("Fiction et littérature") }
+        genreHistoire.setOnClickListener { navigateToRecherche("Histoire") }
+    }
+
+    private fun navigateToRecherche(genre: String) {
+        val bundle = Bundle().apply {
+            putString("genre", genre)
+            putBoolean("obtenirLivreParGenre", true)
         }
+        findNavController().navigate(R.id.action_genres_to_recherche, bundle)
     }
 }

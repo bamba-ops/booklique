@@ -16,7 +16,7 @@ class Data {
                     description = "Un voyage captivant au cœur de la nature sauvage.",
                     auteur = "Olivia Wilson",
                     editeur = "Éditions Nature",
-                    genre = "Aventure",
+                    genre = "Afffaires",
                     date_publication = Date(120, 4, 10), // 2020-05-10
                     nombre_pages = 320,
                     quantite = 5
@@ -28,7 +28,7 @@ class Data {
                     description = "Une enquête palpitante dans les profondeurs de l'océan.",
                     auteur = "Lorna Alvarado",
                     editeur = "Éditions Océan",
-                    genre = "Mystère",
+                    genre = "Biographies",
                     date_publication = Date(119, 2, 5), // 2019-03-05
                     nombre_pages = 280,
                     quantite = 3
@@ -40,7 +40,7 @@ class Data {
                     description = "Un conte enchanteur sur les mystères de l'univers.",
                     auteur = "Avery Davis",
                     editeur = "Éditions Cosmos",
-                    genre = "Fantastique",
+                    genre = "Biographies",
                     date_publication = Date(121, 10, 12), // 2021-11-12
                     nombre_pages = 450,
                     quantite = 2
@@ -52,7 +52,7 @@ class Data {
                     description = "Une exploration fascinante des époques perdues.",
                     auteur = "Harper Lee",
                     editeur = "Éditions Temps",
-                    genre = "Science-Fiction",
+                    genre = "Histoire",
                     date_publication = Date(122, 0, 15), // 2022-01-15
                     nombre_pages = 360,
                     quantite = 4
