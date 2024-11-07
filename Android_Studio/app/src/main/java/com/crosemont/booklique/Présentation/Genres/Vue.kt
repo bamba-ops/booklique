@@ -11,6 +11,12 @@ import com.crosemont.booklique.R
 
 class Vue : Fragment() {
 
+    private lateinit var genreAffaires: LinearLayout
+    private lateinit var genreBiographies: LinearLayout
+    private lateinit var genreDeveloppementPersonnel: LinearLayout
+    private lateinit var genreFiction: LinearLayout
+    private lateinit var genreHistoire: LinearLayout
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -22,25 +28,24 @@ class Vue : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val genreAffaires: LinearLayout = view.findViewById(R.id.genre_affaires)
-        val genreBiographies: LinearLayout = view.findViewById(R.id.genre_biographies)
-        val genreDeveloppementPersonnel: LinearLayout = view.findViewById(R.id.genre_developpement_personnel)
-        val genreFiction: LinearLayout = view.findViewById(R.id.genre_fiction)
-        val genreHistoire: LinearLayout = view.findViewById(R.id.genre_histoire)
+        genreAffaires = view.findViewById(R.id.genre_affaires)
+        genreBiographies = view.findViewById(R.id.genre_biographies)
+        genreDeveloppementPersonnel = view.findViewById(R.id.genre_developpement_personnel)
+        genreFiction = view.findViewById(R.id.genre_fiction)
+        genreHistoire = view.findViewById(R.id.genre_histoire)
 
-        // Set click listeners for each genre
-        genreAffaires.setOnClickListener { navigateToRecherche("Affaires") }
-        genreBiographies.setOnClickListener { navigateToRecherche("Biographies et mémoires") }
+        genreAffaires.setOnClickListener { navigateToRecherche("Afffaires") }
+        genreBiographies.setOnClickListener { navigateToRecherche("Biographies") }
         genreDeveloppementPersonnel.setOnClickListener { navigateToRecherche("Développement personnel") }
         genreFiction.setOnClickListener { navigateToRecherche("Fiction et littérature") }
         genreHistoire.setOnClickListener { navigateToRecherche("Histoire") }
     }
 
-    // Navigate to RechercheFragment with the selected genre as an argument
     private fun navigateToRecherche(genre: String) {
         val bundle = Bundle().apply {
             putString("genre", genre)
+            putBoolean("obtenirLivreParGenre", true)
         }
-        findNavController().navigate(R.id.action_genres_to_rechercheFragment, bundle)
+        findNavController().navigate(R.id.action_genres_to_recherche, bundle)
     }
 }
