@@ -28,6 +28,7 @@
         <action android:id="@+id/action_genres_to_recherche" app:destination="@id/recherche" />
         <action android:id="@+id/action_genres_to_reservation" app:destination="@id/reservation" />
         <action android:id="@+id/action_genres_to_detail_livre" app:destination="@id/detail_livre" />
+        <action android:id="@+id/action_genres_to_rechercheFragment" app:destination="@id/recherche" />
     </fragment>
 
     <!-- Fragment Recherche -->
