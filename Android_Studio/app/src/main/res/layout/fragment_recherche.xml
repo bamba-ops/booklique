@@ -40,11 +40,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/search_bar"
-        android:layout_marginTop="32dp"
         android:layout_centerHorizontal="true"
-        android:text="Aucun livre"
-        android:textSize="18sp"
+        android:layout_marginTop="32dp"
+        android:text="Aucun livre trouvé"
         android:textColor="@android:color/darker_gray"
+        android:textSize="18sp"
         android:visibility="visible" />
 
     <ScrollView
