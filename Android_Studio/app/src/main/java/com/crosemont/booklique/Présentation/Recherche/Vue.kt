@@ -57,7 +57,7 @@ class Vue : Fragment() {
                 bundle.containsKey("obtenirLivreParGenre") -> {
                     val genre = bundle.getString("genre")
                     if (genre != null) {
-                        afficherLivreParAuteur(genre)
+                        afficherLivreParGenre(genre)
                     }
                 }
             }
@@ -80,7 +80,7 @@ class Vue : Fragment() {
 //        }
     }
 
-    fun afficherLivreParAuteur(genre: String){
+    fun afficherLivreParGenre(genre: String){
         var cmbLivreExiste = 0
 
         for(livre in livres){
