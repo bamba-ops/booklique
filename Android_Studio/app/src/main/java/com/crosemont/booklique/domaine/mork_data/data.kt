@@ -19,7 +19,7 @@ class Data {
                     genre = "Afffaires",
                     date_publication = Date(120, 4, 10), // 2020-05-10
                     nombre_pages = 320,
-                    quantite = 5
+                    quantite = 0
                 ),
                 Livre(
                     isbn = "978-3-16-148411-7",
@@ -31,7 +31,7 @@ class Data {
                     genre = "Biographies",
                     date_publication = Date(119, 2, 5), // 2019-03-05
                     nombre_pages = 280,
-                    quantite = 3
+                    quantite = 0
                 ),
                 Livre(
                     isbn = "978-3-16-148412-4",

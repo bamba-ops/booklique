@@ -66,9 +66,21 @@ class Vue : Fragment() {
                 .error(R.drawable.error_image)
                 .into(imageNouveaute)
 
-            imageNouveaute.setOnClickListener{
-                findNavController().navigate(R.id.action_accueil_to_detail_livre)
+            imageNouveaute.setOnClickListener {
+                val bundle = Bundle().apply {
+                    putString("titre", livre.titre)
+                    putString("image_url", livre.image_url)
+                    putString("description", livre.description)
+                    putString("auteur", livre.auteur)
+                    putString("editeur", livre.editeur)
+                    putString("genre", livre.genre)
+                    putString("date_publication", livre.date_publication.toString())
+                    putInt("nombre_pages", livre.nombre_pages)
+                    putString("disponibilite", if (livre.estDisponible()) "Disponible" else "Indisponible")
+                }
+                findNavController().navigate(R.id.action_accueil_to_detail_livre, bundle)
             }
+
 
             listeNouveautes.addView(listeNouveautesView)
 
