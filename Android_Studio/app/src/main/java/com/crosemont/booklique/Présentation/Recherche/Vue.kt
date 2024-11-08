@@ -67,6 +67,10 @@ class Vue : Fragment() {
                         afficherLivreParNomAuteur(nomAuteur)
                     }
                 }
+
+                bundle.getBoolean("trierParNouveaute", false) -> {
+                    afficherResultatParNouveaute()
+                }
             }
         }
 
@@ -86,6 +90,30 @@ class Vue : Fragment() {
 //            updateUI(resultat, resultatRechercheConteneur, affichageDefilementResultatRecherche, textRechercheParDefaut)
 //        }
     }
+
+    private fun afficherResultatParNouveaute() {
+        // Trie les livres par date de publication du plus récent au plus ancien
+        val livresTries = livres.sortedByDescending { it.date_publication }
+
+        // Efface les résultats précédents
+        resultatRechercheConteneur.removeAllViews()
+
+        if (livresTries.isEmpty()) {
+            textRechercheParDefaut.visibility = View.VISIBLE
+            affichageDefilementResultatRecherche.visibility = View.GONE
+        } else {
+            textRechercheParDefaut.visibility = View.GONE
+            affichageDefilementResultatRecherche.visibility = View.VISIBLE
+            txtRechercheUtilisateur.text = "Recherche : Nouveautés"
+            txtRechercheUtilisateur.visibility = View.VISIBLE
+
+
+            for (livre in livresTries) {
+                afficherLivre(livre)
+            }
+        }
+    }
+
 
     fun afficherLivreParNomAuteur(nomAuteur: String){
         var cmbLivreExiste = 0
@@ -138,6 +166,8 @@ class Vue : Fragment() {
             resultatRechercheConteneur,
             false
         )
+
+
 
         val imageView = livreView.findViewById<ImageView>(R.id.livre_image)
         val titreTextView = livreView.findViewById<TextView>(R.id.livre_titre)

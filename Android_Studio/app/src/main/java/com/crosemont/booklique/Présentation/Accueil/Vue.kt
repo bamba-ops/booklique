@@ -48,7 +48,10 @@ class Vue : Fragment() {
         }
 
         sectionNouveautes.setOnClickListener {
-           findNavController().navigate(R.id.action_accueil_to_recherche)
+            val bundle = Bundle().apply {
+                putBoolean("trierParNouveaute", true)
+            }
+            findNavController().navigate(R.id.action_accueil_to_recherche, bundle)
         }
 
 
