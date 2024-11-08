@@ -35,6 +35,12 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.recherche)
                     true
                 }
+
+                R.id.historique -> {
+                    navController.popBackStack(R.id.historique, false)
+                    navController.navigate(R.id.historique)
+                    true
+                }
                 else -> false
             }
         }
