@@ -13,7 +13,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Titre : " />
+            android:text="Titre : "
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/idTitre"
@@ -29,23 +30,31 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Date" />
+            android:text="Date : "
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/dateRerservation"
-            android:layout_width="match_parent"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="01/10/2024" />
+            android:text=" 01/10/2024 " />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" - " />
 
         <TextView
             android:id="@+id/dateRetour"
-            android:layout_width="match_parent"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="10/10/2024" />
+            android:text=" 10/10/2024 " />
     </LinearLayout>
 </LinearLayout>

@@ -15,6 +15,9 @@ import com.crosemont.booklique.domaine.entité.Reservation
 import com.crosemont.booklique.domaine.mork_data.Data
 import org.w3c.dom.Text
 import java.sql.RowId
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * A simple [Fragment] subclass.
@@ -25,6 +28,8 @@ class Vue : Fragment() {
 
     lateinit var resultatHistoriqueResrvation : LinearLayout
     lateinit var historiqueList : List<Reservation>
+
+    //private val dateFormatHistorique = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,10 +56,18 @@ class Vue : Fragment() {
             val date_retour: TextView = resultatHistoriqueReservationView.findViewById(R.id.dateRetour)
 
             titre.text = historique.livre.titre
-            date_reservation.text = historique.debut.toString()
-            date_retour.text = historique.termine.toString()
+            date_reservation.text = formaterDateHistorique(historique.debut)
+            date_retour.text = formaterDateHistorique(historique.termine)
 
             resultatHistoriqueResrvation.addView(resultatHistoriqueReservationView)
         }
+    }
+
+    fun formaterDateHistorique(date: Date?): String {
+        if (date == null) {
+            return "Date invalide"
+        }
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return dateFormat.format(date)
     }
 }
