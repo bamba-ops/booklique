@@ -66,4 +66,16 @@
         <action android:id="@+id/action_reservation_to_detail_livre" app:destination="@id/detail_livre" />
     </fragment>
 
+    <!-- Fragment Historiqhue -->
+    <fragment
+        android:id="@+id/historique"
+        android:name="com.crosemont.booklique.Présentation.Historique.Vue"
+        android:label="fragment_historique"
+        tools:layout="@layout/fragment_historique">
+        <action android:id="@+id/action_historique_to_accueil" app:destination="@id/accueil" />
+        <action android:id="@+id/action_historique_to_genres" app:destination="@id/genres" />
+        <action android:id="@+id/action_historique_to_recherche" app:destination="@id/recherche" />
+        <action android:id="@+id/action_historique_to_detail_livre" app:destination="@id/detail_livre" />
+    </fragment>
+
 </navigation>
