@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -21,7 +22,8 @@ class Vue : Fragment() {
     private lateinit var auteurLivre: TextView
     private lateinit var echeanceLivre: TextView
     private lateinit var buttonReservation: Button
-    private lateinit var buttonFavoris: Button
+    private lateinit var buttonFavoris: ImageButton
+    var isFavoris: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +67,15 @@ class Vue : Fragment() {
                 buttonReservation.isEnabled = true
             else
                 buttonReservation.isEnabled = false
+
+            buttonFavoris.setOnClickListener {
+                isFavoris = !isFavoris
+                if (isFavoris){
+                    buttonFavoris.setImageResource(R.drawable.favoris_true)
+                } else {
+                    buttonFavoris.setImageResource(R.drawable.favoris_false)
+                }
+            }
         }
     }
 }
