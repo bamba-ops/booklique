@@ -16,6 +16,7 @@ import com.crosemont.booklique.domaine.mork_data.Data
 class Vue : Fragment() {
 
     private lateinit var imageLivre: ImageView
+    private lateinit var imageUrl: String
     private lateinit var titreLivre: TextView
     private lateinit var statutLivre: TextView
     private lateinit var descriptionCourte: TextView
@@ -24,6 +25,7 @@ class Vue : Fragment() {
     private lateinit var echeanceLivre: TextView
     private lateinit var buttonReservation: Button
     private lateinit var buttonFavoris: ImageButton
+    private lateinit var disponnible: String
     private lateinit var isbn: String
     var isFavoris: Boolean = false
 
@@ -56,25 +58,17 @@ class Vue : Fragment() {
             descriptionComplete.text = bundle.getString("description")
             auteurLivre.text = bundle.getString("auteur")
             echeanceLivre.text = bundle.getString("date_publication")
+            disponnible = bundle.getString("disponibilite").toString()
+            imageUrl = bundle.getString("image_url").toString()
 
-            // Charger l'image avec Glide
-            val imageUrl = bundle.getString("image_url")
             Glide.with(this)
                 .load(imageUrl)
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.error_image)
                 .into(imageLivre)
 
-            // vérification des bouttons de reservation
-            if (bundle.getString("disponibilite") == "Disponible")
-                buttonReservation.isEnabled = true
-            else
-                buttonReservation.isEnabled = false
-
-            if (Data.estLivreFavori(isbn)) {
-                isFavoris = true
-                buttonFavoris.setImageResource(R.drawable.favoris_true)
-            }
+            isDisponnible()
+            isLivreFavori()
 
             buttonFavoris.setOnClickListener {
                 isFavoris = !isFavoris
@@ -87,5 +81,23 @@ class Vue : Fragment() {
                 }
             }
         }
+
     }
+
+    fun isLivreFavori(){
+        if (Data.estLivreFavori(isbn)) {
+            isFavoris = true
+            buttonFavoris.setImageResource(R.drawable.favoris_true)
+        }
+    }
+
+    fun isDisponnible(){
+        if (disponnible == "Disponible")
+            buttonReservation.isEnabled = true
+        else
+            buttonReservation.isEnabled = false
+
+    }
+
+
 }
