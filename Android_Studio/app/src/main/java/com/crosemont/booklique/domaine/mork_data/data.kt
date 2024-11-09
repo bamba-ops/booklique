@@ -7,6 +7,32 @@ import java.util.Date
 class Data {
 
     companion object {
+        private val livresFavoris = mutableListOf<Livre>()
+
+        fun ajouterLivreFavori(livre: Livre){
+            livresFavoris.add(livre)
+        }
+
+        fun retirerLivreFavoriParISBN(isbn: String){
+            livresFavoris.removeIf { it.isbn == isbn }
+        }
+
+        fun obtenirLivresFavoris(): List<Livre>{
+            return livresFavoris
+        }
+
+        fun estLivreFavori(isbn: String): Boolean {
+            return livresFavoris.any { it.isbn == isbn }
+        }
+
+        fun obtenirLivreParISBN(isbn: String): Livre? {
+            return obtenirLivresDemo().find { it.isbn == isbn }
+        }
+
+        fun obtenirLivreFavorisParISBN(isbn: String): Livre? {
+            return obtenirLivresFavoris().find { it.isbn == isbn }
+        }
+
         fun obtenirLivresDemo(): List<Livre> {
             return listOf(
                 Livre(

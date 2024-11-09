@@ -187,6 +187,7 @@ class Vue : Fragment() {
         livreView.setOnClickListener {
             // Ajout transfert data pour afficher details
             val bundle = Bundle().apply {
+                putString("isbn", livre.isbn)
                 putString("titre", livre.titre)
                 putString("image_url", livre.image_url)
                 putString("description", livre.description)

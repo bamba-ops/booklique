@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.crosemont.booklique.R
+import com.crosemont.booklique.domaine.mork_data.Data
 
 class Vue : Fragment() {
 
@@ -23,6 +24,7 @@ class Vue : Fragment() {
     private lateinit var echeanceLivre: TextView
     private lateinit var buttonReservation: Button
     private lateinit var buttonFavoris: ImageButton
+    private lateinit var isbn: String
     var isFavoris: Boolean = false
 
     override fun onCreateView(
@@ -47,6 +49,7 @@ class Vue : Fragment() {
 
         // Récupérer les données passées depuis Accueil
         arguments?.let { bundle ->
+            isbn = bundle.getString("isbn").toString()
             titreLivre.text = bundle.getString("titre")
             statutLivre.text = bundle.getString("disponibilite")
             descriptionCourte.text = bundle.getString("description")?.take(25)?.plus("...") ?: "Description non disponible"
@@ -68,12 +71,19 @@ class Vue : Fragment() {
             else
                 buttonReservation.isEnabled = false
 
+            if (Data.estLivreFavori(isbn)) {
+                isFavoris = true
+                buttonFavoris.setImageResource(R.drawable.favoris_true)
+            }
+
             buttonFavoris.setOnClickListener {
                 isFavoris = !isFavoris
                 if (isFavoris){
                     buttonFavoris.setImageResource(R.drawable.favoris_true)
+                    Data.obtenirLivreParISBN(isbn)?.let { it1 -> Data.ajouterLivreFavori(it1) }
                 } else {
                     buttonFavoris.setImageResource(R.drawable.favoris_false)
+                    Data.retirerLivreFavoriParISBN(isbn)
                 }
             }
         }

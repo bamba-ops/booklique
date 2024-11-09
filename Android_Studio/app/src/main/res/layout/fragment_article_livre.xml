@@ -14,7 +14,6 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <!-- Image du livre -->
         <ImageView
             android:id="@+id/livre_image"
             android:layout_width="80dp"
@@ -23,14 +22,12 @@
             android:scaleType="centerCrop"
             android:contentDescription="Image du livre" />
 
-        <!-- Informations du livre -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <!-- Titre du livre -->
             <TextView
                 android:id="@+id/livre_titre"
                 android:layout_width="wrap_content"
@@ -42,7 +39,6 @@
                 android:maxLines="2"
                 android:ellipsize="end" />
 
-            <!-- Auteur du livre -->
             <TextView
                 android:id="@+id/livre_auteur"
                 android:layout_width="wrap_content"
@@ -52,7 +48,6 @@
                 android:textSize="14sp"
                 android:layout_marginTop="4dp" />
 
-            <!-- Genre du livre -->
             <TextView
                 android:id="@+id/livre_genre"
                 android:layout_width="wrap_content"
@@ -64,5 +59,18 @@
                 android:background="@drawable/arriere_fond_rond_genre"
                 android:padding="4dp" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/icone_favoris"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="top"
+            android:src="@drawable/favoris_false"
+            android:contentDescription="Icône favoris"
+            android:clickable="true"
+            android:focusable="true"/>
+
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
