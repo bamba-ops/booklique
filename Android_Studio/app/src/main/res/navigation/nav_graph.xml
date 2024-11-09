@@ -78,4 +78,12 @@
         <action android:id="@+id/action_historique_to_detail_livre" app:destination="@id/detail_livre" />
     </fragment>
 
+    <fragment
+        android:id="@+id/favoris"
+        android:name="com.crosemont.booklique.Présentation.Favoris.Vue"
+        android:label="fragment_favoris"
+        tools:layout="@layout/fragment_favoris">
+        <action android:id="@+id/action_favoris_to_detail_livre" app:destination="@id/detail_livre" />
+    </fragment>
+
 </navigation>
