@@ -1,11 +1,16 @@
 package com.crosemont.booklique
 
 import android.os.Bundle
+import android.os.LocaleList
+import android.renderscript.ScriptGroup.Binding
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +49,5 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
     }
 }

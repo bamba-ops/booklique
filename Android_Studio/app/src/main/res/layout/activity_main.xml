@@ -13,7 +13,20 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@android:color/holo_red_dark"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal">
+<!--
+        <Button
+            android:id="@+id/idEn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="En" />
+
+        <Button
+            android:id="@+id/idFr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fr" /> -->
+    </LinearLayout>
 
     <!-- Conteneur de fragment -->
     <androidx.fragment.app.FragmentContainerView

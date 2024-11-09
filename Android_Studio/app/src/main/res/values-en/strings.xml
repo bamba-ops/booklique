@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Booklique</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="recherche">search</string>
+    <string name="accueil">Home</string>
+    <string name="profil">profil</string>
+    <string name="livres">books</string>
+    <string name="genres">gender</string>
+    <string name="auteur">author</string>
+    <string name="nouveautes">news</string>
+    <string name="nouveaute">new</string>
+    <string name="reservation">reservation</string>
+    <string name="liste_reservation">reservation_list</string>
+    <string name="favoris">favorites</string>
+    <string name="annuler">cancel</string>
+    <string name="historique">history</string>
+    <string name="liste_historique">history_list</string>
+    <string name="supprimer">delete</string>
+    <string name="bouton_de_recherche">search button</string>
+    <string name="search">Search</string>
+</resources>

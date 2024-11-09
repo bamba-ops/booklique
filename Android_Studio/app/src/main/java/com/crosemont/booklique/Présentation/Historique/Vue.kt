@@ -29,8 +29,6 @@ class Vue : Fragment() {
     lateinit var resultatHistoriqueResrvation : LinearLayout
     lateinit var historiqueList : List<Reservation>
 
-    //private val dateFormatHistorique = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
