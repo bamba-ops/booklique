@@ -10,10 +10,12 @@
     <item android:title="@string/recherche" android:id="@+id/recherche"
         android:name="com.crosemont.booklique.Présentation.Recherche.Vue"
         android:icon="@drawable/baseline_book_24" />
-    <item android:title="@string/historique" android:id="@+id/historique"
-        android:name="com.crosemont.booklique.Présentation.Historique.Vue"
-        android:icon="@drawable/baseline_format_list_bulleted_24" />
     <item android:title="@string/favoris" android:id="@+id/favoris"
         android:name="com.crosemont.booklique.Présentation.Favoris.Vue"
         android:icon="@drawable/favoris_true" />
+    <item
+        android:id="@+id/historique"
+        android:name="com.crosemont.booklique.Présentation.Historique.Vue"
+        android:icon="@drawable/baseline_format_list_bulleted_24"
+        android:title="@string/historique" />
 </menu>
