@@ -1,29 +1,57 @@
 <resources>
-    <string name="app_name">Booklique</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <!--    Accueil  -->
-    <string name="recherche">recherche</string>
+    <string name="app_name" translatable="false">Booklique</string>
+    <!-- Menu -->
     <string name="accueil">Accueil</string>
-    <string name="profil">profil</string>
-    <string name="livres">livres</string>
-    <string name="genres">genres</string>
-    <string name="auteur">auteur</string>
-    <string name="nouveautes">nouveautes</string>
-    <string name="nouveaute">nouveaute</string>
+    <string name="reservation">Réservation</string>
+    <string name="recherche">Recherche</string>
+    <string name="favoris">Favoris</string>
+    <string name="historique">Historique</string>
 
-    <!--    Reservation-->
-    <string name="reservation">reservation</string>
-    <string name="liste_reservation">liste_reservation</string>
-    <string name="favoris">favoris</string>
-    <string name="annuler">annuler</string>
+<!--    Page Accueil -->
+    <string name="titre_librairie">Librairie</string>
+    <string name="parcourir_genres">Parcourir les genres</string>
+    <string name="parcourir_auteur">Parcourir par auteur</string>
+    <string name="nouveautes">Nouveautés</string>
 
-    <!--    Historique-->
-    <string name="historique">historique</string>
-    <string name="liste_historique">liste_historique</string>
-    <string name="supprimer">supprimer</string>
-    <string name="bouton_de_recherche">bouton de recherche</string>
-    <string name="search">Search</string>
+    <!--    Page Livre carde fragment recherche -->
+    <string name="image_du_livre">Image du livre</string>
+    <string name="titre_du_livre">Titre du livre</string>
+    <string name="auteur">Auteur</string>
+    <string name="genre">Genre</string>
+    <string name="icone_favoris">Icône favoris</string>
+
+    <!-- Page Détails -->
+    <string name="details">Détails</string>
+    <string name="statut">Statut : </string>
+    <string name="description">Description</string>
+    <string name="auteur_texte">Auteur : </string>
+    <string name="echeance">Échéance : </string>
+    <string name="reserver">Réserver</string>
+
+    <!-- Titres -->
+    <string name="titre_genres">Genres de livres</string>
+
+    <!-- Genres -->
+    <string name="genre_affaires">Affaires</string>
+    <string name="genre_biographies">Biographies et mémoires</string>
+    <string name="genre_developpement_personnel">Développement personnel</string>
+    <string name="genre_fiction">Fiction et littérature</string>
+    <string name="genre_histoire">Histoire</string>
+
+    <!--    Page reservation -->
+    <string name="label_title">Titre : </string>
+    <string name="label_reservation_date">Date de réservation : </string>
+    <string name="label_due_date">À rendre : </string>
+    <string name="button_cancel">Annuler</string>
+    <string name="button_extend">Prolonger</string>
+
+<!--    Page Recherche -->
+    <string name="search_hint">Rechercher un livre ou un auteur</string>
+    <string name="search_label">Recherche : Toutes catégories</string>
+    <string name="no_books_found">Aucun livre trouvé</string>
+
+    <!--    Général -->
+    <string name="date">Date : </string>
+    <string name="reservations">Réservations</string>
 
 </resources>

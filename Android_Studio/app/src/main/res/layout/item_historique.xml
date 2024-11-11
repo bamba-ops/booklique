@@ -11,10 +11,10 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/affichageTitre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Titre : "
-            android:id="@+id/affichageTitre"
+            android:text="@string/label_title"
             android:textStyle="bold" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Date : "
+            android:text="@string/date"
             android:textStyle="bold" />
 
         <TextView

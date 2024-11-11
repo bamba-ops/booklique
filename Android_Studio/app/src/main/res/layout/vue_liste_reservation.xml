@@ -37,7 +37,7 @@
                         android:id="@+id/textView13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Titre : "
+                        android:text="@string/label_title"
                         android:textStyle="bold" />
 
                     <TextView
@@ -57,7 +57,7 @@
                         android:id="@+id/textView11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dâte de reservation : "
+                        android:text="@string/label_reservation_date"
                         android:textStyle="bold" />
 
                     <TextView
@@ -76,7 +76,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="À rendre : "
+                        android:text="@string/label_due_date"
                         android:textStyle="bold" />
 
                     <TextView
@@ -96,7 +96,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/black"
-                        android:text="Annuler" />
+                        android:text="@string/button_cancel" />
 
                     <Button
                         android:id="@+id/btn_prolonger_reservation"
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="14dp"
                         android:background="@color/black"
-                        android:text="Prolonger" />
+                        android:text="@string/button_extend" />
                 </LinearLayout>
 
             </LinearLayout>

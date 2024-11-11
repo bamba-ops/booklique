@@ -21,13 +21,13 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_recherche"
-            android:contentDescription="Icône de recherche" />
+            android:contentDescription="@string/search_hint" />
 
         <AutoCompleteTextView
             android:id="@+id/entree_recherche"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Rechercher un livre ou un auteur"
+            android:hint="@string/search_hint"
             android:padding="12dp"
             android:background="@drawable/barre_de_recherche_rond"
             android:textSize="16sp"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/search_bar"
         android:layout_marginTop="16dp"
-        android:text="Recherche : Toutes catégories"
+        android:text="@string/search_label"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:gravity="center"
@@ -55,11 +55,10 @@
         android:layout_below="@id/texte_recherche_utilisateur"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        android:text="Aucun livre trouvé"
+        android:text="@string/no_books_found"
         android:textColor="@android:color/darker_gray"
         android:textSize="18sp"
         android:visibility="visible" />
-
 
     <ScrollView
         android:id="@+id/affichage_defilement_resultat_de_recherche"
@@ -68,7 +67,6 @@
         android:layout_below="@id/texte_recherche_utilisateur"
         android:layout_marginTop="16dp"
         android:visibility="gone">
-
 
         <LinearLayout
             android:id="@+id/resultat_de_recherche_conteneur"

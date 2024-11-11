@@ -20,7 +20,7 @@
             android:layout_height="120dp"
             android:layout_marginEnd="12dp"
             android:scaleType="centerCrop"
-            android:contentDescription="Image du livre" />
+            android:contentDescription="@string/image_du_livre" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -32,7 +32,7 @@
                 android:id="@+id/livre_titre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Titre du livre"
+                android:text="@string/titre_du_livre"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="#212121"
@@ -43,7 +43,7 @@
                 android:id="@+id/livre_auteur"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Auteur"
+                android:text="@string/auteur"
                 android:textColor="#616161"
                 android:textSize="14sp"
                 android:layout_marginTop="4dp" />
@@ -52,7 +52,7 @@
                 android:id="@+id/livre_genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Genre"
+                android:text="@string/genre"
                 android:layout_marginTop="4dp"
                 android:textColor="#757575"
                 android:textSize="13sp"
@@ -67,10 +67,9 @@
             android:layout_marginStart="8dp"
             android:layout_gravity="top"
             android:src="@drawable/favoris_false"
-            android:contentDescription="Icône favoris"
+            android:contentDescription="@string/icone_favoris"
             android:clickable="true"
             android:focusable="true"/>
-
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

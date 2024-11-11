@@ -16,12 +16,12 @@
             android:id="@+id/titre_favoris"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Favoris"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#212121"
             android:layout_gravity="start"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:text="@string/favoris"
+            android:textColor="#212121"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </ScrollView>
