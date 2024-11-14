@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.crosemont.booklique.Présentation.DetailLivre.Présentateur
 import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.mork_data.Data
 
@@ -27,6 +28,7 @@ class Vue : Fragment() {
     private lateinit var buttonFavoris: ImageButton
     private lateinit var disponnible: String
     private lateinit var isbn: String
+    private lateinit var présentateur: Présentateur
     var isFavoris: Boolean = false
 
     override fun onCreateView(
@@ -48,6 +50,7 @@ class Vue : Fragment() {
         echeanceLivre = view.findViewById(R.id.echeance_livre)
         buttonReservation = view.findViewById(R.id.bouton_reserver_details)
         buttonFavoris = view.findViewById(R.id.bouton_favoris_details)
+        présentateur = Présentateur(this)
 
         // Récupérer les données passées depuis Accueil
         arguments?.let { bundle ->

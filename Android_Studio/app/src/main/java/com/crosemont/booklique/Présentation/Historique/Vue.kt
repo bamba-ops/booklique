@@ -28,6 +28,7 @@ class Vue : Fragment() {
 
     lateinit var resultatHistoriqueResrvation : LinearLayout
     lateinit var historiqueList : List<Reservation>
+    private lateinit var présentateur: Présentateur
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +41,7 @@ class Vue : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         resultatHistoriqueResrvation = view.findViewById(R.id.resultatHistoriqueReservation)
+        présentateur = Présentateur(this)
         historiqueList = Data.obtenirReservationsDemo()
 
         afficherHistoriqueReservation()

@@ -19,6 +19,7 @@ class Vue : Fragment() {
 
     private lateinit var resultatLivresFavoris: LinearLayout
     private lateinit var livresFavoris: List<Livre>
+    private lateinit var présentateur: Présentateur
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +34,7 @@ class Vue : Fragment() {
 
         resultatLivresFavoris = view.findViewById(R.id.resultat_livres_favoris)
         livresFavoris = Data.obtenirLivresFavoris()
+        présentateur = Présentateur(this)
 
         afficherLivresFavoris()
 

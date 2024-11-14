@@ -20,6 +20,7 @@ class Vue : Fragment() {
     private lateinit var sectionNouveautes: LinearLayout
     private lateinit var carteAuteur: LinearLayout
     private lateinit var listeNouveautes: LinearLayout
+    private lateinit var présentateur: Présentateur
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +37,8 @@ class Vue : Fragment() {
         sectionNouveautes = view.findViewById(R.id.section_nouveautes)
         listeNouveautes = view.findViewById(R.id.liste_nouveautes)
         carteAuteur = view.findViewById(R.id.carte_auteurs)
+        présentateur = Présentateur(this)
+
 
         // Récupération des livres depuis data
         val livres = Data.obtenirLivresDemo()

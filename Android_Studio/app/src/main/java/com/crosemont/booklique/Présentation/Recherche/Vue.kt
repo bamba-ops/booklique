@@ -26,6 +26,7 @@ class Vue : Fragment() {
     private lateinit var textRechercheParDefaut: TextView
     private lateinit var livres: List<Livre>
     private lateinit var txtRechercheUtilisateur: TextView
+    private lateinit var présentateur: Présentateur
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +46,7 @@ class Vue : Fragment() {
             view.findViewById(R.id.affichage_defilement_resultat_de_recherche)
         textRechercheParDefaut = view.findViewById(R.id.text_recherche_par_defaut)
         txtRechercheUtilisateur = view.findViewById(R.id.texte_recherche_utilisateur)
+        présentateur = Présentateur(this)
 
         livres = Data.obtenirLivresDemo()
 //        val suggestions = arrayOf("Story of two friends", "Soul")
