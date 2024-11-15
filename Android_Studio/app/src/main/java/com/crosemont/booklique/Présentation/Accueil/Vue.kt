@@ -55,9 +55,6 @@ class Vue : Fragment() {
         }
 
         sectionNouveautes.setOnClickListener {
-//            val bundle = Bundle().apply {
-//                putBoolean("trierParNouveaute", true)
-//            }
             présentateur.traiter_obtenir_livres_par_nouveautes()
             findNavController().navigate(R.id.action_accueil_to_recherche)
         }
@@ -88,18 +85,6 @@ class Vue : Fragment() {
                 })
 
             imageNouveaute.setOnClickListener {
-//                val bundle = Bundle().apply {
-//                    putString("isbn", livre.isbn)
-//                    putString("titre", livre.titre)
-//                    putString("image_url", livre.image_url)
-//                    putString("description", livre.description)
-//                    putString("auteur", livre.auteur)
-//                    putString("editeur", livre.editeur)
-//                    putString("genre", livre.genre)
-//                    putString("date_publication", livre.date_publication.toString())
-//                    putInt("nombre_pages", livre.nombre_pages)
-//                    putString("disponibilite", if (livre.estDisponible()) "Disponible" else "Indisponible")
-//                }
                 présentateur.traiter_obtenir_livre_par_nouveaute(livre.isbn)
                 findNavController().navigate(R.id.action_accueil_to_detail_livre)
             }
@@ -135,9 +120,6 @@ class Vue : Fragment() {
                 })
 
             btnCarteAuteur.setOnClickListener{
-//                val bundle = Bundle()
-//                bundle.putString("auteur", livre.auteur)
-//                bundle.putBoolean("obtenirLivreParAuteur", true)
                 présentateur.traiter_obtenir_livres_par_auteur(livre.auteur)
                 findNavController().navigate(R.id.action_accueil_to_recherche)
             }

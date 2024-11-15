@@ -59,6 +59,7 @@ class Vue : Fragment() {
 
         présentateur.traiter_livres_par_nouveautes()
         présentateur.traiter_livres_par_auteur()
+        présentateur.traiter_livres_par_genre()
 
         entreeRecherche.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -166,20 +167,20 @@ class Vue : Fragment() {
             .into(imageView)
 
         livreView.setOnClickListener {
-            // Ajout transfert data pour afficher details
-            val bundle = Bundle().apply {
-                putString("isbn", livre.isbn)
-                putString("titre", livre.titre)
-                putString("image_url", livre.image_url)
-                putString("description", livre.description)
-                putString("auteur", livre.auteur)
-                putString("editeur", livre.editeur)
-                putString("genre", livre.genre)
-                putString("date_publication", livre.date_publication.toString())
-                putInt("nombre_pages", livre.nombre_pages)
-                putString("disponibilite", if (livre.estDisponible()) "Disponible" else "Indisponible")
-            }
-            findNavController().navigate(R.id.action_recherche_to_detail_livre,bundle)
+//            // Ajout transfert data pour afficher details
+//            val bundle = Bundle().apply {
+//                putString("isbn", livre.isbn)
+//                putString("titre", livre.titre)
+//                putString("image_url", livre.image_url)
+//                putString("description", livre.description)
+//                putString("auteur", livre.auteur)
+//                putString("editeur", livre.editeur)
+//                putString("genre", livre.genre)
+//                putString("date_publication", livre.date_publication.toString())
+//                putInt("nombre_pages", livre.nombre_pages)
+//                putString("disponibilite", if (livre.estDisponible()) "Disponible" else "Indisponible")
+//            }
+            findNavController().navigate(R.id.action_recherche_to_detail_livre)
 
         }
 

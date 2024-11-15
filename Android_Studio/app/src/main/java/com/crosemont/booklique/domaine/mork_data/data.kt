@@ -13,13 +13,20 @@ class Data {
         private val livresFavoris = mutableListOf<Livre>()
         var _obtenirLivreParAuteur: String? = null
         var _obtenirLivreParNouveaute: String? = null
+        var _obtenirLivresParGenre: String? = null
         var isObtenirLivreParNouveaute: Boolean = false
         var isObtenirLivreParAuteur: Boolean = false
         var isObtenirLivresParNouveautes: Boolean = false
+        var isObtenirLivresParGenre: Boolean = false
 
         fun definirLivreParAuteur(auteur: String?){
             _obtenirLivreParAuteur = auteur
             isObtenirLivreParAuteur = true
+        }
+
+        fun definirLivreParGenre(genre: String?){
+            _obtenirLivresParGenre = genre
+            isObtenirLivresParGenre = true
         }
 
         fun definirLivreParNouveaute(isbn: String?){
@@ -65,6 +72,10 @@ class Data {
 
         fun obtenirLivreFavorisParISBN(isbn: String): Livre? {
             return obtenirLivresFavoris().find { it.isbn == isbn }
+        }
+
+        fun obtenirLivresParGenre(genre: String?): List<Livre>{
+            return obtenirLivresDemo().filter { it.genre == genre }
         }
 
         fun obtenirLivresDemo(): List<Livre> {

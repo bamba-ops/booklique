@@ -44,10 +44,7 @@ class Vue : Fragment() {
     }
 
     private fun navigateToRecherche(genre: String) {
-        val bundle = Bundle().apply {
-            putString("genre", genre)
-            putBoolean("obtenirLivreParGenre", true)
-        }
-        findNavController().navigate(R.id.action_genres_to_recherche, bundle)
+        présentateur.traiter_obtenir_livres_par_genre(genre)
+        findNavController().navigate(R.id.action_genres_to_recherche)
     }
 }

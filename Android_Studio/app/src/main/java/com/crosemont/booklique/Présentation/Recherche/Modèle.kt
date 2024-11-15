@@ -39,4 +39,11 @@ class Modèle {
         return emptyList()
     }
 
+    fun _obtenirLivresParGenre(): List<Livre>{
+        if(Data.isObtenirLivresParGenre){
+            Data.isObtenirLivresParGenre = false
+            return Data.obtenirLivresParGenre(Data._obtenirLivresParGenre!!)
+        }
+        return emptyList()
+    }
 }

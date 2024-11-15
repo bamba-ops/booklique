@@ -49,6 +49,22 @@ class Présentateur(private val vue: Vue) {
 
     }
 
+    fun traiter_livres_par_genre(){
+        job = CoroutineScope(Dispatchers.Main).launch {
+            val livreParGenre: List<Livre> = modèle._obtenirLivresParGenre()
+            if(livreParGenre.isNotEmpty()){
+                vue.afficherChargement(false)
+                vue.préparationAfficherLivres("Genre")
+                for(livre in livreParGenre){
+                    vue.afficherLivres(livre)
+                }
+            } else {
+                vue.afficherChargement(false)
+            }
+        }
+        vue.afficherChargement(true)
+    }
+
     fun afficherLivresParGenre(genre: String) {
         job = CoroutineScope(Dispatchers.Main).launch {
             val livres = modèle.obtenirLivresParGenre(genre)
