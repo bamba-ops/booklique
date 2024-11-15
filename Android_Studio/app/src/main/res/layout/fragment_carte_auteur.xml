@@ -19,6 +19,7 @@
         android:focusable="true"
         tools:ignore="MissingConstraints">
 
+
         <TextView
             android:id="@+id/nom_auteur"
             android:layout_width="wrap_content"
@@ -28,11 +29,19 @@
             android:paddingBottom="8dp"
             tools:ignore="MissingConstraints" />
 
+        <ProgressBar
+            android:id="@+id/chargement"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:visibility="visible" />
+
         <ImageView
             android:id="@+id/image_auteur"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
+            android:visibility="gone"
             tools:ignore="MissingConstraints" />
 
     </LinearLayout>

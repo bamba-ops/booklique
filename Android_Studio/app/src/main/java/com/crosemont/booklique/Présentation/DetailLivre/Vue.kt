@@ -1,5 +1,6 @@
 package com.crosemont.booklique.Présentation.DetailLivre
 
+import Livre
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,8 +12,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.crosemont.booklique.Présentation.DetailLivre.Présentateur
+import com.crosemont.booklique.Présentation.DetailLivre.Modèle
 import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.mork_data.Data
+import com.squareup.picasso.Picasso
+import java.lang.Exception
 
 class Vue : Fragment() {
 
@@ -27,9 +31,9 @@ class Vue : Fragment() {
     private lateinit var buttonReservation: Button
     private lateinit var buttonFavoris: ImageButton
     private lateinit var disponnible: String
-    private lateinit var isbn: String
     private lateinit var présentateur: Présentateur
     var isFavoris: Boolean = false
+    var modèle = Modèle()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,42 +56,76 @@ class Vue : Fragment() {
         buttonFavoris = view.findViewById(R.id.bouton_favoris_details)
         présentateur = Présentateur(this)
 
+        afficherLivreParNouveaute(modèle.obtenirLivreParNouveaute()!!)
+
         // Récupérer les données passées depuis Accueil
-        arguments?.let { bundle ->
-            isbn = bundle.getString("isbn").toString()
-            titreLivre.text = bundle.getString("titre")
-            statutLivre.text = bundle.getString("disponibilite")
-            descriptionCourte.text = bundle.getString("description")?.take(25)?.plus("...") ?: "Description non disponible"
-            descriptionComplete.text = bundle.getString("description")
-            auteurLivre.text = bundle.getString("auteur")
-            echeanceLivre.text = bundle.getString("date_publication")
-            disponnible = bundle.getString("disponibilite").toString()
-            imageUrl = bundle.getString("image_url").toString()
-
-            Glide.with(this)
-                .load(imageUrl)
-                .placeholder(R.drawable.placeholder_image)
-                .error(R.drawable.error_image)
-                .into(imageLivre)
-
-            isDisponnible()
-            isLivreFavori()
-
-            buttonFavoris.setOnClickListener {
-                isFavoris = !isFavoris
-                if (isFavoris){
-                    buttonFavoris.setImageResource(R.drawable.favoris_true)
-                    Data.obtenirLivreParISBN(isbn)?.let { it1 -> Data.ajouterLivreFavori(it1) }
-                } else {
-                    buttonFavoris.setImageResource(R.drawable.favoris_false)
-                    Data.retirerLivreFavoriParISBN(isbn)
-                }
-            }
-        }
+//        arguments?.let { bundle ->
+//            isbn = bundle.getString("isbn").toString()
+//            titreLivre.text = bundle.getString("titre")
+//            statutLivre.text = bundle.getString("disponibilite")
+//            descriptionCourte.text = bundle.getString("description")?.take(25)?.plus("...") ?: "Description non disponible"
+//            descriptionComplete.text = bundle.getString("description")
+//            auteurLivre.text = bundle.getString("auteur")
+//            echeanceLivre.text = bundle.getString("date_publication")
+//            disponnible = bundle.getString("disponibilite").toString()
+//            imageUrl = bundle.getString("image_url").toString()
+//
+//            Glide.with(this)
+//                .load(imageUrl)
+//                .placeholder(R.drawable.placeholder_image)
+//                .error(R.drawable.error_image)
+//                .into(imageLivre)
+//
+//            isDisponnible()
+//            isLivreFavori()
+//
+//            buttonFavoris.setOnClickListener {
+//                isFavoris = !isFavoris
+//                if (isFavoris){
+//                    buttonFavoris.setImageResource(R.drawable.favoris_true)
+//                    Data.obtenirLivreParISBN(isbn)?.let { it1 -> Data.ajouterLivreFavori(it1) }
+//                } else {
+//                    buttonFavoris.setImageResource(R.drawable.favoris_false)
+//                    Data.retirerLivreFavoriParISBN(isbn)
+//                }
+//            }
+//        }
 
     }
 
-    fun isLivreFavori(){
+    fun afficherLivreParNouveaute(livre: Livre){
+
+        titreLivre.text = livre.titre
+        statutLivre.text = if (livre.estDisponible()) "Disponible" else "Indisponible"
+        descriptionCourte.text = livre.description.take(25).plus("...")
+        descriptionComplete.text = livre.description
+        auteurLivre.text = livre.auteur
+        echeanceLivre.text = livre.date_publication.toString()
+        disponnible = (if (livre.estDisponible()) "Disponible" else "Indisponible").toString()
+        imageUrl = livre.image_url
+
+        Glide.with(this)
+            .load(livre.image_url)
+            .placeholder(R.drawable.placeholder_image)
+            .error(R.drawable.error_image)
+            .into(imageLivre)
+
+        isDisponnible()
+        isLivreFavori(livre.isbn)
+
+        buttonFavoris.setOnClickListener {
+            isFavoris = !isFavoris
+            if (isFavoris){
+                buttonFavoris.setImageResource(R.drawable.favoris_true)
+                Data.obtenirLivreParISBN(livre.isbn)?.let { it1 -> Data.ajouterLivreFavori(it1) }
+            } else {
+                buttonFavoris.setImageResource(R.drawable.favoris_false)
+                Data.retirerLivreFavoriParISBN(livre.isbn)
+            }
+        }
+    }
+
+    fun isLivreFavori(isbn: String){
         if (Data.estLivreFavori(isbn)) {
             isFavoris = true
             buttonFavoris.setImageResource(R.drawable.favoris_true)

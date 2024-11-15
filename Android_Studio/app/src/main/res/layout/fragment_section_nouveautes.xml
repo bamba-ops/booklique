@@ -11,6 +11,15 @@
         android:orientation="horizontal"
         tools:ignore="MissingConstraints">
 
+        <ProgressBar
+            android:id="@+id/chargementNouveaute"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="visible" />
+
         <ImageView
             android:id="@+id/image_nouveaute"
             android:layout_width="100dp"
@@ -18,6 +27,7 @@
             android:layout_marginEnd="8dp"
             android:clickable="true"
             android:focusable="true"
+            android:visibility="gone"
             tools:ignore="MissingConstraints"/>
     </LinearLayout>
 
