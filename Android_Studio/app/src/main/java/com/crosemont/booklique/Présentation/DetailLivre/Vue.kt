@@ -56,7 +56,7 @@ class Vue : Fragment() {
         buttonFavoris = view.findViewById(R.id.bouton_favoris_details)
         présentateur = Présentateur(this)
 
-        afficherLivreParNouveaute(modèle.obtenirLivreParNouveaute()!!)
+        afficherLivre(modèle.obtenirLivre()!!)
 
         // Récupérer les données passées depuis Accueil
 //        arguments?.let { bundle ->
@@ -93,7 +93,7 @@ class Vue : Fragment() {
 
     }
 
-    fun afficherLivreParNouveaute(livre: Livre){
+    fun afficherLivre(livre: Livre){
 
         titreLivre.text = livre.titre
         statutLivre.text = if (livre.estDisponible()) "Disponible" else "Indisponible"

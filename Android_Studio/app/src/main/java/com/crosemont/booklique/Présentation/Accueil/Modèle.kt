@@ -21,7 +21,7 @@ class Modèle {
     }
 
     fun obtenirLivreParNouveaute(isbn: String){
-        Data.definirLivreParNouveaute(isbn)
+        Data.definirLivre(isbn)
     }
 
     fun obtenirLivresParNouveautes(){

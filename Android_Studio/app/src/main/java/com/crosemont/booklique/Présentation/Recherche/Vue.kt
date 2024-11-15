@@ -155,16 +155,30 @@ class Vue : Fragment() {
         val titreTextView = livreView.findViewById<TextView>(R.id.livre_titre)
         val auteurTextView = livreView.findViewById<TextView>(R.id.livre_auteur)
         val genreTextView = livreView.findViewById<TextView>(R.id.livre_genre)
+        val favoris = livreView.findViewById<ImageView>(R.id.icone_favoris)
 
         titreTextView.text = livre.titre
         auteurTextView.text = livre.auteur
         genreTextView.text = livre.genre
+        if(présentateur.traiter_est_livre_favori(livre.isbn)){
+            favoris.setImageResource(R.drawable.favoris_true)
+        }
 
         Picasso.get()
             .load(livre.image_url)
             .placeholder(R.drawable.placeholder_image)
             .error(R.drawable.error_image)
             .into(imageView)
+
+        favoris.setOnClickListener {
+            if(!présentateur.traiter_est_livre_favori(livre.isbn)){
+                favoris.setImageResource(R.drawable.favoris_true)
+                présentateur.traiter_ajouter_livre_favori(livre)
+            } else {
+                favoris.setImageResource(R.drawable.favoris_false)
+                présentateur.traiter_retirer_livre_favori(livre.isbn)
+            }
+        }
 
         livreView.setOnClickListener {
 //            // Ajout transfert data pour afficher details
@@ -180,6 +194,7 @@ class Vue : Fragment() {
 //                putInt("nombre_pages", livre.nombre_pages)
 //                putString("disponibilite", if (livre.estDisponible()) "Disponible" else "Indisponible")
 //            }
+            présentateur.traiter_obtenir_livre(livre.isbn)
             findNavController().navigate(R.id.action_recherche_to_detail_livre)
 
         }

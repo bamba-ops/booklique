@@ -46,4 +46,20 @@ class Modèle {
         }
         return emptyList()
     }
+
+    fun estLivreFavori(isbn: String):Boolean{
+        return Data.estLivreFavori(isbn)
+    }
+
+    fun ajouterLivreFavori(livre: Livre){
+        Data.ajouterLivreFavori(livre)
+    }
+
+    fun retirerLivreFavori(isbn: String){
+        Data.retirerLivreFavoriParISBN(isbn)
+    }
+
+    fun obtenirLivre(isbn: String){
+        Data.definirLivre(isbn)
+    }
 }

@@ -16,6 +16,22 @@ class Présentateur(private val vue: Vue) {
     private var job: Job? = null
     private val modèle = Modèle()
 
+    fun traiter_est_livre_favori(isbn: String): Boolean {
+        return modèle.estLivreFavori(isbn)
+    }
+
+    fun traiter_ajouter_livre_favori(livre: Livre){
+        modèle.ajouterLivreFavori(livre)
+    }
+
+    fun traiter_retirer_livre_favori(isbn: String){
+        modèle.retirerLivreFavori(isbn)
+    }
+
+    fun traiter_obtenir_livre(isbn: String){
+        modèle.obtenirLivre(isbn)
+    }
+
     fun traiter_livres_par_nouveautes(){
         job = CoroutineScope(Dispatchers.Main).launch {
             val livreParNouveautes: List<Livre> = modèle.obtenirLivresParNouveautes()

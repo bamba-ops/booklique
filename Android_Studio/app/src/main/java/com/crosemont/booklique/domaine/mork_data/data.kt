@@ -14,14 +14,21 @@ class Data {
         var _obtenirLivreParAuteur: String? = null
         var _obtenirLivreParNouveaute: String? = null
         var _obtenirLivresParGenre: String? = null
+        var _obtenirLivre: String? = null
         var isObtenirLivreParNouveaute: Boolean = false
         var isObtenirLivreParAuteur: Boolean = false
         var isObtenirLivresParNouveautes: Boolean = false
         var isObtenirLivresParGenre: Boolean = false
+        var isObtenirLivre: Boolean = false
 
         fun definirLivreParAuteur(auteur: String?){
             _obtenirLivreParAuteur = auteur
             isObtenirLivreParAuteur = true
+        }
+
+        fun definirLivre(isbn: String?){
+            _obtenirLivre = isbn
+            isObtenirLivre = true
         }
 
         fun definirLivreParGenre(genre: String?){
@@ -42,7 +49,7 @@ class Data {
             return obtenirLivresDemo().sortedByDescending { it.date_publication }
         }
 
-        fun obtenirLivreParNouveaute(isbn: String): Livre? {
+        fun obtenirLivre(isbn: String): Livre? {
             return obtenirLivreParISBN(isbn)
         }
 
