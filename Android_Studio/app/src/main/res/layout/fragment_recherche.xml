@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,29 +11,31 @@
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
         android:background="@drawable/barre_de_recherche_rond"
         android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:gravity="center_vertical">
+        android:paddingEnd="16dp">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_recherche"
-            android:contentDescription="@string/search_hint" />
+        <ImageButton
+            android:id="@+id/btnRecherche"
+            android:layout_width="wrap_content"
+            android:layout_height="67dp"
+            android:layout_weight="90"
+            android:background="#10B62E2E"
+            android:src="@drawable/baseline_search_24" />
 
         <AutoCompleteTextView
             android:id="@+id/entree_recherche"
-            android:layout_width="match_parent"
+            android:layout_width="312dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/barre_de_recherche_rond"
             android:hint="@string/search_hint"
             android:padding="12dp"
-            android:background="@drawable/barre_de_recherche_rond"
-            android:textSize="16sp"
             android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray" />
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -74,4 +77,5 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
+
 </RelativeLayout>
