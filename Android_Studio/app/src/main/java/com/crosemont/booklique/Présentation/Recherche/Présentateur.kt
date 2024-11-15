@@ -16,34 +16,108 @@ class Présentateur(private val vue: Vue) {
     private var job: Job? = null
     private val modèle = Modèle()
 
+    fun traiter_livres_par_nouveautes(){
+        job = CoroutineScope(Dispatchers.Main).launch {
+            val livreParNouveautes: List<Livre> = modèle.obtenirLivresParNouveautes()
+            if(livreParNouveautes.isNotEmpty()){
+                vue.afficherChargement(false)
+                vue.préparationAfficherLivres("Nouveautés")
+                for(livre in livreParNouveautes){
+                    vue.afficherLivres(livre)
+                }
+            } else {
+                vue.afficherChargement(false)
+            }
+        }
+        vue.afficherChargement(true)
+    }
+
+    fun traiter_livres_par_auteur(){
+        job = CoroutineScope(Dispatchers.Main).launch {
+            val livreParAuteur: List<Livre> = modèle.obtenirLivresParAuteur()
+            if(livreParAuteur.isNotEmpty()){
+                vue.afficherChargement(false)
+                vue.préparationAfficherLivres("Auteur")
+                for(livre in livreParAuteur){
+                    vue.afficherLivres(livre)
+                }
+            } else {
+                vue.afficherChargement(false)
+            }
+        }
+        vue.afficherChargement(true)
+
+    }
+
     fun afficherLivresParGenre(genre: String) {
         job = CoroutineScope(Dispatchers.Main).launch {
             val livres = modèle.obtenirLivresParGenre(genre)
-            vue.afficherRésultatsRecherche(livres, genre)
+            vue.préparationAfficherRésultatsRecherche()
+            vue.modifierTextRechercheUtilisateur(genre)
+            if(livres.isEmpty()){
+                vue.afficherChargement(false)
+                vue.afficherDefilementResultatRecherche(false)
+                vue.modifierTextRechercheParDefaut("Aucun résultat trouvé pour '$genre'.")
+            }else{
+                vue.afficherChargement(false)
+                vue.modifierTextRechercheParDefaut("Recherche : $genre")
+                vue.afficherDefilementResultatRecherche(true)
+
+                for(livre in livres){
+                    vue.afficherLivres(livre)
+                }
+            }
         }
+        vue.afficherChargement(true)
+
     }
 
     fun afficherLivresParAuteur(auteur: String) {
         job = CoroutineScope(Dispatchers.Main).launch {
             val livres = modèle.obtenirLivresParAuteur(auteur)
-            vue.afficherRésultatsRecherche(livres,auteur)
+            vue.préparationAfficherRésultatsRecherche()
+            vue.modifierTextRechercheUtilisateur(auteur)
+            if(livres.isEmpty()){
+                vue.afficherChargement(false)
+                vue.afficherDefilementResultatRecherche(false)
+                vue.modifierTextRechercheParDefaut("Aucun résultat trouvé pour '$auteur'.")
+            }else{
+                vue.afficherChargement(false)
+                vue.modifierTextRechercheParDefaut("Recherche : $auteur")
+                vue.afficherDefilementResultatRecherche(true)
+
+                for(livre in livres){
+                    vue.afficherLivres(livre)
+                }
+            }
         }
+        vue.afficherChargement(true)
+
     }
 
     fun afficherLivresParTitre(titre: String) {
         job = CoroutineScope(Dispatchers.Main).launch {
             val livres = modèle.obtenirLivresParTitre(titre)
-            vue.afficherRésultatsRecherche(livres, titre)
+            vue.préparationAfficherRésultatsRecherche()
+            vue.modifierTextRechercheUtilisateur(titre)
+            if(livres.isEmpty()){
+                vue.afficherChargement(false)
+                vue.afficherDefilementResultatRecherche(false)
+                vue.modifierTextRechercheParDefaut("Aucun résultat trouvé pour '$titre'.")
+            }else{
+                vue.afficherChargement(false)
+                vue.modifierTextRechercheParDefaut("Recherche : $titre")
+                vue.afficherDefilementResultatRecherche(true)
+
+                for(livre in livres){
+                    vue.afficherLivres(livre)
+                }
+            }
         }
+        vue.afficherChargement(true)
+
     }
 
-
-    fun afficherLivresParNouveaute() {
-        job = CoroutineScope(Dispatchers.Main).launch {
-            val livres = modèle.trierLivresParNouveaute()
-            vue.afficherRésultatsRecherche(livres,"")
-        }
-    }
 
     fun lancerRecherche(rechercheTexte: String) {
         val texte = rechercheTexte.trim()
@@ -68,44 +142,4 @@ class Présentateur(private val vue: Vue) {
         }
     }
 
-    fun afficherLivres(livre: Livre) {
-        val livreView = vue.layoutInflater.inflate(
-            R.layout.fragment_article_livre,
-            vue.resultatRechercheConteneur,
-            false
-        )
-
-        val imageView = livreView.findViewById<ImageView>(R.id.livre_image)
-        val titreTextView = livreView.findViewById<TextView>(R.id.livre_titre)
-        val auteurTextView = livreView.findViewById<TextView>(R.id.livre_auteur)
-        val genreTextView = livreView.findViewById<TextView>(R.id.livre_genre)
-
-        titreTextView.text = livre.titre
-        auteurTextView.text = livre.auteur
-        genreTextView.text = livre.genre
-
-        Picasso.get()
-            .load(livre.image_url)
-            .placeholder(R.drawable.placeholder_image)
-            .error(R.drawable.error_image)
-            .into(imageView)
-
-        livreView.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("isbn", livre.isbn)
-                putString("titre", livre.titre)
-                putString("image_url", livre.image_url)
-                putString("description", livre.description)
-                putString("auteur", livre.auteur)
-                putString("editeur", livre.editeur)
-                putString("genre", livre.genre)
-                putString("date_publication", livre.date_publication.toString())
-                putInt("nombre_pages", livre.nombre_pages)
-                putString("disponibilite", if (livre.estDisponible()) "Disponible" else "Indisponible")
-            }
-            vue.findNavController().navigate(R.id.action_recherche_to_detail_livre, bundle)
-        }
-
-        vue.resultatRechercheConteneur.addView(livreView)
-    }
 }

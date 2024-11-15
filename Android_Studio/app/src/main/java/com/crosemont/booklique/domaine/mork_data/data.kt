@@ -1,13 +1,47 @@
 package com.crosemont.booklique.domaine.mork_data
 
 import Livre
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.crosemont.booklique.domaine.entité.Reservation
+import java.util.Calendar
 import java.util.Date
 
 class Data {
 
     companion object {
         private val livresFavoris = mutableListOf<Livre>()
+        var _obtenirLivreParAuteur: String? = null
+        var _obtenirLivreParNouveaute: String? = null
+        var isObtenirLivreParNouveaute: Boolean = false
+        var isObtenirLivreParAuteur: Boolean = false
+        var isObtenirLivresParNouveautes: Boolean = false
+
+        fun definirLivreParAuteur(auteur: String?){
+            _obtenirLivreParAuteur = auteur
+            isObtenirLivreParAuteur = true
+        }
+
+        fun definirLivreParNouveaute(isbn: String?){
+            _obtenirLivreParNouveaute = isbn
+            isObtenirLivreParNouveaute = true
+        }
+
+        fun definirLivresParNouveautes(){
+            isObtenirLivresParNouveautes = true
+        }
+
+        fun obtenirLivresParNouveautes(): List<Livre>{
+            return obtenirLivresDemo().sortedByDescending { it.date_publication }
+        }
+
+        fun obtenirLivreParNouveaute(isbn: String): Livre? {
+            return obtenirLivreParISBN(isbn)
+        }
+
+        fun obtenirLivresParAuteur(auteur: String): List<Livre>{
+            return obtenirLivresDemo().filter { it.auteur == auteur }
+        }
 
         fun ajouterLivreFavori(livre: Livre){
             livresFavoris.add(livre)

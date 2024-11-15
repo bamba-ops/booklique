@@ -22,4 +22,21 @@ class Modèle {
     fun trierLivresParNouveaute(): List<Livre> {
         return this.livres.sortedByDescending { it.date_publication }
     }
+
+    fun obtenirLivresParAuteur(): List<Livre>{
+        if(Data.isObtenirLivreParAuteur){
+            Data.isObtenirLivreParAuteur = false
+            return Data.obtenirLivresParAuteur(Data._obtenirLivreParAuteur!!)
+        }
+        return emptyList()
+    }
+
+    fun obtenirLivresParNouveautes(): List<Livre> {
+        if(Data.isObtenirLivresParNouveautes){
+            Data.isObtenirLivresParNouveautes = false
+            return Data.obtenirLivresParNouveautes()
+        }
+        return emptyList()
+    }
+
 }

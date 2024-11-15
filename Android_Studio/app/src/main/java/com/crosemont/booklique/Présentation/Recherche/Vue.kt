@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -31,6 +32,7 @@ class Vue : Fragment() {
     private lateinit var txtRechercheUtilisateur: TextView
     private lateinit var btnRecherce : ImageButton
     private lateinit var présentateur: Présentateur
+    private lateinit var chargement: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,8 +54,11 @@ class Vue : Fragment() {
         textRechercheParDefaut = view.findViewById(R.id.text_recherche_par_defaut)
         txtRechercheUtilisateur = view.findViewById(R.id.texte_recherche_utilisateur)
         btnRecherce = view.findViewById(R.id.btnRecherche)
+        chargement = view.findViewById(R.id.chargement)
         présentateur = Présentateur(this)
 
+        présentateur.traiter_livres_par_nouveautes()
+        présentateur.traiter_livres_par_auteur()
 
         entreeRecherche.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -70,52 +75,120 @@ class Vue : Fragment() {
             val rechercheTexte = entreeRecherche.text.toString()
             présentateur.lancerRecherche(rechercheTexte)
         }
-
-
-        arguments?.let { bundle ->
-            when {
-                bundle.containsKey("obtenirLivreParGenre") -> {
-                    val genre = bundle.getString("genre")
-                    if (genre != null) présentateur.afficherLivresParGenre(genre)
-                }
-
-                bundle.containsKey("obtenirLivreParTitre") -> {
-                    val Titre = bundle.getString("titre")
-                    if (Titre != null) présentateur.afficherLivresParTitre(Titre)
-                }
-
-                bundle.containsKey("obtenirLivreParAuteur") -> {
-                    val nomAuteur = bundle.getString("auteur")
-                    if (nomAuteur != null) présentateur.afficherLivresParAuteur(nomAuteur)
-                }
-
-                bundle.getBoolean("trierParNouveaute", false) -> {
-                    présentateur.afficherLivresParNouveaute()
-                }
-            }
-        }
     }
 
 
 
     @SuppressLint("SetTextI18n")
-    fun afficherRésultatsRecherche(livres: List<Livre>, rechercheTexte: String) {
-        textRechercheParDefaut.visibility = View.VISIBLE
-        resultatRechercheConteneur.removeAllViews()
-        txtRechercheUtilisateur.text = rechercheTexte
+    fun préparationAfficherRésultatsRecherche() {
+        afficherTextParDefaut(true)
+        supprimerResultatRechercheConteneur()
+    }
 
-        if (livres.isEmpty()) {
-            affichageDefilementResultatRecherche.visibility = View.GONE
-            textRechercheParDefaut.text = "Aucun résultat trouvé pour '$rechercheTexte'."
+    fun afficherChargement(isCharger: Boolean){
+        if(isCharger){
+            chargement.visibility = View.VISIBLE
         } else {
-            textRechercheParDefaut.text = "Recherche : $rechercheTexte"
-            affichageDefilementResultatRecherche.visibility = View.VISIBLE
-
-            for (livre in livres) {
-                présentateur.afficherLivres(livre)
-            }
+            chargement.visibility = View.GONE
         }
     }
+
+    fun modifierTextRechercheUtilisateur(text: String){
+        txtRechercheUtilisateur.text = text
+    }
+
+    fun supprimerResultatRechercheConteneur(){
+        resultatRechercheConteneur.removeAllViews()
+    }
+
+    fun afficherTextParDefaut(isVisible: Boolean){
+        if(isVisible && textRechercheParDefaut.visibility == View.GONE){
+            textRechercheParDefaut.visibility = View.VISIBLE
+        } else if(!isVisible && textRechercheParDefaut.visibility == View.VISIBLE) {
+            textRechercheParDefaut.visibility = View.GONE
+        }
+    }
+
+    fun afficherTextRechercheUtilisateur(isVisible: Boolean){
+        if(isVisible && txtRechercheUtilisateur.visibility == View.GONE){
+            txtRechercheUtilisateur.visibility = View.VISIBLE
+        } else if(!isVisible && txtRechercheUtilisateur.visibility == View.VISIBLE) {
+            txtRechercheUtilisateur.visibility = View.GONE
+        }
+    }
+
+    fun afficherDefilementResultatRecherche(isVisible: Boolean){
+        if(isVisible && affichageDefilementResultatRecherche.visibility == View.GONE){
+            affichageDefilementResultatRecherche.visibility = View.VISIBLE
+        } else if(!isVisible && affichageDefilementResultatRecherche.visibility == View.VISIBLE) {
+            affichageDefilementResultatRecherche.visibility = View.GONE
+        }
+    }
+
+    fun modifierTextRechercheParDefaut(text: String){
+        textRechercheParDefaut.text = text
+    }
+
+    fun modifierTxtCritère(critère: String){
+            txtRechercheUtilisateur.text = "Recherche : $critère"
+    }
+
+    fun préparationAfficherLivres(critère: String){
+        afficherTextParDefaut(false)
+        afficherDefilementResultatRecherche(true)
+        modifierTxtCritère(critère)
+        afficherTextRechercheUtilisateur(true)
+    }
+
+    fun afficherLivres(livre: Livre){
+        val inflater = layoutInflater
+        val livreView = inflater.inflate(
+            R.layout.fragment_article_livre,
+            resultatRechercheConteneur,
+            false
+        )
+
+
+
+        val imageView = livreView.findViewById<ImageView>(R.id.livre_image)
+        val titreTextView = livreView.findViewById<TextView>(R.id.livre_titre)
+        val auteurTextView = livreView.findViewById<TextView>(R.id.livre_auteur)
+        val genreTextView = livreView.findViewById<TextView>(R.id.livre_genre)
+
+        titreTextView.text = livre.titre
+        auteurTextView.text = livre.auteur
+        genreTextView.text = livre.genre
+
+        Picasso.get()
+            .load(livre.image_url)
+            .placeholder(R.drawable.placeholder_image)
+            .error(R.drawable.error_image)
+            .into(imageView)
+
+        livreView.setOnClickListener {
+            // Ajout transfert data pour afficher details
+            val bundle = Bundle().apply {
+                putString("isbn", livre.isbn)
+                putString("titre", livre.titre)
+                putString("image_url", livre.image_url)
+                putString("description", livre.description)
+                putString("auteur", livre.auteur)
+                putString("editeur", livre.editeur)
+                putString("genre", livre.genre)
+                putString("date_publication", livre.date_publication.toString())
+                putInt("nombre_pages", livre.nombre_pages)
+                putString("disponibilite", if (livre.estDisponible()) "Disponible" else "Indisponible")
+            }
+            findNavController().navigate(R.id.action_recherche_to_detail_livre,bundle)
+
+        }
+
+        resultatRechercheConteneur.addView(livreView)
+
+    }
+
+
+
 
 
 

@@ -63,6 +63,13 @@
         android:textSize="18sp"
         android:visibility="visible" />
 
+    <ProgressBar
+        android:id="@+id/chargement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
     <ScrollView
         android:id="@+id/affichage_defilement_resultat_de_recherche"
         android:layout_width="match_parent"
