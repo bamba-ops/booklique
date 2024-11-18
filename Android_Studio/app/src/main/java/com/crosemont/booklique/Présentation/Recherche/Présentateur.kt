@@ -16,7 +16,6 @@ class Présentateur(private val vue: Vue) {
     private var job: Job? = null
     private val modèle = Modèle()
 
-<<<<<<< HEAD
     fun traiter_est_livre_favori(isbn: String): Boolean {
         return modèle.estLivreFavori(isbn)
     }
@@ -33,11 +32,10 @@ class Présentateur(private val vue: Vue) {
         modèle.obtenirLivre(isbn)
     }
 
-    fun traiter_livres_par_nouveautes(){
-=======
+
     fun traiter_livres_par_nouveautes() {
         vue.afficherChargement(true)
->>>>>>> mvpRecherche
+
         job = CoroutineScope(Dispatchers.Main).launch {
             val livreParNouveautes: List<Livre> = modèle.obtenirLivresParNouveautes()
             if (livreParNouveautes.isNotEmpty()) {

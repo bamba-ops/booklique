@@ -36,7 +36,7 @@ class Modèle {
         return emptyList()
     }
 
-<<<<<<< HEAD
+
     fun _obtenirLivresParGenre(): List<Livre>{
         if(Data.isObtenirLivresParGenre){
             Data.isObtenirLivresParGenre = false
@@ -60,7 +60,5 @@ class Modèle {
     fun obtenirLivre(isbn: String){
         Data.definirLivre(isbn)
     }
-=======
 
->>>>>>> mvpRecherche
 }
