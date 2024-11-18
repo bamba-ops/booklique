@@ -13,8 +13,10 @@ class Présentateur(val vue: Vue) {
 
     fun traiter_affichage_livre() {
         job = CoroutineScope( Dispatchers.Main ).launch {
-            for(livre in modèle.obtenirLivres()){
+            for(livre in modèle.obtenirLivresParAuteur()){
                 vue.afficherCartesAuteurs(livre)
+            }
+            for(livre in modèle.obtenirLivres()){
                 vue.afficherListeNouveautes(livre)
             }
             vue.afficherChargement(false)
