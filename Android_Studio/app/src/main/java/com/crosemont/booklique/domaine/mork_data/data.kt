@@ -46,7 +46,7 @@ class Data {
         }
 
         fun obtenirLivresParNouveautes(): List<Livre>{
-            return obtenirLivresDemo().sortedByDescending { it.date_publication }
+            return obtenirLivresDemo().sortedByDescending { it.date_publication }.take(5)
         }
 
         fun obtenirLivre(isbn: String): Livre? {
@@ -55,6 +55,10 @@ class Data {
 
         fun obtenirLivresParAuteur(auteur: String): List<Livre>{
             return obtenirLivresDemo().filter { it.auteur == auteur }
+        }
+
+        fun obtenirLivresParAuteurs(): List<Livre>{
+            return obtenirLivresDemo().groupBy { it.auteur }.mapNotNull { (_, livresParAuteur) -> livresParAuteur.firstOrNull()}
         }
 
         fun ajouterLivreFavori(livre: Livre){
@@ -134,7 +138,46 @@ class Data {
                     date_publication = Date(122, 0, 15), // 2022-01-15
                     nombre_pages = 360,
                     quantite = 4
-                )
+                ),
+                Livre(
+                    isbn = "978-3-16-148417-9",
+                    image_url = "https://i.imghippo.com/files/Os4847ZDI.jpeg",
+                    titre = "Tree Fellas: Olly Oak",
+                    description = "Dans un petit village isolé, une jeune archiviste découvre un journal ancien caché dans les murs d'une vieille maison. Les pages, mystérieusement liées à des événements du présent, révèlent une histoire d'amour impossible, des secrets de famille enfouis et une tragédie oubliée. Alors que le passé et le présent s'entrelacent, elle doit résoudre l'énigme avant que l'histoire ne se répète.\n" +
+                            "\n" +
+                            "Un récit captivant mêlant mystère, romance et voyages dans le temps.",
+                    auteur = "Olivia Wilson",
+                    editeur = "Éditions Temps",
+                    genre = "Biographies",
+                    date_publication = Date(123, 3, 12),
+                    nombre_pages = 230,
+                    quantite = 4
+                ),
+                Livre(
+                    isbn = "978-1-84-916432-8",
+                    image_url = "https://i.imghippo.com/files/g2841BS.jpeg",
+                    titre = "yellow: a poetry collection",
+                    description = "Au cœur d'une ville où les lumières ne s'éteignent jamais, une journaliste intrépide découvre l'existence d'un réseau clandestin qui manipule les souvenirs des citoyens. Alors qu'elle plonge dans une enquête périlleuse, elle réalise que son propre passé a été altéré. Avec l'aide d'un mystérieux informateur, elle tente de dénouer les fils d'une conspiration qui pourrait changer le cours de l'humanité.",
+                    auteur = "Olivia Wilson",
+                    editeur = "Éditions cosmos",
+                    genre = "Histoire",
+                    date_publication = Date(122, 4, 15),
+                    nombre_pages = 159,
+                    quantite = 6
+                ),
+                Livre(
+                    isbn = "978-0-14-312779-6",
+                    image_url = "https://i.imghippo.com/files/zRDt7335bn.jpeg",
+                    titre = "you are a plant",
+                    description = "Lorsqu'une biologiste marine, Clara, est envoyée sur une île isolée pour étudier un phénomène inexplicable—des chants mystérieux venant des profondeurs—elle découvre bien plus que ce qu'elle avait imaginé. Les habitants parlent de légendes oubliées, et l'océan semble garder jalousement ses secrets. Au fil de ses recherches, Clara doit affronter son propre passé et choisir entre la science et la magie, la réalité et l’imaginaire.",
+                    auteur = "Olivia Wilson",
+                    editeur = "Éditions Océan",
+                    genre = "Afffaires",
+                    date_publication = Date(122, 3, 12),
+                    nombre_pages = 134,
+                    quantite = 2
+                ),
+
             )
         }
 
