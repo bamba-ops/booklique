@@ -14,6 +14,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.RadioButton
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -30,7 +31,10 @@ class Vue : Fragment() {
     private lateinit var affichageDefilementResultatRecherche: ScrollView
     private lateinit var textRechercheParDefaut: TextView
     private lateinit var txtRechercheUtilisateur: TextView
-    private lateinit var btnRecherce : ImageButton
+    private lateinit var btnRecherhce : ImageButton
+    private lateinit var btnGenre : Button
+    private lateinit var btnAuteur : RadioButton
+    private lateinit var btnTitre : RadioButton
     private lateinit var présentateur: Présentateur
     private lateinit var chargement: ProgressBar
 
@@ -53,7 +57,10 @@ class Vue : Fragment() {
             view.findViewById(R.id.affichage_defilement_resultat_de_recherche)
         textRechercheParDefaut = view.findViewById(R.id.text_recherche_par_defaut)
         txtRechercheUtilisateur = view.findViewById(R.id.texte_recherche_utilisateur)
-        btnRecherce = view.findViewById(R.id.btnRecherche)
+        btnRecherhce = view.findViewById(R.id.btnRecherche)
+        btnAuteur = view.findViewById(R.id.radioAuteur)
+        btnTitre = view.findViewById(R.id.radioTitre)
+        btnGenre = view.findViewById(R.id.btnGenre)
         chargement = view.findViewById(R.id.chargement)
         présentateur = Présentateur(this)
 
@@ -72,12 +79,20 @@ class Vue : Fragment() {
         }
 
         // Action pour le bouton de recherche
-        btnRecherce.setOnClickListener {
-            val rechercheTexte = entreeRecherche.text.toString()
-            présentateur.lancerRecherche(rechercheTexte)
+        btnRecherhce.setOnClickListener {
+            val rechercheTexte = entreeRecherche.text.toString().trim()
+            if (btnAuteur.isChecked) {
+                présentateur.afficherLivresParAuteur(rechercheTexte)
+            } else if (btnTitre.isChecked) {
+                présentateur.afficherLivresParTitre(rechercheTexte)
+            }
         }
-    }
 
+        btnGenre.setOnClickListener {
+            findNavController().navigate(R.id.action_recherche_to_genres)
+        }
+
+    }
 
 
     @SuppressLint("SetTextI18n")

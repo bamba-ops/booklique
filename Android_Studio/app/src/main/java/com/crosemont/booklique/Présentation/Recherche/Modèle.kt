@@ -16,12 +16,9 @@ class Modèle {
     }
 
     fun obtenirLivresParGenre(genre: String): List<Livre> {
-        return livres.filter { it.genre.contains(genre, ignoreCase = true) }
-        }
-
-    fun trierLivresParNouveaute(): List<Livre> {
-        return this.livres.sortedByDescending { it.date_publication }
+        return livres.filter { it.genre.trim().equals(genre.trim(), ignoreCase = true) }
     }
+
 
     fun obtenirLivresParAuteur(): List<Livre>{
         if(Data.isObtenirLivreParAuteur){
@@ -31,14 +28,15 @@ class Modèle {
         return emptyList()
     }
 
-    fun obtenirLivresParNouveautes(): List<Livre> {
-        if(Data.isObtenirLivresParNouveautes){
+     fun obtenirLivresParNouveautes(): List<Livre> {
+        if (Data.isObtenirLivresParNouveautes) {
             Data.isObtenirLivresParNouveautes = false
-            return Data.obtenirLivresParNouveautes()
+            return Data.obtenirLivresDemo()
         }
         return emptyList()
     }
 
+<<<<<<< HEAD
     fun _obtenirLivresParGenre(): List<Livre>{
         if(Data.isObtenirLivresParGenre){
             Data.isObtenirLivresParGenre = false
@@ -62,4 +60,7 @@ class Modèle {
     fun obtenirLivre(isbn: String){
         Data.definirLivre(isbn)
     }
+=======
+
+>>>>>>> mvpRecherche
 }

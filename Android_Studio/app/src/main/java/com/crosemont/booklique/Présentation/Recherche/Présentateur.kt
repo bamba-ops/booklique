@@ -16,6 +16,7 @@ class Présentateur(private val vue: Vue) {
     private var job: Job? = null
     private val modèle = Modèle()
 
+<<<<<<< HEAD
     fun traiter_est_livre_favori(isbn: String): Boolean {
         return modèle.estLivreFavori(isbn)
     }
@@ -33,20 +34,26 @@ class Présentateur(private val vue: Vue) {
     }
 
     fun traiter_livres_par_nouveautes(){
+=======
+    fun traiter_livres_par_nouveautes() {
+        vue.afficherChargement(true)
+>>>>>>> mvpRecherche
         job = CoroutineScope(Dispatchers.Main).launch {
             val livreParNouveautes: List<Livre> = modèle.obtenirLivresParNouveautes()
-            if(livreParNouveautes.isNotEmpty()){
+            if (livreParNouveautes.isNotEmpty()) {
                 vue.afficherChargement(false)
                 vue.préparationAfficherLivres("Nouveautés")
-                for(livre in livreParNouveautes){
+                for (livre in livreParNouveautes) {
                     vue.afficherLivres(livre)
                 }
             } else {
                 vue.afficherChargement(false)
+                vue.modifierTextRechercheParDefaut("Aucune nouveauté trouvée.")
             }
         }
         vue.afficherChargement(true)
     }
+
 
     fun traiter_livres_par_auteur(){
         job = CoroutineScope(Dispatchers.Main).launch {
@@ -84,6 +91,7 @@ class Présentateur(private val vue: Vue) {
     fun afficherLivresParGenre(genre: String) {
         job = CoroutineScope(Dispatchers.Main).launch {
             val livres = modèle.obtenirLivresParGenre(genre)
+            println("Livres trouvés pour le genre '$genre': ${livres.size}")
             vue.préparationAfficherRésultatsRecherche()
             vue.modifierTextRechercheUtilisateur(genre)
             if(livres.isEmpty()){
@@ -151,27 +159,22 @@ class Présentateur(private val vue: Vue) {
     }
 
 
-    fun lancerRecherche(rechercheTexte: String) {
+    fun lancerRecherche(rechercheTexte: String, critère: String = "titre") {
         val texte = rechercheTexte.trim()
         if (texte.isNotEmpty()) {
-            when {
-                texte.startsWith("auteur:", ignoreCase = true) -> {
-                    val auteurRecherche = texte.removePrefix("auteur:").trim()
-                    afficherLivresParAuteur(auteurRecherche)
-                }
-                texte.startsWith("titre:", ignoreCase = true) -> {
-                    val titreRecherche = texte.removePrefix("titre:").trim()
-                    afficherLivresParTitre(titreRecherche)
-                }
-                texte.startsWith("genre:", ignoreCase = true) -> {
-                    val genreRecherche = texte.removePrefix("genre:").trim()
-                    afficherLivresParGenre(genreRecherche)
-                }
-                else -> {
-                    afficherLivresParTitre(texte)
-                }
+            when (critère) {
+                "auteur" -> afficherLivresParAuteur(texte)
+                "titre" -> afficherLivresParTitre(texte)
+                "genre" -> afficherLivresParGenre(texte)
+                else -> vue.modifierTextRechercheParDefaut("Critère inconnu.")
             }
+        } else {
+            vue.préparationAfficherRésultatsRecherche()
+            vue.modifierTextRechercheParDefaut("Veuillez entrer un texte à rechercher.")
+            vue.afficherDefilementResultatRecherche(false)
         }
     }
+
+
 
 }
