@@ -1,14 +1,19 @@
 package com.crosemont.booklique.Présentation.Recherche
 
 import Livre
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -21,12 +26,13 @@ import java.util.Date
 class Vue : Fragment() {
 
     private lateinit var entreeRecherche: AutoCompleteTextView
-    private lateinit var resultatRechercheConteneur: LinearLayout
+    lateinit var resultatRechercheConteneur: LinearLayout
     private lateinit var affichageDefilementResultatRecherche: ScrollView
     private lateinit var textRechercheParDefaut: TextView
-    private lateinit var livres: List<Livre>
     private lateinit var txtRechercheUtilisateur: TextView
+    private lateinit var btnRecherce : ImageButton
     private lateinit var présentateur: Présentateur
+    private lateinit var chargement: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +42,7 @@ class Vue : Fragment() {
         return inflater.inflate(R.layout.fragment_recherche, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -46,122 +53,95 @@ class Vue : Fragment() {
             view.findViewById(R.id.affichage_defilement_resultat_de_recherche)
         textRechercheParDefaut = view.findViewById(R.id.text_recherche_par_defaut)
         txtRechercheUtilisateur = view.findViewById(R.id.texte_recherche_utilisateur)
+        btnRecherce = view.findViewById(R.id.btnRecherche)
+        chargement = view.findViewById(R.id.chargement)
         présentateur = Présentateur(this)
 
-        livres = Data.obtenirLivresDemo()
-//        val suggestions = arrayOf("Story of two friends", "Soul")
-//        val adapter =
-//            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, suggestions)
-//        entreeRecherche.setAdapter(adapter)
+        présentateur.traiter_livres_par_nouveautes()
+        présentateur.traiter_livres_par_auteur()
+        présentateur.traiter_livres_par_genre()
 
-        arguments?.let{ bundle ->
-            when{
-                bundle.containsKey("obtenirLivreParGenre") -> {
-                    val genre = bundle.getString("genre")
-                    if (genre != null) {
-                        afficherLivreParGenre(genre)
-                    }
-                }
-
-                bundle.containsKey("obtenirLivreParAuteur") -> {
-                    val nomAuteur = bundle.getString("auteur")
-                    if(nomAuteur != null) {
-                        afficherLivreParNomAuteur(nomAuteur)
-                    }
-                }
-
-                bundle.getBoolean("trierParNouveaute", false) -> {
-                    afficherResultatParNouveaute()
-                }
+        entreeRecherche.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val rechercheTexte = entreeRecherche.text.toString()
+                présentateur.lancerRecherche(rechercheTexte)
+                true
+            } else {
+                false
             }
         }
 
-        //val genre = arguments?.getString("genre") ?: "" // Retrieve the genre if passed
-
-//        entreeRecherche.setOnItemClickListener { _, _, position, _ ->
-//            val choix = adapter.getItem(position) ?: ""
-//            resultatRechercheConteneur.removeAllViews()
-//            val resultat = obtenirResultatRecherche(choix, genre)
-//
-//            updateUI(resultat, resultatRechercheConteneur, affichageDefilementResultatRecherche, textRechercheParDefaut)
-//        }
-
-
-//        if (genre.isNotEmpty()) {
-//            val resultat = obtenirResultatRecherche("", genre)  // Empty query, filter by genre
-//            updateUI(resultat, resultatRechercheConteneur, affichageDefilementResultatRecherche, textRechercheParDefaut)
-//        }
+        // Action pour le bouton de recherche
+        btnRecherce.setOnClickListener {
+            val rechercheTexte = entreeRecherche.text.toString()
+            présentateur.lancerRecherche(rechercheTexte)
+        }
     }
 
-    private fun afficherResultatParNouveaute() {
-        // Trie les livres par date de publication du plus récent au plus ancien
-        val livresTries = livres.sortedByDescending { it.date_publication }
 
-        // Efface les résultats précédents
-        resultatRechercheConteneur.removeAllViews()
 
-        if (livresTries.isEmpty()) {
-            textRechercheParDefaut.visibility = View.VISIBLE
-            affichageDefilementResultatRecherche.visibility = View.GONE
+    @SuppressLint("SetTextI18n")
+    fun préparationAfficherRésultatsRecherche() {
+        afficherTextParDefaut(true)
+        supprimerResultatRechercheConteneur()
+    }
+
+    fun afficherChargement(isCharger: Boolean){
+        if(isCharger){
+            chargement.visibility = View.VISIBLE
         } else {
-            textRechercheParDefaut.visibility = View.GONE
-            affichageDefilementResultatRecherche.visibility = View.VISIBLE
-            txtRechercheUtilisateur.text = "Recherche : Nouveautés"
-            txtRechercheUtilisateur.visibility = View.VISIBLE
-
-
-            for (livre in livresTries) {
-                afficherLivre(livre)
-            }
+            chargement.visibility = View.GONE
         }
     }
 
+    fun modifierTextRechercheUtilisateur(text: String){
+        txtRechercheUtilisateur.text = text
+    }
 
-    fun afficherLivreParNomAuteur(nomAuteur: String){
-        var cmbLivreExiste = 0
+    fun supprimerResultatRechercheConteneur(){
+        resultatRechercheConteneur.removeAllViews()
+    }
 
-
-        for(livre in livres){
-            textRechercheParDefaut.visibility = View.GONE
-            affichageDefilementResultatRecherche.visibility = View.VISIBLE
-            txtRechercheUtilisateur.text = "Recherche : ${nomAuteur}"
-            txtRechercheUtilisateur.visibility = View.VISIBLE
-
-            if(livre.auteur.contains(nomAuteur)){
-                afficherLivre(livre)
-                cmbLivreExiste = cmbLivreExiste + 1
-            }
-        }
-
-        if(cmbLivreExiste == 0){
+    fun afficherTextParDefaut(isVisible: Boolean){
+        if(isVisible && textRechercheParDefaut.visibility == View.GONE){
             textRechercheParDefaut.visibility = View.VISIBLE
+        } else if(!isVisible && textRechercheParDefaut.visibility == View.VISIBLE) {
+            textRechercheParDefaut.visibility = View.GONE
+        }
+    }
+
+    fun afficherTextRechercheUtilisateur(isVisible: Boolean){
+        if(isVisible && txtRechercheUtilisateur.visibility == View.GONE){
+            txtRechercheUtilisateur.visibility = View.VISIBLE
+        } else if(!isVisible && txtRechercheUtilisateur.visibility == View.VISIBLE) {
+            txtRechercheUtilisateur.visibility = View.GONE
+        }
+    }
+
+    fun afficherDefilementResultatRecherche(isVisible: Boolean){
+        if(isVisible && affichageDefilementResultatRecherche.visibility == View.GONE){
+            affichageDefilementResultatRecherche.visibility = View.VISIBLE
+        } else if(!isVisible && affichageDefilementResultatRecherche.visibility == View.VISIBLE) {
             affichageDefilementResultatRecherche.visibility = View.GONE
         }
     }
 
-    fun afficherLivreParGenre(genre: String){
-        var cmbLivreExiste = 0
-
-        for(livre in livres){
-            textRechercheParDefaut.visibility = View.GONE
-            affichageDefilementResultatRecherche.visibility = View.VISIBLE
-            txtRechercheUtilisateur.text = "Recherche : ${genre}"
-            txtRechercheUtilisateur.visibility = View.VISIBLE
-
-            if(livre.genre.contains(genre)){
-                afficherLivre(livre)
-                cmbLivreExiste = cmbLivreExiste + 1
-            }
-
-        }
-
-        if(cmbLivreExiste == 0){
-            textRechercheParDefaut.visibility = View.VISIBLE
-            affichageDefilementResultatRecherche.visibility = View.GONE
-        }
+    fun modifierTextRechercheParDefaut(text: String){
+        textRechercheParDefaut.text = text
     }
 
-    fun afficherLivre(livre: Livre){
+    fun modifierTxtCritère(critère: String){
+            txtRechercheUtilisateur.text = "Recherche : $critère"
+    }
+
+    fun préparationAfficherLivres(critère: String){
+        afficherTextParDefaut(false)
+        afficherDefilementResultatRecherche(true)
+        modifierTxtCritère(critère)
+        afficherTextRechercheUtilisateur(true)
+    }
+
+    fun afficherLivres(livre: Livre){
         val inflater = layoutInflater
         val livreView = inflater.inflate(
             R.layout.fragment_article_livre,
@@ -175,10 +155,14 @@ class Vue : Fragment() {
         val titreTextView = livreView.findViewById<TextView>(R.id.livre_titre)
         val auteurTextView = livreView.findViewById<TextView>(R.id.livre_auteur)
         val genreTextView = livreView.findViewById<TextView>(R.id.livre_genre)
+        val favoris = livreView.findViewById<ImageView>(R.id.icone_favoris)
 
         titreTextView.text = livre.titre
         auteurTextView.text = livre.auteur
         genreTextView.text = livre.genre
+        if(présentateur.traiter_est_livre_favori(livre.isbn)){
+            favoris.setImageResource(R.drawable.favoris_true)
+        }
 
         Picasso.get()
             .load(livre.image_url)
@@ -186,21 +170,32 @@ class Vue : Fragment() {
             .error(R.drawable.error_image)
             .into(imageView)
 
-        livreView.setOnClickListener {
-            // Ajout transfert data pour afficher details
-            val bundle = Bundle().apply {
-                putString("isbn", livre.isbn)
-                putString("titre", livre.titre)
-                putString("image_url", livre.image_url)
-                putString("description", livre.description)
-                putString("auteur", livre.auteur)
-                putString("editeur", livre.editeur)
-                putString("genre", livre.genre)
-                putString("date_publication", livre.date_publication.toString())
-                putInt("nombre_pages", livre.nombre_pages)
-                putString("disponibilite", if (livre.estDisponible()) "Disponible" else "Indisponible")
+        favoris.setOnClickListener {
+            if(!présentateur.traiter_est_livre_favori(livre.isbn)){
+                favoris.setImageResource(R.drawable.favoris_true)
+                présentateur.traiter_ajouter_livre_favori(livre)
+            } else {
+                favoris.setImageResource(R.drawable.favoris_false)
+                présentateur.traiter_retirer_livre_favori(livre.isbn)
             }
-            findNavController().navigate(R.id.action_recherche_to_detail_livre,bundle)
+        }
+
+        livreView.setOnClickListener {
+//            // Ajout transfert data pour afficher details
+//            val bundle = Bundle().apply {
+//                putString("isbn", livre.isbn)
+//                putString("titre", livre.titre)
+//                putString("image_url", livre.image_url)
+//                putString("description", livre.description)
+//                putString("auteur", livre.auteur)
+//                putString("editeur", livre.editeur)
+//                putString("genre", livre.genre)
+//                putString("date_publication", livre.date_publication.toString())
+//                putInt("nombre_pages", livre.nombre_pages)
+//                putString("disponibilite", if (livre.estDisponible()) "Disponible" else "Indisponible")
+//            }
+            présentateur.traiter_obtenir_livre(livre.isbn)
+            findNavController().navigate(R.id.action_recherche_to_detail_livre)
 
         }
 
@@ -208,87 +203,10 @@ class Vue : Fragment() {
 
     }
 
-//    private fun updateUI(
-//        resultat: List<Livre>,
-//        resultatRechercheConteneur: LinearLayout,
-//        affichageDefilementResultatRecherche: ScrollView,
-//        textRechercheParDefaut: TextView
-//    ) {
-//        if (resultat.isEmpty()) {
-//            textRechercheParDefaut.visibility = View.VISIBLE
-//            affichageDefilementResultatRecherche.visibility = View.GONE
-//        } else {
-//            textRechercheParDefaut.visibility = View.GONE
-//            affichageDefilementResultatRecherche.visibility = View.VISIBLE
-//
-//            // Iterate over the result and display the books
-//            for (livre in resultat) {
-//                val inflater = layoutInflater
-//                val itemView = inflater.inflate(
-//                    R.layout.fragment_article_livre,
-//                    resultatRechercheConteneur,
-//                    false
-//                )
-//
-//                val imageView = itemView.findViewById<ImageView>(R.id.livre_image)
-//                val titreTextView = itemView.findViewById<TextView>(R.id.livre_titre)
-//                val auteurTextView = itemView.findViewById<TextView>(R.id.livre_auteur)
-//                val genreTextView = itemView.findViewById<TextView>(R.id.livre_genre)
-//
-//
-//                titreTextView.text = livre.titre
-//                auteurTextView.text = livre.auteur
-//                genreTextView.text = livre.genre
-//
-//                Picasso.get()
-//                    .load(livre.image_url)
-//                    .placeholder(R.drawable.placeholder_image)
-//                    .error(R.drawable.error_image)
-//                    .into(imageView)
-//
-//                itemView.setOnClickListener {
-//                    findNavController().navigate(R.id.action_recherche_to_detail_livre)
-//                }
-//
-//                resultatRechercheConteneur.addView(itemView)
-//            }
-//        }
-//    }
 
 
-//    fun obtenirResultatRecherche(query: String, genreFilter: String): List<Livre> {
-//        val books = listOf(
-//            Livre(
-//                "12345",
-//                "https://i.imghippo.com/files/YFa6767kO.png",
-//                "Story of two friends",
-//                "Dans une petite ville entourée de forêts denses et de montagnes, Alex et Jamie partagent une amitié aussi rare que précieuse.",
-//                "Avery Davis",
-//                "Éditions Horizons Littéraires",
-//                "Histoire",
-//                Date(),
-//                300,
-//                10
-//            ),
-//            Livre(
-//                "67890",
-//                "https://i.imghippo.com/files/Al2125oNk.png",
-//                "Soul",
-//                "À travers un voyage intime et spirituel, Soul explore les profondeurs de l'âme humaine, les questions d'identité et le besoin de se reconnecter avec soi-même.",
-//                "Olivia Wilson",
-//                "Éditions Éclipse",
-//                "Histoire",
-//                Date(),
-//                250,
-//                5
-//            ),
-//
-//
-//        )
-//
-//        return books.filter { livre ->
-//            (genreFilter.isEmpty() || livre.genre.equals(genreFilter, ignoreCase = true)) &&
-//                    (query.isEmpty() || livre.titre.contains(query, ignoreCase = true))
-//        }
-//    }
+
+
+
 }
+
