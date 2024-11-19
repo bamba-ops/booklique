@@ -52,7 +52,7 @@ class Vue : Fragment() {
 
         présentateur = Présentateur(this)
 
-        // Récupérer les données passées depuis Accueil
+        // Récupérer les données passées depuis Accueil (à modifier après l'implémentation de mvp sur accueil)
         arguments?.let { bundle ->
             isbn = bundle.getString("isbn").toString()
             titreLivre.text = bundle.getString("titre")
