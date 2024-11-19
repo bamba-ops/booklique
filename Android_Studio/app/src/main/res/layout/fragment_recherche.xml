@@ -1,12 +1,43 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:padding="16dp"
     tools:context=".Présentation.Recherche.Vue">
 
+    <LinearLayout
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/barre_de_recherche_rond"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <ImageButton
+            android:id="@+id/btnRecherche"
+            android:layout_width="wrap_content"
+            android:layout_height="67dp"
+            android:layout_weight="90"
+            android:background="#10B62E2E"
+            android:src="@drawable/baseline_search_24" />
+
+        <AutoCompleteTextView
+            android:id="@+id/entree_recherche"
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/barre_de_recherche_rond"
+            android:hint="@string/search_hint"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -31,101 +62,14 @@
             android:layout_width="91dp"
             android:layout_height="match_parent"
             android:text="Auteur" />
+
     </RadioGroup>
-
-    <LinearLayout
-        android:id="@+id/search_bar"
-        android:layout_width="351dp"
-        android:layout_height="0dp"
-        android:background="@drawable/barre_de_recherche_rond"
-        android:elevation="4dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="85dp">
-
-        <ImageButton
-            android:id="@+id/btnRecherche"
-            android:layout_width="wrap_content"
-            android:layout_height="67dp"
-            android:layout_weight="90"
-            android:background="#10B62E2E"
-            android:src="@drawable/baseline_search_24" />
-
-        <AutoCompleteTextView
-            android:id="@+id/entree_recherche"
-            android:layout_width="278dp"
-            android:layout_height="67dp"
-            android:background="@drawable/barre_de_recherche_rond"
-            android:hint="@string/search_hint"
-            android:padding="12dp"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/texte_recherche_utilisateur"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/search_label"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:visibility="gone"
-        tools:layout_editor_absoluteX="71dp"
-        tools:layout_editor_absoluteY="272dp" />
-
-    <TextView
-        android:id="@+id/text_recherche_par_defaut"
-        android:layout_width="170dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="200dp"
-        android:text="@string/no_books_found"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="18sp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/chargement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        tools:ignore="MissingConstraints" />
-
-    <ScrollView
-        android:id="@+id/affichage_defilement_resultat_de_recherche"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/texte_recherche_utilisateur"
-        android:visibility="gone"
-        tools:layout_editor_absoluteY="16dp">
-
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/resultat_de_recherche_conteneur"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.558"
-        tools:layout_editor_absoluteX="0dp" />
 
     <Button
         android:id="@+id/btnGenre"
         android:layout_width="101dp"
         android:layout_height="47dp"
+        android:layout_below="@+id/radioGroup"
         android:backgroundTint="@color/material_dynamic_tertiary60"
         android:text="Genres"
         android:textColor="@android:color/white"
@@ -136,4 +80,51 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.225" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/texte_recherche_utilisateur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_bar"
+        android:layout_marginTop="16dp"
+        android:text="@string/search_label"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/text_recherche_par_defaut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/texte_recherche_utilisateur"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="@string/no_books_found"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="18sp"
+        android:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/chargement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/affichage_defilement_resultat_de_recherche"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btnGenre"
+        android:layout_marginTop="16dp"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/resultat_de_recherche_conteneur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+</RelativeLayout>
