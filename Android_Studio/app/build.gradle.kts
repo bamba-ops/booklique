@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
     implementation(libs.androidx.constraintlayout)
     implementation("androidx.cardview:cardview:1.0.0")
     implementation(libs.androidx.navigation.fragment.ktx)
