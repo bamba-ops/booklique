@@ -1,5 +1,6 @@
 package com.crosemont.booklique.Présentation.DetailLivre
 
+import Livre
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,8 @@ class Vue : Fragment() {
     private lateinit var présentateur: Présentateur
     private var isFavoris: Boolean = false
     private lateinit var imageUrl: String
+    private lateinit var disponnible: String
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,46 +55,61 @@ class Vue : Fragment() {
 
         présentateur = Présentateur(this)
 
-        // Récupérer les données passées depuis Accueil (à modifier après l'implémentation de mvp sur accueil)
-        arguments?.let { bundle ->
-            isbn = bundle.getString("isbn").toString()
-            titreLivre.text = bundle.getString("titre")
-            statutLivre.text = bundle.getString("disponibilite")
-            descriptionCourte.text = bundle.getString("description")?.take(25)?.plus("...") ?: "Description non disponible"
-            descriptionComplete.text = bundle.getString("description")
-            auteurLivre.text = bundle.getString("auteur")
-            echeanceLivre.text = bundle.getString("date_publication")
-            imageUrl = bundle.getString("image_url").toString()
+        présentateur.initialiserLivre()
+    }
 
-            Glide.with(this)
-                .load(imageUrl)
-                .placeholder(R.drawable.placeholder_image)
-                .error(R.drawable.error_image)
-                .into(imageLivre)
 
-            présentateur.initialiserLivre(isbn)
-        }
+    fun afficherLivre(livre: Livre){
+
+        titreLivre.text = livre.titre
+        statutLivre.text = if (livre.estDisponible()) "Disponible" else "Indisponible"
+        descriptionCourte.text = livre.description.take(25).plus("...")
+        descriptionComplete.text = livre.description
+        auteurLivre.text = livre.auteur
+        echeanceLivre.text = livre.date_publication.toString()
+        disponnible = (if (livre.estDisponible()) "Disponible" else "Indisponible").toString()
+        imageUrl = livre.image_url
+
+        Glide.with(this)
+            .load(livre.image_url)
+            .placeholder(R.drawable.placeholder_image)
+            .error(R.drawable.error_image)
+            .into(imageLivre)
+
+        isDisponnible()
+        présentateur.estFavori(livre.isbn)
 
         buttonFavoris.setOnClickListener {
-            présentateur.basculerFavori(isbn)
+            présentateur.basculerFavori(livre.isbn)
         }
     }
 
-    fun mettreAJourFavoris(isFavori: Boolean) {
-        isFavoris = isFavori
-        val icon = if (isFavoris) R.drawable.favoris_true else R.drawable.favoris_false
-        buttonFavoris.setImageResource(icon)
+    fun changer_boutton_favoris_source_true(){
+        buttonFavoris.setImageResource(R.drawable.favoris_true)
     }
 
-    fun mettreAJourDisponibilite(disponible: Boolean) {
-        if (disponible) {
-            statutLivre.text = "Disponible"
-        } else {
-            statutLivre.text = "Indisponible"
-        }
+    fun changer_boutton_favoris_source_false(){
+        buttonFavoris.setImageResource(R.drawable.favoris_false)
     }
 
-    fun getDisponibilite(): String {
-        return statutLivre.text.toString()
+    fun changer_isFavoris_vrai(){
+        isFavoris = true
     }
+
+    fun retourner_favori(): Boolean{
+        return isFavoris
+    }
+
+    fun verifier_isFavoris(){
+        isFavoris = !isFavoris
+    }
+
+    fun isDisponnible(){
+        if (disponnible == "Disponible")
+            buttonReservation.isEnabled = true
+        else
+            buttonReservation.isEnabled = false
+
+    }
+
 }

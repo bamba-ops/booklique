@@ -8,21 +8,25 @@ class Présentateur(private val vue: Vue) {
     private val modèle = Modèle()
     private var job: Job? = null
 
-    fun initialiserLivre(isbn: String) {
-        val livreFavori = modèle.obtenirLivreFavori(isbn)
-        vue.mettreAJourFavoris(livreFavori)
-        val disponible = modèle.estDisponible(vue.getDisponibilite())
-        vue.mettreAJourDisponibilite(disponible)
+    fun initialiserLivre() {
+        vue.afficherLivre(modèle.obtenirLivre()!!)
     }
 
-    fun basculerFavori(isbn: String) {
-        val livreFavori = modèle.obtenirLivreFavori(isbn)
-        if (livreFavori) {
-            modèle.retirerLivreFavori(isbn)
-            vue.mettreAJourFavoris(false)
-        } else {
+    fun estFavori(isbn: String) {
+        if(modèle.obtenirLivreFavori(isbn)) {
+            vue.changer_isFavoris_vrai()
+            vue.changer_boutton_favoris_source_true()
+        }
+    }
+
+    fun basculerFavori(isbn: String){
+        vue.verifier_isFavoris()
+        if(vue.retourner_favori()){
+            vue.changer_boutton_favoris_source_true()
             modèle.ajouterLivreFavori(isbn)
-            vue.mettreAJourFavoris(true)
+        } else {
+            vue.changer_boutton_favoris_source_false()
+            modèle.retirerLivreFavori(isbn)
         }
     }
 }
