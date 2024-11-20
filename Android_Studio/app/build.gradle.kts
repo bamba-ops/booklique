@@ -46,6 +46,9 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.monitor)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime.android)
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
     implementation(libs.androidx.constraintlayout)
     implementation("androidx.cardview:cardview:1.0.0")
@@ -57,4 +60,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Dépendances pour les tests unitaires et Mockito
+    testImplementation("org.mockito:mockito-core:4.11.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.8.0")
 }
