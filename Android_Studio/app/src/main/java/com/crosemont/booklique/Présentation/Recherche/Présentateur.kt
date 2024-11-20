@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class Présentateur(private val vue: Vue) {
     private var job: Job? = null
-    private val modèle = Modèle(Data.obtenirLivresDemo())
+    private val modèle = Modèle()
 
     fun traiter_est_livre_favori(isbn: String): Boolean {
         return modèle.estLivreFavori(isbn)
