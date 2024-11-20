@@ -53,4 +53,5 @@
     <!--    Général -->
     <string name="date">Date : </string>
     <string name="reservations">Reservations</string>
+    <string name="message_no_favoris"> No favorites on the list</string>
 </resources>

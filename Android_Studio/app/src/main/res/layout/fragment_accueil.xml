@@ -93,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
-                android:background="#F5F5DC"
+                android:background="#DB6D56"
                 android:paddingEnd="16dp"
                 android:scrollbars="none">
 
