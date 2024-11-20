@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="12dp">
 
@@ -20,8 +20,7 @@
         <TextView
             android:id="@+id/idTitre"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Soul" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -41,8 +40,7 @@
             android:id="@+id/dateRerservation"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text=" 01/10/2024 " />
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/textView4"
@@ -55,7 +53,11 @@
             android:id="@+id/dateRetour"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text=" 10/10/2024 " />
+            android:layout_weight="1" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="8dp"
+        android:background="@android:color/darker_gray" />
 </LinearLayout>
