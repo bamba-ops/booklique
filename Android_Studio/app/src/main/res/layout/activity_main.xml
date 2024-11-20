@@ -30,5 +30,8 @@
         android:id="@+id/nav_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/nav_bar" />
+        app:menu="@menu/nav_bar"
+        app:itemIconTint="@null"
+        app:itemTextColor="@color/vector_tint_selector"
+        android:background="@android:color/holo_red_dark"/>
 </LinearLayout>
