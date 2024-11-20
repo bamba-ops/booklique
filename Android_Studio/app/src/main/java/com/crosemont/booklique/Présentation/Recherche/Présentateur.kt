@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
+import com.crosemont.booklique.domaine.mork_data.Data
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class Présentateur(private val vue: Vue) {
     private var job: Job? = null
-    private val modèle = Modèle()
+    private val modèle = Modèle(Data.obtenirLivresDemo())
 
     fun traiter_est_livre_favori(isbn: String): Boolean {
         return modèle.estLivreFavori(isbn)

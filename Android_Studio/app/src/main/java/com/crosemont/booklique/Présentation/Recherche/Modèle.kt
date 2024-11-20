@@ -3,9 +3,7 @@ package com.crosemont.booklique.Présentation.Recherche
 import Livre
 import com.crosemont.booklique.domaine.mork_data.Data
 
-class Modèle {
-
-    private val livres: List<Livre> = Data.obtenirLivresDemo()
+class Modèle (private var livres: List<Livre>){
 
     fun obtenirLivresParAuteur(auteur: String): List<Livre> {
         return livres.filter { it.auteur.contains(auteur, ignoreCase = true) }

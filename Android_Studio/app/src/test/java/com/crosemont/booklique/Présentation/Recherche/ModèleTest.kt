@@ -53,7 +53,7 @@ class ModèleTest{
     fun `etant donn`() {
         val livres = livresMorck
 
-        val model = Modèle()
+        val model = Modèle(livres)
 
         val livresParAuteur = model.obtenirLivresParAuteur("Paul Marin");
 
