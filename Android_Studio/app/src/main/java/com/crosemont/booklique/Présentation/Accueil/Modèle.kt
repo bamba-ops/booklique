@@ -7,7 +7,7 @@ import kotlinx.coroutines.delay
 class Modèle {
 
     suspend fun obtenirLivres(): List<Livre>{
-        delay(600)
+        delay(400)
         return Data.obtenirLivresDemo()
     }
 
@@ -17,7 +17,7 @@ class Modèle {
     }
 
     suspend fun obtenirLivresParAuteur(): List<Livre>{
-        delay(600)
+        delay(400)
         return Data.obtenirLivresParAuteurs()
     }
 
