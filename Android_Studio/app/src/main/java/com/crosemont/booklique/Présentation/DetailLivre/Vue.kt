@@ -132,11 +132,6 @@ class Vue : Fragment() {
     }
 
     private fun ouvrirCalendrierPourAjouterEvenement() {
-        val calendar = Calendar.getInstance()
-
-        // Définir une heure de fin approximative pour l'événement, ici 1 jour après le début
-        calendar.add(Calendar.HOUR_OF_DAY, 24)
-
         // Récupérer les valeurs des champs de texte pour le titre et la description
         val titre = titreLivre.text?.toString()?.takeIf { it.isNotBlank() } ?: "Booklique"
         val description = getString(R.string.message_description_calandar)
@@ -152,8 +147,7 @@ class Vue : Fragment() {
             titre,
             description,
             lieu,
-            dateÉchéance,
-            calendar
+            dateÉchéance
         )
     }
 

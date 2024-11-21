@@ -1,6 +1,8 @@
 package com.crosemont.booklique.Présentation.DetailLivre
 
 import android.content.ActivityNotFoundException
+import android.content.ContentUris
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
@@ -45,23 +47,22 @@ class Présentateur(private val vue: Vue) {
         titre: String,
         description: String,
         lieu: String?,
-        début: Date,
-        fin: android.icu.util.Calendar
+        fin: Date,
     ) {
+
         val intent = Intent(Intent.ACTION_INSERT).apply {
             data = CalendarContract.Events.CONTENT_URI
             putExtra(CalendarContract.Events.TITLE, titre)
             putExtra(CalendarContract.Events.DESCRIPTION, description)
             lieu?.let { putExtra(CalendarContract.Events.EVENT_LOCATION, it) }
-            putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, début.time)
-            putExtra(CalendarContract.EXTRA_EVENT_END_TIME, fin.timeInMillis)
+            putExtra(CalendarContract.EXTRA_EVENT_END_TIME, fin.time)
         }
 
         try {
             context.startActivity(intent)
         } catch (e: ActivityNotFoundException) {
             // Gérer l'exception si aucune application ne gère l'intent
-            Toast.makeText(context, "Erreur: Aucune application capable de gérer cet événement.", Toast.LENGTH_SHORT).show()
+            vue.afficherToast("Erreur: Aucune application capable de gérer cet événement.")
         }
     }
 }
