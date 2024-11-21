@@ -89,11 +89,11 @@ class Vue : Fragment() {
     fun afficherLivre(livre: Livre) {
         titreLivre.text = livre.titre
         statutLivre.text = if (livre.estDisponible()) getString(R.string.disponible) else getString(R.string.indisponible)
-        descriptionCourte.text = livre.description.take(25) + "..."
+        descriptionCourte.text = livre.description.take(45) + "..."
         descriptionComplete.text = livre.description
         auteurLivre.text = livre.auteur
         editeurLivre.text = livre.editeur
-        datePublicationLivre.text = livre.date_publication.toString()
+        datePublicationLivre.text = présentateur.getFormattedDate(livre.date_publication)
         nombrePagesLivre.text = livre.nombre_pages.toString()
         echeanceLivre.text = getString(R.string.non_definit)
         isbnLivre = livre.isbn
@@ -123,7 +123,7 @@ class Vue : Fragment() {
     private fun effectuerReservation() {
         val dateÉchéance = présentateur.écheance()
         sectionEcheance.visibility = View.VISIBLE
-        echeanceLivre.text = dateÉchéance.toString()
+        echeanceLivre.text = présentateur.getFormattedDate(dateÉchéance)
         buttonReservation.text = getString(R.string.confirmer_reservation)
     }
 

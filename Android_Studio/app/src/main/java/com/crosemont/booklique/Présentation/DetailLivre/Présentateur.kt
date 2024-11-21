@@ -7,8 +7,10 @@ import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
 import android.widget.Toast
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 class Présentateur(private val vue: Vue) {
 
@@ -21,6 +23,11 @@ class Présentateur(private val vue: Vue) {
     fun estFavori(isbn: String) {
         val estFavori = modèle.obtenirLivreFavori(isbn)
         vue.mettreÀJourFavori(estFavori)
+    }
+
+    fun getFormattedDate(date : Date): String {
+        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        return dateFormat.format(date)
     }
 
     fun basculerFavori(isbn: String) {
