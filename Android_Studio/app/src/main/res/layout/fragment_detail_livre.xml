@@ -41,7 +41,7 @@
                     android:layout_height="150dp"
                     android:contentDescription="@string/image_du_livre"
                     android:scaleType="centerCrop"
-                    tools:src="@tools:sample/avatars"/>
+                    tools:src="@tools:sample/avatars" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -99,6 +99,7 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <!-- Description -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -118,22 +119,24 @@
         android:layout_marginVertical="8dp"
         android:background="@android:color/darker_gray" />
 
+    <!-- Auteur -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/textView10"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/auteur_texte"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/auteur_livre_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <View
@@ -142,27 +145,127 @@
         android:layout_marginVertical="8dp"
         android:background="@android:color/darker_gray" />
 
+    <!-- Éditeur -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/echeance"
+            android:text="@string/editeur"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/echeance_livre"
+            android:id="@+id/editeur_livre_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="8dp"
+        android:background="@android:color/darker_gray" />
+
+    <!-- Date de publication -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_publication"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/date_publication_livre_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="8dp"
+        android:background="@android:color/darker_gray" />
+
+    <!-- Nombre de pages -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nombre_pages"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/nombre_pages_livre_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <!-- Bouton Réserver -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/echeance_section"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"> <!-- Invisible par défaut -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="8dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/echeance" />
+
+                <TextView
+                    android:id="@+id/echeance_livre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/holo_blue_dark" />
+
+                <ImageButton
+                    android:id="@+id/bouton_alert_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    app:srcCompat="@drawable/baseline_access_alarm_24" />
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="58dp"
         android:gravity="right"
         android:orientation="horizontal">
 
@@ -171,9 +274,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/black"
+            android:backgroundTint="@color/button_background"
             android:text="@string/reserver"
             android:textColor="@color/white"
-            android:verticalScrollbarPosition="defaultPosition" />
+            android:enabled="false" />
     </LinearLayout>
 </LinearLayout>

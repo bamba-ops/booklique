@@ -44,6 +44,12 @@
     <string name="label_due_date">Due Date:</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_extend">Extend</string>
+    <string name="editeur">Publisher:</string>
+    <string name="date_publication">Publication Date:</string>
+    <string name="nombre_pages">Number of Pages:</string>
+    <string name="confirmer_reservation">Confirm Reservation</string>
+    <string name="disponible"> Available</string>
+    <string name="indisponible"> Unavailable</string>
 
     <!--    Page Recherche -->
     <string name="search_hint">Search for a book or author</string>
@@ -54,4 +60,8 @@
     <string name="date">Date : </string>
     <string name="reservations">Reservations</string>
     <string name="message_no_favoris"> No favorites on the list</string>
+    <string name="non_definit">not define</string>
+
+    <!--    Messages -->
+    <string name="message_description_calandar">Reminder to return the book before the deadline</string>
 </resources>

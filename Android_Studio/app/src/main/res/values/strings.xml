@@ -27,6 +27,8 @@
     <string name="auteur_texte">Auteur : </string>
     <string name="echeance">Échéance : </string>
     <string name="reserver">Réserver</string>
+    <string name="disponible"> Disponible</string>
+    <string name="indisponible">Indisponible</string>
 
     <!-- Titres -->
     <string name="titre_genres">Genres de livres</string>
@@ -44,8 +46,13 @@
     <string name="label_due_date">À rendre : </string>
     <string name="button_cancel">Annuler</string>
     <string name="button_extend">Prolonger</string>
+    <string name="editeur">Éditeur:</string>
+    <string name="date_publication">Date de publication:</string>
+    <string name="nombre_pages">Nombre de pages:</string>
+    <string name="confirmer_reservation">Confirmer la réservation</string>
 
-<!--    Page Recherche -->
+
+    <!--    Page Recherche -->
     <string name="search_hint">Rechercher un livre ou un auteur</string>
     <string name="search_label">Recherche : Toutes catégories</string>
     <string name="no_books_found">Aucun livre trouvé</string>
@@ -54,5 +61,9 @@
     <string name="date">Date : </string>
     <string name="reservations">Réservations</string>
     <string name="message_no_favoris"> Aucun favoris dans la liste</string>
+    <string name="non_definit">non definie</string>
+
+<!--    Messages -->
+    <string name="message_description_calandar">Rappel de retour du livre avant la date limite</string>
 
 </resources>
