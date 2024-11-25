@@ -8,7 +8,7 @@ import com.squareup.picasso.Picasso
 import kotlin.coroutines.CoroutineContext
 
 
-class Présentateur(val vue: Vue, val modèle: Modèle = Modèle(), iocontext : CoroutineContext = Dispatchers.IO) {
+class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
     private var job: Job? = null
     //private val modèle = Modèle()
 
