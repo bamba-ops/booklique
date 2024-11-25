@@ -50,7 +50,7 @@ class ModèleTest{
     )
 
     @Test
-    fun `etant donn`() {
+    fun `étant donné un Modèle nouvellement instancié lorsqu'on récupère un livre par auteur Paul Marin , on obtient le livre correspondant a Paul Marin`() {
         val livres = livresMorck
 
         val model = Modèle(livres)
@@ -60,4 +60,99 @@ class ModèleTest{
         assertEquals(livresParAuteur[0].auteur, "Paul Marin")
 
     }
+
+    @Test
+    fun `étant donné un Modèle nouvellement instancié lorsqu'on récupère un livre par titre 'Histoires de la Mer' , on obtient le livre correspondant au titre 'Histoires de la Mer'`() {
+        val livres = livresMorck
+
+        val model = Modèle(livres)
+
+        val livresParTitre = model.obtenirLivresParTitre("Histoires de la Mer");
+
+        assertEquals(livresParTitre[0].titre, "Histoires de la Mer")
+
+    }
+
+    @Test
+    fun `étant donné un Modèle nouvellement instancié lorsqu'on récupère un livre par genre 'Aventure' , on obtient le livre correspondant au genre 'Aventure'`() {
+        val livres = livresMorck
+
+        val model = Modèle(livres)
+
+        val livresParGenres = model.obtenirLivresParGenre("Aventure");
+
+        assertEquals(livresParGenres[0].genre, "Aventure")
+
+    }
+
+    @Test
+     fun `étant donné un Modèle nouvellement instancié lorsqu'on récupère un livre par nouveautes  , on obtient list de livres de nouveaute`() {
+        val livres = livresMorck
+
+        val model = Modèle(livres)
+
+        val livresParNouveautes = model.obtenirLivresParNouveautes();
+
+        assertEquals(true, livresParNouveautes.isEmpty())
+
+    }
+
+
+    @Test
+    fun `étant donné un Modèle nouvellement instancié lorsqu'un livre  est en favoris  , alors le livre est dans favoris`() {
+        val livres = livresMorck
+
+        val model = Modèle(livres)
+
+        val estFavori = model.estLivreFavori("978-1-86197-876-9")
+
+        assertEquals(false, estFavori)
+
+    }
+
+    @Test
+    fun `étant donné un Modèle nouvellement instancié lorsqu'on ajout un livre en favoris, alors le livre s'ajout au favoris`() {
+        val livres = livresMorck
+        val livre = livres[1]
+
+        val model = Modèle(livres)
+
+        model.ajouterLivreFavori(livre);
+
+        assertEquals(true, model.estLivreFavori(livre.isbn))
+
+    }
+
+
+    @Test
+    fun `étant donné un Modèle nouvellement instancié lorsqu'on retire un livre de favoris, alors le livre est enlevé de la list de livres de favoris`() {
+        val livres = livresMorck
+        val livre = livres[2]
+
+        val model = Modèle(livres)
+
+
+        model.ajouterLivreFavori(livre)
+        model.retirerLivreFavori(livre.isbn)
+
+
+        assertEquals(false, model.estLivreFavori(livre.isbn))
+
+    }
+
+
+
+   /* @Test
+    fun `étant donné un Modèle nouvellement instancié lorsqu'on recuper un livre a travers son isbn,on obtient le  livre correspondant `() {
+        val livres = livresMorck
+
+
+        val model = Modèle(livres)
+
+        val liveObtenirLivre = model.obtenirLivre("978-1-86197-876-9");
+
+        assertEquals(liveObtenirLivre[0].isbn,"978-1-86197-876-9" )
+    }*/
+
+
 }
