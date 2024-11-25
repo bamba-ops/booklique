@@ -4,7 +4,7 @@ import Livre
 import com.crosemont.booklique.domaine.mork_data.Data
 import kotlinx.coroutines.delay
 
-class Modèle {
+class Modèle() {
 
     suspend fun obtenirLivres(): List<Livre>{
         delay(400)
