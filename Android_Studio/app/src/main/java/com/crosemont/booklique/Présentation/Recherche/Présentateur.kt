@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class Présentateur(private val vue: Vue, private val modèle : Modèle) {
+class Présentateur(private val vue: Vue, private val modèle: Modèle = Modèle()) {
     private var job: Job? = null
 
 
