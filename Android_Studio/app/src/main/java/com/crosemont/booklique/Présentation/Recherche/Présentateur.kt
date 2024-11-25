@@ -13,9 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class Présentateur(private val vue: Vue) {
+class Présentateur(private val vue: Vue, private val modèle: Modèle = Modèle()) {
     private var job: Job? = null
-    private val modèle = Modèle()
+
 
     fun traiter_est_livre_favori(isbn: String): Boolean {
         return modèle.estLivreFavori(isbn)
@@ -90,7 +90,6 @@ class Présentateur(private val vue: Vue) {
     fun afficherLivresParGenre(genre: String) {
         job = CoroutineScope(Dispatchers.Main).launch {
             val livres = modèle.obtenirLivresParGenre(genre)
-            println("Livres trouvés pour le genre '$genre': ${livres.size}")
             vue.préparationAfficherRésultatsRecherche()
             vue.modifierTextRechercheUtilisateur(genre)
             if(livres.isEmpty()){
