@@ -90,7 +90,6 @@ class Présentateur(private val vue: Vue) {
     fun afficherLivresParGenre(genre: String) {
         job = CoroutineScope(Dispatchers.Main).launch {
             val livres = modèle.obtenirLivresParGenre(genre)
-            println("Livres trouvés pour le genre '$genre': ${livres.size}")
             vue.préparationAfficherRésultatsRecherche()
             vue.modifierTextRechercheUtilisateur(genre)
             if(livres.isEmpty()){

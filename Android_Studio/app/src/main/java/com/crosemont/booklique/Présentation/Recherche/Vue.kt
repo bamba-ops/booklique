@@ -29,7 +29,7 @@ class Vue : Fragment() {
     private lateinit var entreeRecherche: AutoCompleteTextView
     lateinit var resultatRechercheConteneur: LinearLayout
     private lateinit var affichageDefilementResultatRecherche: ScrollView
-    private lateinit var textRechercheParDefaut: TextView
+    lateinit var textRechercheParDefaut: TextView
     private lateinit var txtRechercheUtilisateur: TextView
     private lateinit var btnRecherhce : ImageButton
     private lateinit var btnGenre : Button
