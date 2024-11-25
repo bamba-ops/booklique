@@ -5,8 +5,6 @@ import com.crosemont.booklique.domaine.mork_data.Data
 
 class Modèle {
 
-
-
     fun obtenirLivresFavoris(): List<Livre>{
         return Data.obtenirLivresFavoris()
     }
