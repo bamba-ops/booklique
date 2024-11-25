@@ -13,9 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class Présentateur(private val vue: Vue) {
+class Présentateur(private val vue: Vue, private val modèle : Modèle) {
     private var job: Job? = null
-    private val modèle = Modèle()
+
 
     fun traiter_est_livre_favori(isbn: String): Boolean {
         return modèle.estLivreFavori(isbn)

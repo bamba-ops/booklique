@@ -38,6 +38,7 @@ class Vue : Fragment() {
     private lateinit var présentateur: Présentateur
     private lateinit var chargement: ProgressBar
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
