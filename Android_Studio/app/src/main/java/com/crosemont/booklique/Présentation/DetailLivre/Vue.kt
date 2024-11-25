@@ -1,6 +1,7 @@
 package com.crosemont.booklique.Présentation.DetailLivre
 
 import Livre
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,9 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.crosemont.booklique.R
-import com.crosemont.booklique.domaine.mork_data.Data
 import androidx.fragment.app.Fragment
 
 class Vue : Fragment() {
@@ -25,12 +26,15 @@ class Vue : Fragment() {
     private lateinit var echeanceLivre: TextView
     private lateinit var buttonReservation: Button
     private lateinit var buttonFavoris: ImageButton
-    private lateinit var isbn: String
+    private lateinit var buttonAjouterAgenda: ImageButton
+    private lateinit var editeurLivre: TextView
+    private lateinit var datePublicationLivre: TextView
+    private lateinit var nombrePagesLivre: TextView
+    private lateinit var sectionEcheance: View
     private lateinit var présentateur: Présentateur
-    private var isFavoris: Boolean = false
-    private lateinit var imageUrl: String
-    private lateinit var disponnible: String
 
+    private var isFavoris: Boolean = false
+    private var isbnLivre: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,64 +56,105 @@ class Vue : Fragment() {
         echeanceLivre = view.findViewById(R.id.echeance_livre)
         buttonReservation = view.findViewById(R.id.bouton_reserver_details)
         buttonFavoris = view.findViewById(R.id.bouton_favoris_details)
+        buttonAjouterAgenda = view.findViewById(R.id.bouton_alert_details)
+        editeurLivre = view.findViewById(R.id.editeur_livre_details)
+        datePublicationLivre = view.findViewById(R.id.date_publication_livre_details)
+        nombrePagesLivre = view.findViewById(R.id.nombre_pages_livre_details)
+        sectionEcheance = view.findViewById(R.id.echeance_section)
 
         présentateur = Présentateur(this)
 
+        // Initialisation des données
         présentateur.initialiserLivre()
+
+        // Gestion des actions
+
+        buttonReservation.setOnClickListener {
+            effectuerReservation()
+        }
+
+        // Fonctionnalité pour le bouton favoris
+        buttonFavoris.setOnClickListener {
+            présentateur.basculerFavori(isbnLivre)
+        }
+
+        // Fonctionnalité pour l'ajout à l'agenda
+
+        buttonAjouterAgenda.setOnClickListener {
+            ouvrirCalendrierPourAjouterEvenement()
+        }
+
     }
 
-
-    fun afficherLivre(livre: Livre){
-
+    fun afficherLivre(livre: Livre) {
         titreLivre.text = livre.titre
-        statutLivre.text = if (livre.estDisponible()) "Disponible" else "Indisponible"
-        descriptionCourte.text = livre.description.take(25).plus("...")
+        statutLivre.text = if (livre.estDisponible()) getString(R.string.disponible) else getString(R.string.indisponible)
+        descriptionCourte.text = livre.description.take(45) + "..."
         descriptionComplete.text = livre.description
         auteurLivre.text = livre.auteur
-        echeanceLivre.text = livre.date_publication.toString()
-        disponnible = (if (livre.estDisponible()) "Disponible" else "Indisponible").toString()
-        imageUrl = livre.image_url
+        editeurLivre.text = livre.editeur
+        datePublicationLivre.text = présentateur.getFormattedDate(livre.date_publication)
+        nombrePagesLivre.text = livre.nombre_pages.toString()
+        echeanceLivre.text = getString(R.string.non_definit)
+        isbnLivre = livre.isbn
 
+        // Charger l'image
         Glide.with(this)
             .load(livre.image_url)
             .placeholder(R.drawable.placeholder_image)
             .error(R.drawable.error_image)
             .into(imageLivre)
 
-        isDisponnible()
+        mettreAJourBoutonReservation(livre.estDisponible())
         présentateur.estFavori(livre.isbn)
-
-        buttonFavoris.setOnClickListener {
-            présentateur.basculerFavori(livre.isbn)
-        }
     }
 
-    fun changer_boutton_favoris_source_true(){
-        buttonFavoris.setImageResource(R.drawable.favoris_true)
+    private fun mettreAJourBoutonReservation(estDisponible: Boolean) {
+        buttonReservation.isEnabled = estDisponible
     }
 
-    fun changer_boutton_favoris_source_false(){
-        buttonFavoris.setImageResource(R.drawable.favoris_false)
+    fun mettreÀJourFavori(isFavori: Boolean) {
+        this.isFavoris = isFavori
+        buttonFavoris.setImageResource(
+            if (isFavoris) R.drawable.favoris_true else R.drawable.favoris_false
+        )
     }
 
-    fun changer_isFavoris_vrai(){
-        isFavoris = true
+    private fun effectuerReservation() {
+        val dateÉchéance = présentateur.écheance()
+        sectionEcheance.visibility = View.VISIBLE
+        echeanceLivre.text = présentateur.getFormattedDate(dateÉchéance)
+        buttonReservation.text = getString(R.string.confirmer_reservation)
     }
 
-    fun retourner_favori(): Boolean{
+    fun estLivreFavori(): Boolean {
         return isFavoris
     }
 
-    fun verifier_isFavoris(){
-        isFavoris = !isFavoris
+    private fun ouvrirCalendrierPourAjouterEvenement() {
+        // Récupérer les valeurs des champs de texte pour le titre et la description
+        val titre = titreLivre.text?.toString()?.takeIf { it.isNotBlank() } ?: "Booklique"
+        val description = getString(R.string.message_description_calandar)
+
+        val lieu = "6400 16e Avenue, Montréal, QC H1X 2S9"
+
+        // Obtenir la date d'échéance depuis le présentateur
+        val dateÉchéance = présentateur.écheance()
+
+        // Ouvrir le calendrier pour ajouter un événement avec les informations collectées
+        présentateur.ouvrirCalendrierPourAjouterEvenement(
+            requireContext(),
+            titre,
+            description,
+            lieu,
+            dateÉchéance
+        )
     }
 
-    fun isDisponnible(){
-        if (disponnible == "Disponible")
-            buttonReservation.isEnabled = true
-        else
-            buttonReservation.isEnabled = false
 
+
+    // En cas d'erreur
+    fun afficherToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
-
 }

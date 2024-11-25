@@ -5,11 +5,12 @@ import kotlinx.coroutines.*
 import com.crosemont.booklique.Présentation.Accueil.Modèle
 import com.crosemont.booklique.R
 import com.squareup.picasso.Picasso
+import kotlin.coroutines.CoroutineContext
 
 
-class Présentateur(val vue: Vue) {
+class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
     private var job: Job? = null
-    private val modèle = Modèle()
+    //private val modèle = Modèle()
 
     fun traiter_affichage_livre() {
         job = CoroutineScope( Dispatchers.Main ).launch {
