@@ -45,6 +45,6 @@ class Vue : Fragment() {
 
     private fun navigateToRecherche(genre: String) {
         présentateur.traiter_obtenir_livres_par_genre(genre)
-        findNavController().navigate(R.id.action_genres_to_recherche)
+        findNavController().navigate(R.id.action_genres_to_resultat)
     }
 }
