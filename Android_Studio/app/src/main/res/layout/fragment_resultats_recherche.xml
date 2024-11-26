@@ -1,43 +1,31 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp"
-    android:background="@android:color/white"
-    tools:context=".Présentation.Recherche.Vue_Resultat">
-
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/text_titre_resultats"
+        android:id="@+id/text_recherche_par_defaut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:text="Résultat Recherche"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-
-    <TextView
-        android:id="@+id/text_aucun_resultat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_titre_resultats"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
         android:text="Aucun résultat trouvé."
-        android:textColor="@android:color/darker_gray"
-        android:textSize="18sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:padding="16dp" />
 
-
-    <RecyclerView
-        android:id="@+id/recycler_resultats_recherche"
+    <!-- Résultats de recherche -->
+    <ScrollView
+        android:id="@+id/affichage_defilement_resultat_de_recherche"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/text_aucun_resultat"
+        android:layout_below="@id/text_recherche_par_defaut"
         android:layout_marginTop="16dp"
-        android:visibility="visible" />
+        android:visibility="gone">
 
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/resultat_de_recherche_conteneur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+
+</LinearLayout>

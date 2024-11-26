@@ -32,7 +32,6 @@ class Vue : Fragment() {
     lateinit var textRechercheParDefaut: TextView
     private lateinit var txtRechercheUtilisateur: TextView
     private lateinit var btnRecherhce : ImageButton
-    private lateinit var btnGenre : Button
     private lateinit var btnAuteur : RadioButton
     private lateinit var btnTitre : RadioButton
     private lateinit var présentateur: Présentateur
@@ -52,16 +51,11 @@ class Vue : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         entreeRecherche = view.findViewById(R.id.entree_recherche)
-        resultatRechercheConteneur =
-            view.findViewById(R.id.resultat_de_recherche_conteneur)
-        affichageDefilementResultatRecherche =
-            view.findViewById(R.id.affichage_defilement_resultat_de_recherche)
         textRechercheParDefaut = view.findViewById(R.id.text_recherche_par_defaut)
-        txtRechercheUtilisateur = view.findViewById(R.id.texte_recherche_utilisateur)
         btnRecherhce = view.findViewById(R.id.btnRecherche)
+        txtRechercheUtilisateur = view.findViewById(R.id.texte_recherche_utilisateur)
         btnAuteur = view.findViewById(R.id.radioAuteur)
         btnTitre = view.findViewById(R.id.radioTitre)
-        btnGenre = view.findViewById(R.id.btnGenre)
         chargement = view.findViewById(R.id.chargement)
         présentateur = Présentateur(this)
 
@@ -87,11 +81,12 @@ class Vue : Fragment() {
             } else if (btnTitre.isChecked) {
                 présentateur.afficherLivresParTitre(rechercheTexte)
             }
+            findNavController().navigate(R.id.action_recherche_to_resultat)
         }
 
-        btnGenre.setOnClickListener {
-            findNavController().navigate(R.id.action_recherche_to_genres)
-        }
+
+
+
 
     }
 
@@ -109,6 +104,7 @@ class Vue : Fragment() {
             chargement.visibility = View.GONE
         }
     }
+
 
     fun modifierTextRechercheUtilisateur(text: String){
         txtRechercheUtilisateur.text = text
@@ -156,70 +152,6 @@ class Vue : Fragment() {
         modifierTxtCritère(critère)
         afficherTextRechercheUtilisateur(true)
     }
-
-    fun afficherLivres(livre: Livre){
-        val inflater = layoutInflater
-        val livreView = inflater.inflate(
-            R.layout.fragment_article_livre,
-            resultatRechercheConteneur,
-            false
-        )
-
-
-
-        val imageView = livreView.findViewById<ImageView>(R.id.livre_image)
-        val titreTextView = livreView.findViewById<TextView>(R.id.livre_titre)
-        val auteurTextView = livreView.findViewById<TextView>(R.id.livre_auteur)
-        val genreTextView = livreView.findViewById<TextView>(R.id.livre_genre)
-        val favoris = livreView.findViewById<ImageView>(R.id.icone_favoris)
-
-        titreTextView.text = livre.titre
-        auteurTextView.text = livre.auteur
-        genreTextView.text = livre.genre
-        if(présentateur.traiter_est_livre_favori(livre.isbn)){
-            favoris.setImageResource(R.drawable.favoris_true)
-        }
-
-        Picasso.get()
-            .load(livre.image_url)
-            .placeholder(R.drawable.placeholder_image)
-            .error(R.drawable.error_image)
-            .into(imageView)
-
-        favoris.setOnClickListener {
-            if(!présentateur.traiter_est_livre_favori(livre.isbn)){
-                favoris.setImageResource(R.drawable.favoris_true)
-                présentateur.traiter_ajouter_livre_favori(livre)
-            } else {
-                favoris.setImageResource(R.drawable.favoris_false)
-                présentateur.traiter_retirer_livre_favori(livre.isbn)
-            }
-        }
-
-        livreView.setOnClickListener {
-//            // Ajout transfert data pour afficher details
-//            val bundle = Bundle().apply {
-//                putString("isbn", livre.isbn)
-//                putString("titre", livre.titre)
-//                putString("image_url", livre.image_url)
-//                putString("description", livre.description)
-//                putString("auteur", livre.auteur)
-//                putString("editeur", livre.editeur)
-//                putString("genre", livre.genre)
-//                putString("date_publication", livre.date_publication.toString())
-//                putInt("nombre_pages", livre.nombre_pages)
-//                putString("disponibilite", if (livre.estDisponible()) "Disponible" else "Indisponible")
-//            }
-            présentateur.traiter_obtenir_livre(livre.isbn)
-            findNavController().navigate(R.id.action_recherche_to_detail_livre)
-
-        }
-
-        resultatRechercheConteneur.addView(livreView)
-
-    }
-
-
 
 
 

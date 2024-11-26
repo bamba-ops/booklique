@@ -1,6 +1,7 @@
 package com.crosemont.booklique.Présentation.Favoris
 
 import Livre
+import android.provider.ContactsContract
 import com.crosemont.booklique.domaine.mork_data.Data
 
 class Modèle {

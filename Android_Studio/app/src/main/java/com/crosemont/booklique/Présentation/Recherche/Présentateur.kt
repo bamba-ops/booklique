@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
+import com.crosemont.booklique.Présentation.Recherche.Modèle
 import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.mork_data.Data
+import com.google.android.material.tabs.TabLayout.Mode
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class Présentateur(private val vue: Vue, private val modèle: Modèle = Modèle()) {
     private var job: Job? = null
-
+    private val vueR = Vue_Resultat()
 
     fun traiter_est_livre_favori(isbn: String): Boolean {
         return modèle.estLivreFavori(isbn)
@@ -43,7 +45,7 @@ class Présentateur(private val vue: Vue, private val modèle: Modèle = Modèle
                 vue.afficherChargement(false)
                 vue.préparationAfficherLivres("Nouveautés")
                 for (livre in livreParNouveautes) {
-                    vue.afficherLivres(livre)
+                    vueR.afficherLivres(livre)
                 }
             } else {
                 vue.afficherChargement(false)
@@ -61,7 +63,7 @@ class Présentateur(private val vue: Vue, private val modèle: Modèle = Modèle
                 vue.afficherChargement(false)
                 vue.préparationAfficherLivres("Auteur")
                 for(livre in livreParAuteur){
-                    vue.afficherLivres(livre)
+                    vueR.afficherLivres(livre)
                 }
             } else {
                 vue.afficherChargement(false)
@@ -78,7 +80,7 @@ class Présentateur(private val vue: Vue, private val modèle: Modèle = Modèle
                 vue.afficherChargement(false)
                 vue.préparationAfficherLivres("Genre")
                 for(livre in livreParGenre){
-                    vue.afficherLivres(livre)
+                    vueR.afficherLivres(livre)
                 }
             } else {
                 vue.afficherChargement(false)
@@ -102,7 +104,7 @@ class Présentateur(private val vue: Vue, private val modèle: Modèle = Modèle
                 vue.afficherDefilementResultatRecherche(true)
 
                 for(livre in livres){
-                    vue.afficherLivres(livre)
+                    vueR.afficherLivres(livre)
                 }
             }
         }
@@ -125,7 +127,7 @@ class Présentateur(private val vue: Vue, private val modèle: Modèle = Modèle
                 vue.afficherDefilementResultatRecherche(true)
 
                 for(livre in livres){
-                    vue.afficherLivres(livre)
+                    vueR.afficherLivres(livre)
                 }
             }
         }
@@ -148,7 +150,7 @@ class Présentateur(private val vue: Vue, private val modèle: Modèle = Modèle
                 vue.afficherDefilementResultatRecherche(true)
 
                 for(livre in livres){
-                    vue.afficherLivres(livre)
+                    vueR.afficherLivres(livre)
                 }
             }
         }
@@ -172,6 +174,9 @@ class Présentateur(private val vue: Vue, private val modèle: Modèle = Modèle
             vue.afficherDefilementResultatRecherche(false)
         }
     }
+
+
+
 
 
 
