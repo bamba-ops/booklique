@@ -1,8 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center"> <!-- Centers all children -->
 
+    <!-- TextView for "No Results Found" -->
     <TextView
         android:id="@+id/text_recherche_par_defaut"
         android:layout_width="wrap_content"
@@ -11,12 +13,18 @@
         android:visibility="gone"
         android:padding="16dp" />
 
-    <!-- Résultats de recherche -->
+    <!-- ProgressBar for loading -->
+    <ProgressBar
+        android:id="@+id/chargement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <!-- ScrollView for search results -->
     <ScrollView
         android:id="@+id/affichage_defilement_resultat_de_recherche"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/text_recherche_par_defaut"
         android:layout_marginTop="16dp"
         android:visibility="gone">
 
@@ -26,6 +34,4 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
-
-
 </LinearLayout>

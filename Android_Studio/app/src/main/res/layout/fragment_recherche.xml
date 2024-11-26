@@ -91,28 +91,5 @@
         android:textSize="18sp"
         android:visibility="visible" />
 
-    <!-- Barre de chargement -->
-    <ProgressBar
-        android:id="@+id/chargement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
-
-    <ScrollView
-        android:id="@+id/affichage_defilement_resultat_de_recherche"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/text_recherche_par_defaut"
-        android:layout_marginTop="16dp"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:id="@+id/resultat_de_recherche_conteneur"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
-
 
 </RelativeLayout>

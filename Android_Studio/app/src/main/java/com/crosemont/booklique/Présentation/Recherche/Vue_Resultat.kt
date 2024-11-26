@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -18,7 +20,11 @@ class Vue_Resultat : Fragment() {
 
     lateinit var resultatRechercheConteneur: LinearLayout
     lateinit var textRechercheParDefaut: TextView
-    private lateinit var présentateur: Présentateur
+    private lateinit var présentateur: Présentateur_Resultat
+    private lateinit var affichageDefilementResultatRecherche: ScrollView
+    private lateinit var chargement: ProgressBar
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,9 +32,24 @@ class Vue_Resultat : Fragment() {
 
     ): View? {
         return inflater.inflate(R.layout.fragment_resultats_recherche, container, false)
+
     }
 
-    //val livres = présentateur.traiter_obtenir_livre()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        resultatRechercheConteneur = view.findViewById(R.id.resultat_de_recherche_conteneur)
+        affichageDefilementResultatRecherche = view.findViewById(R.id.affichage_defilement_resultat_de_recherche)
+        textRechercheParDefaut = view.findViewById(R.id.text_recherche_par_defaut)
+        chargement = view.findViewById(R.id.chargement)
+        présentateur = Présentateur_Resultat(this)
+
+        présentateur.traiter_livres_par_nouveautes()
+        présentateur.traiter_livres_par_auteur()
+        présentateur.traiter_livres_par_genre()
+        présentateur.traiter_livre_par_titre()
+
+    }
 
     fun afficherLivres(livre: Livre){
         val inflater = layoutInflater
@@ -38,8 +59,6 @@ class Vue_Resultat : Fragment() {
             resultatRechercheConteneur,
             false
         )
-
-
 
         val imageView = livreView.findViewById<ImageView>(R.id.livre_image)
         val titreTextView = livreView.findViewById<TextView>(R.id.livre_titre)
@@ -71,21 +90,8 @@ class Vue_Resultat : Fragment() {
         }
 
         livreView.setOnClickListener {
-//            // Ajout transfert data pour afficher details
-//            val bundle = Bundle().apply {
-//                putString("isbn", livre.isbn)
-//                putString("titre", livre.titre)
-//                putString("image_url", livre.image_url)
-//                putString("description", livre.description)
-//                putString("auteur", livre.auteur)
-//                putString("editeur", livre.editeur)
-//                putString("genre", livre.genre)
-//                putString("date_publication", livre.date_publication.toString())
-//                putInt("nombre_pages", livre.nombre_pages)
-//                putString("disponibilite", if (livre.estDisponible()) "Disponible" else "Indisponible")
-//            }
             présentateur.traiter_obtenir_livre(livre.isbn)
-            findNavController().navigate(R.id.action_recherche_to_detail_livre)
+            findNavController().navigate(R.id.action_resultat_to_detail_livre)
 
         }
 
@@ -93,7 +99,43 @@ class Vue_Resultat : Fragment() {
 
     }
 
+    fun afficherChargement(isCharger: Boolean){
+        if(isCharger){
+            chargement.visibility = View.VISIBLE
+        } else {
+            chargement.visibility = View.GONE
+        }
+    }
 
+    fun supprimerResultatRechercheConteneur(){
+        resultatRechercheConteneur.removeAllViews()
+    }
+
+    fun afficherTextParDefaut(isVisible: Boolean){
+        if(isVisible && textRechercheParDefaut.visibility == View.GONE){
+            textRechercheParDefaut.visibility = View.VISIBLE
+        } else if(!isVisible && textRechercheParDefaut.visibility == View.VISIBLE) {
+            textRechercheParDefaut.visibility = View.GONE
+        }
+    }
+
+    fun afficherDefilementResultatRecherche(isVisible: Boolean){
+        if(isVisible && affichageDefilementResultatRecherche.visibility == View.GONE){
+            affichageDefilementResultatRecherche.visibility = View.VISIBLE
+        } else if(!isVisible && affichageDefilementResultatRecherche.visibility == View.VISIBLE) {
+            affichageDefilementResultatRecherche.visibility = View.GONE
+        }
+    }
+
+    fun modifierTextRechercheParDefaut(text: String){
+        textRechercheParDefaut.text = text
+    }
+
+
+    fun préparationAfficherLivres(critère: String){
+        afficherTextParDefaut(false)
+        afficherDefilementResultatRecherche(true)
+    }
 
 
 }

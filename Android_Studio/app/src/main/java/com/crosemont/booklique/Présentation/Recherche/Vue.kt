@@ -15,6 +15,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -26,16 +27,10 @@ import java.util.Date
 
 class Vue : Fragment() {
 
-    private lateinit var entreeRecherche: AutoCompleteTextView
-    lateinit var resultatRechercheConteneur: LinearLayout
-    private lateinit var affichageDefilementResultatRecherche: ScrollView
-    lateinit var textRechercheParDefaut: TextView
-    private lateinit var txtRechercheUtilisateur: TextView
-    private lateinit var btnRecherhce : ImageButton
-    private lateinit var btnAuteur : RadioButton
-    private lateinit var btnTitre : RadioButton
+    private lateinit var barreRecherche: AutoCompleteTextView
+    private lateinit var groupeRadio: RadioGroup
+    private lateinit var boutonRecherche: ImageButton
     private lateinit var présentateur: Présentateur
-    private lateinit var chargement: ProgressBar
 
 
     override fun onCreateView(
@@ -50,111 +45,59 @@ class Vue : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        entreeRecherche = view.findViewById(R.id.entree_recherche)
-        textRechercheParDefaut = view.findViewById(R.id.text_recherche_par_defaut)
-        btnRecherhce = view.findViewById(R.id.btnRecherche)
-        txtRechercheUtilisateur = view.findViewById(R.id.texte_recherche_utilisateur)
-        btnAuteur = view.findViewById(R.id.radioAuteur)
-        btnTitre = view.findViewById(R.id.radioTitre)
-        chargement = view.findViewById(R.id.chargement)
+        barreRecherche = view.findViewById(R.id.entree_recherche)
+        groupeRadio = view.findViewById(R.id.radioGroup)
+        boutonRecherche = view.findViewById(R.id.btnRecherche)
         présentateur = Présentateur(this)
 
-        présentateur.traiter_livres_par_nouveautes()
-        présentateur.traiter_livres_par_auteur()
-        présentateur.traiter_livres_par_genre()
+        présentateur.traiter_mise_a_jour_suggestions("titre")
 
-        entreeRecherche.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val rechercheTexte = entreeRecherche.text.toString()
-                présentateur.lancerRecherche(rechercheTexte)
-                true
-            } else {
-                false
-            }
+        groupeRadio.setOnCheckedChangeListener { _, checkedId ->
+            val critère = if (checkedId == R.id.radioTitre) "titre" else "auteur"
+            présentateur.traiter_mise_a_jour_suggestions(critère)
         }
 
-        // Action pour le bouton de recherche
-        btnRecherhce.setOnClickListener {
-            val rechercheTexte = entreeRecherche.text.toString().trim()
-            if (btnAuteur.isChecked) {
-                présentateur.afficherLivresParAuteur(rechercheTexte)
-            } else if (btnTitre.isChecked) {
-                présentateur.afficherLivresParTitre(rechercheTexte)
-            }
-            findNavController().navigate(R.id.action_recherche_to_resultat)
+        // Action pour rechercher
+        boutonRecherche.setOnClickListener {
+            val rechercheTexte = barreRecherche.text.toString().trim()
+            val critère = if (groupeRadio.checkedRadioButtonId == R.id.radioTitre) "titre" else "auteur"
+
+            présentateur.lancerRecherche(rechercheTexte, critère)
         }
 
-
-
+//        entreeRecherche.setOnEditorActionListener { _, actionId, _ ->
+//            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                val rechercheTexte = entreeRecherche.text.toString()
+//                présentateur.lancerRecherche(rechercheTexte)
+//                true
+//            } else {
+//                false
+//            }
+//        }
+//
+//        // Action pour le bouton de recherche
+//        btnRecherhce.setOnClickListener {
+//            val rechercheTexte = entreeRecherche.text.toString().trim()
+//            if (btnAuteur.isChecked) {
+//                présentateur.afficherLivresParAuteur(rechercheTexte)
+//            } else if (btnTitre.isChecked) {
+//                présentateur.afficherLivresParTitre(rechercheTexte)
+//            }
+//            findNavController().navigate(R.id.action_recherche_to_resultat)
+//        }
 
 
     }
 
-
-    @SuppressLint("SetTextI18n")
-    fun préparationAfficherRésultatsRecherche() {
-        afficherTextParDefaut(true)
-        supprimerResultatRechercheConteneur()
+    fun mettreAJourSuggestions(suggestions: List<String>) {
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, suggestions)
+        barreRecherche.setAdapter(adapter)
+        barreRecherche.threshold = 1 // Déclenche les suggestions après 1 caractère
     }
 
-    fun afficherChargement(isCharger: Boolean){
-        if(isCharger){
-            chargement.visibility = View.VISIBLE
-        } else {
-            chargement.visibility = View.GONE
-        }
+    fun naviguer_resultat(){
+        findNavController().navigate(R.id.action_recherche_to_resultat)
     }
-
-
-    fun modifierTextRechercheUtilisateur(text: String){
-        txtRechercheUtilisateur.text = text
-    }
-
-    fun supprimerResultatRechercheConteneur(){
-        resultatRechercheConteneur.removeAllViews()
-    }
-
-    fun afficherTextParDefaut(isVisible: Boolean){
-        if(isVisible && textRechercheParDefaut.visibility == View.GONE){
-            textRechercheParDefaut.visibility = View.VISIBLE
-        } else if(!isVisible && textRechercheParDefaut.visibility == View.VISIBLE) {
-            textRechercheParDefaut.visibility = View.GONE
-        }
-    }
-
-    fun afficherTextRechercheUtilisateur(isVisible: Boolean){
-        if(isVisible && txtRechercheUtilisateur.visibility == View.GONE){
-            txtRechercheUtilisateur.visibility = View.VISIBLE
-        } else if(!isVisible && txtRechercheUtilisateur.visibility == View.VISIBLE) {
-            txtRechercheUtilisateur.visibility = View.GONE
-        }
-    }
-
-    fun afficherDefilementResultatRecherche(isVisible: Boolean){
-        if(isVisible && affichageDefilementResultatRecherche.visibility == View.GONE){
-            affichageDefilementResultatRecherche.visibility = View.VISIBLE
-        } else if(!isVisible && affichageDefilementResultatRecherche.visibility == View.VISIBLE) {
-            affichageDefilementResultatRecherche.visibility = View.GONE
-        }
-    }
-
-    fun modifierTextRechercheParDefaut(text: String){
-        textRechercheParDefaut.text = text
-    }
-
-    fun modifierTxtCritère(critère: String){
-            txtRechercheUtilisateur.text = "Recherche : $critère"
-    }
-
-    fun préparationAfficherLivres(critère: String){
-        afficherTextParDefaut(false)
-        afficherDefilementResultatRecherche(true)
-        modifierTxtCritère(critère)
-        afficherTextRechercheUtilisateur(true)
-    }
-
-
-
 
 }
 
