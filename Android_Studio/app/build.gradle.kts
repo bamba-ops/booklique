@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime.android)
     implementation(libs.firebase.vertexai)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.datastore.core.android)
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
     implementation(libs.androidx.constraintlayout)
     implementation("androidx.cardview:cardview:1.0.0")
@@ -68,14 +70,13 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.8.0")
-<<<<<<< HEAD
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
     testImplementation("io.mockk:mockk:1.13.2")
 
-=======
+
     testImplementation ("org.jetbrains.kotlin:kotlin-test")
     testImplementation ("junit:junit:4.13.2")
->>>>>>> feature_mvpRecherche
+
 
 }

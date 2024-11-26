@@ -4,19 +4,21 @@ import Livre
 import com.crosemont.booklique.domaine.mork_data.Data
 
 class Modèle (private var livres: List<Livre> = Data.obtenirLivresDemo()){
-
-    fun obtenirLivresParAuteur(auteur: String): List<Livre> {
-        return livres.filter { it.auteur.contains(auteur, ignoreCase = true) }
+    fun obtenirLivresParNomAuteur(auteur: String){
+        Data.definirLivreParAuteur(auteur)
     }
 
-    fun obtenirLivresParTitre(titre: String): List<Livre> {
-        return livres.filter { it.titre.contains(titre, ignoreCase = true) }
+    fun obtenirLivresParNomTitre(titre: String){
+        Data.definirLivreParTitre(titre)
     }
 
-    fun obtenirLivresParGenre(genre: String): List<Livre> {
-        return livres.filter { it.genre.trim().equals(genre.trim(), ignoreCase = true) }
+    fun obtenirLivresParTitres(): List<String>{
+        return Data.obtenirLivresParTires()
     }
 
+    fun obtenirLivresParAuteursListString(): List<String>{
+        return Data.obtenirLivresParAuteursListString()
+    }
 
     fun obtenirLivresParAuteur(): List<Livre>{
         if(Data.isObtenirLivreParAuteur){
@@ -24,6 +26,15 @@ class Modèle (private var livres: List<Livre> = Data.obtenirLivresDemo()){
             return Data.obtenirLivresParAuteur(Data._obtenirLivreParAuteur!!)
         }
         return emptyList()
+    }
+
+    fun obtenirLivreParTitre(): Livre? {
+        if(Data.isObtenirLivreParTitre){
+            Data.isObtenirLivreParTitre = false
+            return Data.obtenirLivreParTitre(Data._obtenirLivreParTitre!!)
+        }
+
+        return null
     }
 
      fun obtenirLivresParNouveautes(): List<Livre> {
@@ -58,5 +69,7 @@ class Modèle (private var livres: List<Livre> = Data.obtenirLivresDemo()){
     fun obtenirLivre(isbn: String){
         Data.definirLivre(isbn)
     }
+
+
 
 }
