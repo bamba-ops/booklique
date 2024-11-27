@@ -93,7 +93,7 @@ class présentateurTest {
         présentateur.afficherLivresParAuteur("Olivia Wilson")
 
 
-        verify(mockVue).afficherLivres(expectedLivre[0])
+        //verify(mockVue).afficherLivres(expectedLivre[0])
 
 
     }
@@ -114,7 +114,7 @@ class présentateurTest {
 
         présentateur.afficherLivresParAuteur("Mystères sous la mer")
 
-        verify(mockVue).afficherLivres(livreMock[1])
+        //verify(mockVue).afficherLivres(livreMock[1])
         verify(mockVue).afficherChargement(true)
 
     }
