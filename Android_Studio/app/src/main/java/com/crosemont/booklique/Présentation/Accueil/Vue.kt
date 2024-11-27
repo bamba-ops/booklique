@@ -56,7 +56,7 @@ class Vue : Fragment() {
 
         sectionNouveautes.setOnClickListener {
             présentateur.traiter_obtenir_livres_par_nouveautes()
-            findNavController().navigate(R.id.action_accueil_to_recherche)
+            findNavController().navigate(R.id.action_accueil_to_resultats)
         }
 
 
@@ -121,7 +121,7 @@ class Vue : Fragment() {
 
             btnCarteAuteur.setOnClickListener{
                 présentateur.traiter_obtenir_livres_par_auteur(livre.auteur)
-                findNavController().navigate(R.id.action_accueil_to_recherche)
+                findNavController().navigate(R.id.action_accueil_to_resultats)
             }
 
             carteAuteur.addView(carteAuteurView)

@@ -15,15 +15,30 @@ class Data {
         var _obtenirLivreParNouveaute: String? = null
         var _obtenirLivresParGenre: String? = null
         var _obtenirLivre: String? = null
+        var _obtenirLivreParTitre: String? = null
         var isObtenirLivreParNouveaute: Boolean = false
         var isObtenirLivreParAuteur: Boolean = false
         var isObtenirLivresParNouveautes: Boolean = false
         var isObtenirLivresParGenre: Boolean = false
         var isObtenirLivre: Boolean = false
+        var isObtenirLivreParTitre: Boolean = false
+
+        fun obtenirLivresParTires(): List<String>{
+            return obtenirLivresDemo().map { it.titre }.distinct()
+        }
+
+        fun obtenirLivresParAuteursListString(): List<String>{
+            return obtenirLivresDemo().map { it.auteur }.distinct()
+        }
 
         fun definirLivreParAuteur(auteur: String?){
             _obtenirLivreParAuteur = auteur
             isObtenirLivreParAuteur = true
+        }
+
+        fun definirLivreParTitre(titre: String?){
+            _obtenirLivreParTitre = titre
+            isObtenirLivreParTitre = true
         }
 
         fun definirLivre(isbn: String?){
@@ -47,6 +62,10 @@ class Data {
 
         fun obtenirLivresParNouveautes(): List<Livre>{
             return obtenirLivresDemo().sortedByDescending { it.date_publication }.take(5)
+        }
+
+        fun obtenirLivreParTitre(titre: String): Livre? {
+            return obtenirLivresDemo().find { it.titre == titre }
         }
 
         fun obtenirLivre(isbn: String): Livre? {
