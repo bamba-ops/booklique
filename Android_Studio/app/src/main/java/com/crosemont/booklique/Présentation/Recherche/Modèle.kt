@@ -3,7 +3,13 @@ package com.crosemont.booklique.Présentation.Recherche
 import Livre
 import com.crosemont.booklique.domaine.mork_data.Data
 
-class Modèle (private var livres: List<Livre> = Data.obtenirLivresDemo()){
+class Modèle {
+
+    var isObtenirLivreParAuteur: Boolean = false
+    var isObtenirLivreParTitre: Boolean = false
+    var isObtenirLivreParNouveautes: Boolean = false
+    var isObtenirLivreParGenre: Boolean = false
+
     fun obtenirLivresParNomAuteur(auteur: String){
         Data.definirLivreParAuteur(auteur)
     }
@@ -23,6 +29,7 @@ class Modèle (private var livres: List<Livre> = Data.obtenirLivresDemo()){
     fun obtenirLivresParAuteur(): List<Livre>{
         if(Data.isObtenirLivreParAuteur){
             Data.isObtenirLivreParAuteur = false
+            isObtenirLivreParAuteur = true
             return Data.obtenirLivresParAuteur(Data._obtenirLivreParAuteur!!)
         }
         return emptyList()
@@ -31,6 +38,7 @@ class Modèle (private var livres: List<Livre> = Data.obtenirLivresDemo()){
     fun obtenirLivreParTitre(): Livre? {
         if(Data.isObtenirLivreParTitre){
             Data.isObtenirLivreParTitre = false
+            isObtenirLivreParTitre = true
             return Data.obtenirLivreParTitre(Data._obtenirLivreParTitre!!)
         }
 
@@ -40,6 +48,7 @@ class Modèle (private var livres: List<Livre> = Data.obtenirLivresDemo()){
      fun obtenirLivresParNouveautes(): List<Livre> {
         if (Data.isObtenirLivresParNouveautes) {
             Data.isObtenirLivresParNouveautes = false
+            isObtenirLivreParNouveautes = true
             return Data.obtenirLivresDemo()
         }
         return emptyList()
@@ -49,6 +58,7 @@ class Modèle (private var livres: List<Livre> = Data.obtenirLivresDemo()){
     fun _obtenirLivresParGenre(): List<Livre>{
         if(Data.isObtenirLivresParGenre){
             Data.isObtenirLivresParGenre = false
+            isObtenirLivreParGenre = true
             return Data.obtenirLivresParGenre(Data._obtenirLivresParGenre!!)
         }
         return emptyList()

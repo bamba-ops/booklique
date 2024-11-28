@@ -23,7 +23,7 @@ class Vue_Resultat : Fragment() {
     private lateinit var présentateur: Présentateur_Resultat
     private lateinit var affichageDefilementResultatRecherche: ScrollView
     private lateinit var chargement: ProgressBar
-
+    private lateinit var text_critere_recherche: TextView
 
 
     override fun onCreateView(
@@ -41,13 +41,11 @@ class Vue_Resultat : Fragment() {
         resultatRechercheConteneur = view.findViewById(R.id.resultat_de_recherche_conteneur)
         affichageDefilementResultatRecherche = view.findViewById(R.id.affichage_defilement_resultat_de_recherche)
         textRechercheParDefaut = view.findViewById(R.id.text_recherche_par_defaut)
+        text_critere_recherche = view.findViewById(R.id.text_critere_recherche)
         chargement = view.findViewById(R.id.chargement)
         présentateur = Présentateur_Resultat(this)
 
-        présentateur.traiter_livres_par_nouveautes()
-        présentateur.traiter_livres_par_auteur()
-        présentateur.traiter_livres_par_genre()
-        présentateur.traiter_livre_par_titre()
+        présentateur.traiter_livre()
 
     }
 
@@ -127,12 +125,24 @@ class Vue_Resultat : Fragment() {
         }
     }
 
+    fun afficherTextCritereRecherche(isVisible: Boolean){
+        if(isVisible && text_critere_recherche.visibility == View.GONE){
+            text_critere_recherche.visibility = View.VISIBLE
+        } else if(!isVisible && text_critere_recherche.visibility == View.VISIBLE) {
+            text_critere_recherche.visibility = View.GONE
+        }
+    }
+
+    fun modifierTextCritereRecherche(text: String){
+        text_critere_recherche.text = text
+    }
+
     fun modifierTextRechercheParDefaut(text: String){
         textRechercheParDefaut.text = text
     }
 
 
-    fun préparationAfficherLivres(critère: String){
+    fun préparationAfficherLivres(){
         afficherTextParDefaut(false)
         afficherDefilementResultatRecherche(true)
     }

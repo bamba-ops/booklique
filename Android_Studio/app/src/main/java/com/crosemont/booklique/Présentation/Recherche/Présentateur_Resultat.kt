@@ -25,73 +25,38 @@ class Présentateur_Resultat(private val vue: Vue_Resultat, private val modèle:
         modèle.obtenirLivre(isbn)
     }
 
-    fun traiter_livre_par_titre(){
-        vue.afficherChargement(true)
-        job = CoroutineScope(Dispatchers.Main).launch {
-            val livreParTitre: Livre? = modèle.obtenirLivreParTitre()
-            if (livreParTitre != null) {
-                vue.afficherChargement(false)
-                vue.préparationAfficherLivres("Nouveautés")
-                vue.afficherLivres(livreParTitre)
-            } else {
-                vue.afficherChargement(false)
-                vue.modifierTextRechercheParDefaut("Aucune nouveauté trouvée.")
-            }
-        }
-        vue.afficherChargement(true)
-    }
-
-
-    fun traiter_livres_par_nouveautes() {
+    fun traiter_livre() {
         vue.afficherChargement(true)
 
         job = CoroutineScope(Dispatchers.Main).launch {
-            val livreParNouveautes: List<Livre> = modèle.obtenirLivresParNouveautes()
-            if (livreParNouveautes.isNotEmpty()) {
-                vue.afficherChargement(false)
-                vue.préparationAfficherLivres("Nouveautés")
-                for (livre in livreParNouveautes) {
-                    vue.afficherLivres(livre)
-                }
-            } else {
-                vue.afficherChargement(false)
-                vue.modifierTextRechercheParDefaut("Aucune nouveauté trouvée.")
+            val livreParTitre = modèle.obtenirLivreParTitre()?.let { listOf(it) }
+            val livreParNouveautes = modèle.obtenirLivresParNouveautes()
+            val livreParAuteur = modèle.obtenirLivresParAuteur()
+            val livreParGenre = modèle._obtenirLivresParGenre()
+
+            when {
+                modèle.isObtenirLivreParTitre && !livreParTitre.isNullOrEmpty() -> afficherLivres(livreParTitre, "Critère de recherche : Titre")
+                modèle.isObtenirLivreParNouveautes && livreParNouveautes.isNotEmpty() -> afficherLivres(livreParNouveautes, "Critère de recherche : Nouveautes")
+                modèle.isObtenirLivreParAuteur && livreParAuteur.isNotEmpty() -> afficherLivres(livreParAuteur, "Critère de recherche : Auteur")
+                modèle.isObtenirLivreParGenre && livreParGenre.isNotEmpty() -> afficherLivres(livreParGenre, "Critère de recherche : Genre")
+                else -> afficherAucunLivreTrouvé()
             }
         }
-        vue.afficherChargement(true)
+    }
+
+    private fun afficherLivres(livres: List<Livre>, critère: String) {
+        vue.afficherChargement(false)
+        vue.modifierTextCritereRecherche(critère)
+        vue.afficherTextCritereRecherche(true)
+        vue.préparationAfficherLivres()
+        livres.forEach { vue.afficherLivres(it) }
+    }
+
+    private fun afficherAucunLivreTrouvé() {
+        vue.afficherChargement(false)
+        vue.modifierTextRechercheParDefaut("Aucun livre trouvé.")
+        vue.afficherTextParDefaut(true)
     }
 
 
-    fun traiter_livres_par_auteur(){
-        job = CoroutineScope(Dispatchers.Main).launch {
-            val livreParAuteur: List<Livre> = modèle.obtenirLivresParAuteur()
-            if(livreParAuteur.isNotEmpty()){
-                vue.afficherChargement(false)
-                vue.préparationAfficherLivres("Auteur")
-                for(livre in livreParAuteur){
-                    vue.afficherLivres(livre)
-                }
-            } else {
-                vue.afficherChargement(false)
-            }
-        }
-        vue.afficherChargement(true)
-
-    }
-
-    fun traiter_livres_par_genre(){
-        job = CoroutineScope(Dispatchers.Main).launch {
-            val livreParGenre: List<Livre> = modèle._obtenirLivresParGenre()
-            if(livreParGenre.isNotEmpty()){
-                vue.afficherChargement(false)
-                vue.préparationAfficherLivres("Genre")
-                for(livre in livreParGenre){
-                    vue.afficherLivres(livre)
-                }
-            } else {
-                vue.afficherChargement(false)
-            }
-        }
-        vue.afficherChargement(true)
-    }
 }
