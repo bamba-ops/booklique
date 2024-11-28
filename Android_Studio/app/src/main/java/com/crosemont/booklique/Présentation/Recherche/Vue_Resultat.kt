@@ -44,10 +44,7 @@ class Vue_Resultat : Fragment() {
         chargement = view.findViewById(R.id.chargement)
         présentateur = Présentateur_Resultat(this)
 
-        présentateur.traiter_livres_par_nouveautes()
-        présentateur.traiter_livres_par_auteur()
-        présentateur.traiter_livres_par_genre()
-        présentateur.traiter_livre_par_titre()
+        présentateur.traiter_livre()
 
     }
 
@@ -132,7 +129,7 @@ class Vue_Resultat : Fragment() {
     }
 
 
-    fun préparationAfficherLivres(critère: String){
+    fun préparationAfficherLivres(){
         afficherTextParDefaut(false)
         afficherDefilementResultatRecherche(true)
     }
