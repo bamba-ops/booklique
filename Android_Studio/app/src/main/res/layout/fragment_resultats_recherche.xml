@@ -2,9 +2,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"> <!-- Centers all children -->
+    android:gravity="center">
 
-    <!-- TextView for "No Results Found" -->
+    <TextView
+        android:id="@+id/text_critere_recherche"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Critère de recherche : "
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:padding="8dp"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/text_recherche_par_defaut"
         android:layout_width="wrap_content"
@@ -13,14 +22,12 @@
         android:visibility="gone"
         android:padding="16dp" />
 
-    <!-- ProgressBar for loading -->
     <ProgressBar
         android:id="@+id/chargement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <!-- ScrollView for search results -->
     <ScrollView
         android:id="@+id/affichage_defilement_resultat_de_recherche"
         android:layout_width="match_parent"

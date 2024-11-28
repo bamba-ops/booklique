@@ -35,17 +35,19 @@ class Présentateur_Resultat(private val vue: Vue_Resultat, private val modèle:
             val livreParGenre = modèle._obtenirLivresParGenre()
 
             when {
-                modèle.isObtenirLivreParTitre && !livreParTitre.isNullOrEmpty() -> afficherLivres(livreParTitre)
-                modèle.isObtenirLivreParNouveautes && livreParNouveautes.isNotEmpty() -> afficherLivres(livreParNouveautes)
-                modèle.isObtenirLivreParAuteur && livreParAuteur.isNotEmpty() -> afficherLivres(livreParAuteur)
-                modèle.isObtenirLivreParGenre && livreParGenre.isNotEmpty() -> afficherLivres(livreParGenre)
+                modèle.isObtenirLivreParTitre && !livreParTitre.isNullOrEmpty() -> afficherLivres(livreParTitre, "Critère de recherche : Titre")
+                modèle.isObtenirLivreParNouveautes && livreParNouveautes.isNotEmpty() -> afficherLivres(livreParNouveautes, "Critère de recherche : Nouveautes")
+                modèle.isObtenirLivreParAuteur && livreParAuteur.isNotEmpty() -> afficherLivres(livreParAuteur, "Critère de recherche : Auteur")
+                modèle.isObtenirLivreParGenre && livreParGenre.isNotEmpty() -> afficherLivres(livreParGenre, "Critère de recherche : Genre")
                 else -> afficherAucunLivreTrouvé()
             }
         }
     }
 
-    private fun afficherLivres(livres: List<Livre>) {
+    private fun afficherLivres(livres: List<Livre>, critère: String) {
         vue.afficherChargement(false)
+        vue.modifierTextCritereRecherche(critère)
+        vue.afficherTextCritereRecherche(true)
         vue.préparationAfficherLivres()
         livres.forEach { vue.afficherLivres(it) }
     }
