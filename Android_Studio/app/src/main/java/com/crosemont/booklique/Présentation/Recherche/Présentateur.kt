@@ -1,6 +1,7 @@
 package com.crosemont.booklique.Présentation.Recherche
 
 import Livre
+import android.content.Context
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,8 +16,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class Présentateur(private val vue: Vue, private val modèle: Modèle = Modèle()) {
+class Présentateur(private val vue: Vue, context: Context) {
     private var job: Job? = null
+    private val modèle = Modèle(context)
 
     fun traiter_mise_a_jour_suggestions(suggestions: String){
         job = CoroutineScope( Dispatchers.Main ).launch {

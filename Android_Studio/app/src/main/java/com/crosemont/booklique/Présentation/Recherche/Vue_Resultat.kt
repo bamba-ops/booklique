@@ -43,10 +43,18 @@ class Vue_Resultat : Fragment() {
         textRechercheParDefaut = view.findViewById(R.id.text_recherche_par_defaut)
         text_critere_recherche = view.findViewById(R.id.text_critere_recherche)
         chargement = view.findViewById(R.id.chargement)
-        présentateur = Présentateur_Resultat(this)
+        présentateur = Présentateur_Resultat(this, requireContext())
 
         présentateur.traiter_livre()
 
+    }
+
+    fun changer_image_resource_true(iconFavoris: ImageView ){
+        iconFavoris.setImageResource(R.drawable.favoris_true)
+    }
+
+    fun changer_image_resource_false(iconFavoris: ImageView){
+        iconFavoris.setImageResource(R.drawable.favoris_false)
     }
 
     fun afficherLivres(livre: Livre){
@@ -67,9 +75,7 @@ class Vue_Resultat : Fragment() {
         titreTextView.text = livre.titre
         auteurTextView.text = livre.auteur
         genreTextView.text = livre.genre
-        if(présentateur.traiter_est_livre_favori(livre.isbn)){
-            favoris.setImageResource(R.drawable.favoris_true)
-        }
+        présentateur.traiter_livre_favori(livre.isbn, favoris)
 
         Picasso.get()
             .load(livre.image_url)
@@ -78,13 +84,7 @@ class Vue_Resultat : Fragment() {
             .into(imageView)
 
         favoris.setOnClickListener {
-            if(!présentateur.traiter_est_livre_favori(livre.isbn)){
-                favoris.setImageResource(R.drawable.favoris_true)
-                présentateur.traiter_ajouter_livre_favori(livre)
-            } else {
-                favoris.setImageResource(R.drawable.favoris_false)
-                présentateur.traiter_retirer_livre_favori(livre.isbn)
-            }
+            présentateur.traiter_livre_favori_boutton(livre, favoris)
         }
 
         livreView.setOnClickListener {

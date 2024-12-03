@@ -1,9 +1,13 @@
 package com.crosemont.booklique.Présentation.Recherche
 
 import Livre
+import android.content.Context
+import com.crosemont.booklique.domaine.dao.dbConfig.DatabaseBuilder
+import com.crosemont.booklique.domaine.entité.Favoris
 import com.crosemont.booklique.domaine.mork_data.Data
 
-class Modèle {
+class Modèle(context: Context) {
+    private val favorisDao = DatabaseBuilder.obtenirInstance(context).favorisDao()
 
     var isObtenirLivreParAuteur: Boolean = false
     var isObtenirLivreParTitre: Boolean = false
@@ -64,16 +68,16 @@ class Modèle {
         return emptyList()
     }
 
-    fun estLivreFavori(isbn: String):Boolean{
-        return Data.estLivreFavori(isbn)
+    suspend fun obtenirLivreFavori(isbn: String): Favoris? {
+        return favorisDao.obtenirFavoriParIsbn(isbn)
     }
 
-    fun ajouterLivreFavori(livre: Livre){
-        Data.ajouterLivreFavori(livre)
+    suspend fun ajouterLivreFavori(favori: Favoris){
+        favorisDao.ajouterFavori(favori)
     }
 
-    fun retirerLivreFavori(isbn: String){
-        Data.retirerLivreFavoriParISBN(isbn)
+    suspend fun retirerLivreFavori(isbn: String){
+        favorisDao.supprimerFavoriParIsbn(isbn)
     }
 
     fun obtenirLivre(isbn: String){

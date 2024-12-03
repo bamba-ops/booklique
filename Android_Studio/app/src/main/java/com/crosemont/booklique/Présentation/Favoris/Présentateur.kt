@@ -1,29 +1,47 @@
 package com.crosemont.booklique.Présentation.Favoris
 
 import Livre
+import android.content.Context
+import android.widget.ImageView
 import com.crosemont.booklique.Présentation.Favoris.Modèle
+import com.crosemont.booklique.domaine.entité.Favoris
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
-class Présentateur(val vue: Vue) {
+class Présentateur(val vue: Vue, context: Context) {
     private var job: Job? = null
-    private val modèle = Modèle()
+    private val modèle = Modèle(context)
 
     fun chargerLivresFavoris(){
-        val livres = modèle.obtenirLivresFavoris()
-        vue.afficherLivresFavoris(livres)
+        job = CoroutineScope( Dispatchers.Main ).launch {
+            val favoris = modèle.obtenirLivresFavoris()
+            if(favoris.isNotEmpty()){
+                vue.enlever_text_view()
+                vue.charger_affichage_livre_favoris()
+                for(favori in favoris){
+                    vue.afficherLivresFavoris(favori)
+                }
+            } else {
+                vue.charger_affichage_livre_favoris()
+                vue.afficher_text_view()
+            }
+        }
     }
 
-    fun ajouterLivresFavoris(livre: Livre){
-        modèle.ajouterLivresFavoris(livre)
-        chargerLivresFavoris()
+    fun traiter_obtenir_livre(isbn: String){
+        modèle.obtenirLivre(isbn)
     }
 
-    fun ouvrirDétailsLivre(isbn: String){
-        modèle.obtenirLivreFavorisParISBN(isbn)
-    }
-
-    fun retirerDesFavoris(livre: Livre){
-        modèle.retirerLivreFavorisParISBN(livre.isbn)
-        chargerLivresFavoris()
+    fun traiter_favoris(favoris: Favoris, iconFavoris: ImageView){
+        job = CoroutineScope( Dispatchers.Main ).launch {
+            val favori = modèle.obtenirLivreFavorisParISBN(favoris.isbn)
+            if(favori != null){
+                modèle.retirerLivreFavorisParISBN(favoris.isbn)
+                vue.changer_resource_iconeFavoris_false(iconFavoris)
+                chargerLivresFavoris()
+            }
+        }
     }
 }
