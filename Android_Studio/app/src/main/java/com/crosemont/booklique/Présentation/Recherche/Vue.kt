@@ -48,7 +48,7 @@ class Vue : Fragment() {
         barreRecherche = view.findViewById(R.id.entree_recherche)
         groupeRadio = view.findViewById(R.id.radioGroup)
         boutonRecherche = view.findViewById(R.id.btnRecherche)
-        présentateur = Présentateur(this)
+        présentateur = Présentateur(this, requireContext())
 
         présentateur.traiter_mise_a_jour_suggestions("titre")
 

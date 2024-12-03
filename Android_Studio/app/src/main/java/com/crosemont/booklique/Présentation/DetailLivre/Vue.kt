@@ -32,6 +32,7 @@ class Vue : Fragment() {
     private lateinit var nombrePagesLivre: TextView
     private lateinit var sectionEcheance: View
     private lateinit var présentateur: Présentateur
+    private lateinit var livre: Livre
 
     private var isFavoris: Boolean = false
     private var isbnLivre: String = ""
@@ -62,7 +63,7 @@ class Vue : Fragment() {
         nombrePagesLivre = view.findViewById(R.id.nombre_pages_livre_details)
         sectionEcheance = view.findViewById(R.id.echeance_section)
 
-        présentateur = Présentateur(this)
+        présentateur = Présentateur(this, requireContext())
 
         // Initialisation des données
         présentateur.initialiserLivre()
@@ -75,7 +76,7 @@ class Vue : Fragment() {
 
         // Fonctionnalité pour le bouton favoris
         buttonFavoris.setOnClickListener {
-            présentateur.basculerFavori(isbnLivre)
+            présentateur.basculerFavori(livre)
         }
 
         // Fonctionnalité pour l'ajout à l'agenda
@@ -87,6 +88,7 @@ class Vue : Fragment() {
     }
 
     fun afficherLivre(livre: Livre) {
+        this.livre = livre
         titreLivre.text = livre.titre
         statutLivre.text = if (livre.estDisponible()) getString(R.string.disponible) else getString(R.string.indisponible)
         descriptionCourte.text = livre.description.take(45) + "..."

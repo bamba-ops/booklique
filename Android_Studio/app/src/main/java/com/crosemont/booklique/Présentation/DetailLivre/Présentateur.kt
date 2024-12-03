@@ -1,5 +1,6 @@
 package com.crosemont.booklique.Présentation.DetailLivre
 
+import Livre
 import android.content.ActivityNotFoundException
 import android.content.ContentUris
 import android.content.ContentValues
@@ -7,22 +8,32 @@ import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
 import android.widget.Toast
+import com.crosemont.booklique.domaine.entité.Favoris
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class Présentateur(private val vue: Vue) {
+class Présentateur(private val vue: Vue, context: Context) {
 
-    private val modèle = Modèle()
+    private val modèle = Modèle(context)
 
     fun initialiserLivre() {
         vue.afficherLivre(modèle.obtenirLivre() ?: return)
     }
 
     fun estFavori(isbn: String) {
-        val estFavori = modèle.obtenirLivreFavori(isbn)
-        vue.mettreÀJourFavori(estFavori)
+        CoroutineScope( Dispatchers.Main ).launch {
+            var favori: Favoris? = modèle.obtenirLivreFavori(isbn)
+            if(favori != null){
+                vue.mettreÀJourFavori(true)
+            } else {
+                vue.mettreÀJourFavori(false)
+            }
+        }
     }
 
     fun getFormattedDate(date : Date): String {
@@ -30,12 +41,22 @@ class Présentateur(private val vue: Vue) {
         return dateFormat.format(date)
     }
 
-    fun basculerFavori(isbn: String) {
+    fun basculerFavori(livre: Livre) {
         val actuelFavori = vue.estLivreFavori()
-        if (actuelFavori) {
-            modèle.retirerLivreFavori(isbn)
-        } else {
-            modèle.ajouterLivreFavori(isbn)
+        CoroutineScope( Dispatchers.Main ).launch {
+            if (actuelFavori){
+                modèle.retirerLivreFavori(livre.isbn)
+            } else{
+                modèle.ajouterLivreFavori(Favoris(
+                    livre.isbn,
+                    livre.image_url,
+                    livre.titre,
+                    livre.description,
+                    livre.auteur,
+                    livre.editeur,
+                    livre.genre
+                ))
+            }
         }
         vue.mettreÀJourFavori(!actuelFavori)
     }

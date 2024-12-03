@@ -1,20 +1,26 @@
 package com.crosemont.booklique.Présentation.DetailLivre
 
 import Livre
+import android.content.Context
+import com.crosemont.booklique.domaine.dao.dbConfig.DatabaseBuilder
+import com.crosemont.booklique.domaine.entité.Favoris
 import com.crosemont.booklique.domaine.mork_data.Data
 
-class Modèle {
+class Modèle(context: Context) {
 
-    fun obtenirLivreFavori(isbn: String): Boolean {
-        return Data.estLivreFavori(isbn)
+    private val database = DatabaseBuilder.obtenirInstance(context)
+    private val favorisDao = database.favorisDao()
+
+    suspend fun obtenirLivreFavori(isbn: String): Favoris? {
+        return favorisDao.obtenirFavoriParIsbn(isbn)
     }
 
-    fun ajouterLivreFavori(isbn: String) {
-        Data.obtenirLivreParISBN(isbn)?.let { Data.ajouterLivreFavori(it) }
+    suspend fun ajouterLivreFavori(favori: Favoris) {
+        favorisDao.ajouterFavori(favori)
     }
 
-    fun retirerLivreFavori(isbn: String) {
-        Data.retirerLivreFavoriParISBN(isbn)
+    suspend fun retirerLivreFavori(isbn: String) {
+        favorisDao.supprimerFavoriParIsbn(isbn)
     }
 
     fun estDisponible(disponibilite: String): Boolean {

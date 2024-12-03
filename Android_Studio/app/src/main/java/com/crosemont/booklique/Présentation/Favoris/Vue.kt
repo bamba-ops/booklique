@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
+import com.crosemont.booklique.domaine.entité.Favoris
 import com.crosemont.booklique.domaine.mork_data.Data
 import com.squareup.picasso.Picasso
 
@@ -34,23 +35,35 @@ class Vue : Fragment() {
 
         resultatLivresFavoris = view.findViewById(R.id.resultat_livres_favoris)
         textView = view.findViewById(R.id.rienFavoris)
-        présentateur = Présentateur(this)
+        présentateur = Présentateur(this, requireContext())
         présentateur.chargerLivresFavoris()
 
 
     }
 
-    fun afficherLivresFavoris(livres: List<Livre>) {
-        if (livres.isEmpty()) {
-            textView.visibility = View.VISIBLE
-        } else {
-            textView.visibility = View.GONE
-        }
-
+    fun charger_affichage_livre_favoris(){
         resultatLivresFavoris.removeAllViews()
+    }
+
+    fun afficher_text_view(){
+        textView.visibility = View.VISIBLE
+    }
+
+    fun enlever_text_view(){
+        textView.visibility = View.GONE
+    }
+
+    fun changer_resource_iconeFavoris_true(iconeFavoris: ImageView){
+        iconeFavoris.setImageResource(R.drawable.favoris_true)
+    }
+
+    fun changer_resource_iconeFavoris_false(iconeFavoris: ImageView){
+        iconeFavoris.setImageResource(R.drawable.favoris_false)
+    }
+
+    fun afficherLivresFavoris(favoris: Favoris) {
         val inflater = layoutInflater
 
-        for (livre in livres) {
             val livresFavorisView = inflater.inflate(
                 R.layout.fragment_article_livre,
                 resultatLivresFavoris,
@@ -63,31 +76,26 @@ class Vue : Fragment() {
             val genreTextView = livresFavorisView.findViewById<TextView>(R.id.livre_genre)
             val iconeFavoris = livresFavorisView.findViewById<ImageView>(R.id.icone_favoris)
 
-            titreTextView.text = livre.titre
-            auteurTextView.text = livre.auteur
-            genreTextView.text = livre.genre
+            titreTextView.text = favoris.titre
+            auteurTextView.text = favoris.auteur
+            genreTextView.text = favoris.genre
             iconeFavoris.setImageResource(R.drawable.favoris_true)
 
             Picasso.get()
-                .load(livre.image_url)
+                .load(favoris.image_url)
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.error_image)
                 .into(imageView)
 
             livresFavorisView.setOnClickListener {
-                présentateur.ouvrirDétailsLivre(livre.isbn)
+                présentateur.traiter_obtenir_livre(favoris.isbn)
                 findNavController().navigate(R.id.action_favoris_to_detail_livre)
             }
 
             iconeFavoris.setOnClickListener {
-                présentateur.ajouterLivresFavoris(livre)
-            }
-
-            iconeFavoris.setOnClickListener {
-                présentateur.retirerDesFavoris(livre)
+                présentateur.traiter_favoris(favoris, iconeFavoris)
             }
 
             resultatLivresFavoris.addView(livresFavorisView)
         }
-    }
 }
