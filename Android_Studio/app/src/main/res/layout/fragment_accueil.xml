@@ -5,10 +5,25 @@
     android:layout_height="match_parent"
     tools:context=".Présentation.Accueil.Vue">
 
-    <ScrollView
+    <FrameLayout
+        android:id="@+id/chargement"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:visibility="visible">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/accueil"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
-                android:background="#F5F5DC"
+                android:background="#0DFF0005"
                 android:paddingEnd="16dp"
                 android:scrollbars="none">
 
@@ -91,8 +106,11 @@
                     <!-- Carte d'auteur -->
 
                     <!-- Ajoutez d'autres cartes d'auteur ici si nécessaire -->
+
                 </LinearLayout>
+
             </HorizontalScrollView>
+
 
             <!-- Section Nouveautés -->
             <LinearLayout

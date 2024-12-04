@@ -1,0 +1,68 @@
+package com.crosemont.booklique.Présentation.Recherche
+
+import Livre
+import android.content.Context
+import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.navigation.fragment.findNavController
+import com.crosemont.booklique.Présentation.Recherche.Modèle
+import com.crosemont.booklique.R
+import com.crosemont.booklique.domaine.mork_data.Data
+import com.google.android.material.tabs.TabLayout.Mode
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+
+class Présentateur(private val vue: Vue, context: Context) {
+    private var job: Job? = null
+    private val modèle = Modèle(context)
+
+    fun traiter_historique_recherche() {
+        job = CoroutineScope(Dispatchers.Main).launch {
+            val historique = modèle.obtenirHistoriqueRecherches()
+            val suggestionsAvecIcones = historique.map { "⏳ $it" }
+            vue.mettreAJourSuggestions(suggestionsAvecIcones)
+        }
+    }
+
+    fun traiter_supprimer_recherche_historique(){
+        job = CoroutineScope(Dispatchers.Main).launch {
+            modèle.supprimerHistoriqueRecherche()
+            vue.mettreAJourSuggestions(emptyList())
+        }
+    }
+
+    fun traiter_mise_a_jour_suggestions(suggestions: String) {
+        job = CoroutineScope(Dispatchers.Main).launch {
+            val historique = modèle.obtenirHistoriqueRecherches()
+            val suggestions  = if (suggestions == "titre") {
+                modèle.obtenirLivresParTitres()
+            } else {
+                modèle.obtenirLivresParAuteursListString()
+            }
+            val suggestionsAvecIcones = mutableListOf<String>()
+
+            suggestionsAvecIcones.addAll(historique.map { "⏳ $it" })
+            suggestionsAvecIcones.addAll(suggestions.map { "🔍 $it" })
+
+            vue.mettreAJourSuggestions(suggestionsAvecIcones)
+        }
+    }
+
+    fun lancerRecherche(rechercheText: String, critere: String) {
+        if(rechercheText.isNotEmpty()){
+            CoroutineScope( Dispatchers.Main ).launch {
+                modèle.ajouterRecherche(rechercheText)
+            }
+            when (critere) {
+                "titre" -> modèle.obtenirLivresParNomTitre(rechercheText)
+                "auteur" -> modèle.obtenirLivresParNomAuteur(rechercheText)
+            }
+            vue.naviguer_resultat()
+        }
+    }
+
+}

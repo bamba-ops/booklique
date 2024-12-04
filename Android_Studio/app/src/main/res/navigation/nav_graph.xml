@@ -15,7 +15,7 @@
         <action android:id="@+id/action_accueil_to_genres" app:destination="@id/genres" />
         <action android:id="@+id/action_accueil_to_reservation" app:destination="@id/reservation" />
         <action android:id="@+id/action_accueil_to_detail_livre" app:destination="@id/detail_livre" />
-        <action android:id="@+id/action_accueil_to_recherche" app:destination="@id/recherche" />
+        <action android:id="@+id/action_accueil_to_resultats" app:destination="@id/resultats_recherche" />
     </fragment>
 
     <!-- Fragment Genres -->
@@ -27,6 +27,7 @@
         <action android:id="@+id/action_genres_to_accueil" app:destination="@id/accueil" />
         <action android:id="@+id/action_genres_to_recherche" app:destination="@id/recherche" />
         <action android:id="@+id/action_genres_to_reservation" app:destination="@id/reservation" />
+        <action android:id="@+id/action_genres_to_resultat" app:destination="@id/resultats_recherche" />
         <action android:id="@+id/action_genres_to_detail_livre" app:destination="@id/detail_livre" />
     </fragment>
 
@@ -36,11 +37,17 @@
         android:name="com.crosemont.booklique.Présentation.Recherche.Vue"
         android:label="fragment_recherche"
         tools:layout="@layout/fragment_recherche">
-        <action android:id="@+id/action_recherche_to_accueil" app:destination="@id/accueil" />
-        <action android:id="@+id/action_recherche_to_genres" app:destination="@id/genres" />
-        <action android:id="@+id/action_recherche_to_reservation" app:destination="@id/reservation" />
-        <action android:id="@+id/action_recherche_to_detail_livre" app:destination="@id/detail_livre" />
+        <action android:id="@+id/action_recherche_to_resultat" app:destination="@id/resultats_recherche" />
     </fragment>
+
+    <!-- Fragment resultat  Recherche -->
+    <fragment
+        android:id="@+id/resultats_recherche"
+        android:name="com.crosemont.booklique.Présentation.Recherche.Vue_Resultat"
+        tools:layout="@layout/fragment_resultats_recherche">
+        <action android:id="@+id/action_resultat_to_detail_livre" app:destination="@id/detail_livre" />
+    </fragment>
+
 
     <!-- Fragment Detail Livre -->
     <fragment

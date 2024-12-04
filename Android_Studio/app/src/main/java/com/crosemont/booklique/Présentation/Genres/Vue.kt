@@ -16,6 +16,7 @@ class Vue : Fragment() {
     private lateinit var genreDeveloppementPersonnel: LinearLayout
     private lateinit var genreFiction: LinearLayout
     private lateinit var genreHistoire: LinearLayout
+    private lateinit var présentateur: Présentateur
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +34,7 @@ class Vue : Fragment() {
         genreDeveloppementPersonnel = view.findViewById(R.id.genre_developpement_personnel)
         genreFiction = view.findViewById(R.id.genre_fiction)
         genreHistoire = view.findViewById(R.id.genre_histoire)
+        présentateur = Présentateur(this)
 
         genreAffaires.setOnClickListener { navigateToRecherche("Afffaires") }
         genreBiographies.setOnClickListener { navigateToRecherche("Biographies") }
@@ -42,10 +44,7 @@ class Vue : Fragment() {
     }
 
     private fun navigateToRecherche(genre: String) {
-        val bundle = Bundle().apply {
-            putString("genre", genre)
-            putBoolean("obtenirLivreParGenre", true)
-        }
-        findNavController().navigate(R.id.action_genres_to_recherche, bundle)
+        présentateur.traiter_obtenir_livres_par_genre(genre)
+        findNavController().navigate(R.id.action_genres_to_resultat)
     }
 }

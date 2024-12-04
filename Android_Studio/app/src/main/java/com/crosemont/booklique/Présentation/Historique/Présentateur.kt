@@ -1,0 +1,51 @@
+package com.crosemont.booklique.Présentation.Historique
+
+import android.content.Context
+import android.widget.TextView
+import com.crosemont.booklique.Présentation.Historique.Modèle
+import com.crosemont.booklique.domaine.mork_data.Data
+import com.crosemont.booklique.domaine.entité.Reservation
+import com.crosemont.booklique.domaine.entité.ReservationHistorique
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+
+class Présentateur(private val vue: Vue, context: Context) {
+    private val modèle = Modèle(context)
+
+    fun formaterDateHistorique(date: Date?): String {
+        if (date == null) {
+            return "Date invalide"
+        }
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return dateFormat.format(date)
+    }
+
+    fun afficherHistoriqueReservation() {
+        CoroutineScope( Dispatchers.Main ).launch{
+            var reservationHistoriqueList = modèle.obtenirHistoriqueReservation()
+            if(reservationHistoriqueList.isNotEmpty()){
+                vue.afficherHistoriqueReservation(reservationHistoriqueList)
+            }
+        }
+    }
+
+    fun traiter_titre_historique_reservation(isbn: String, titre: TextView){
+        CoroutineScope( Dispatchers.Main ).launch {
+            var livre = modèle.obtenirLivreParIsbn(isbn)
+            if(livre != null){
+                vue.changer_text(titre, livre.titre)
+            }
+        }
+    }
+
+    fun supprimerHistoriqueReservation() {
+        CoroutineScope(Dispatchers.Main).launch {
+            modèle.supprimerHistoriqueReservation()
+        }
+    }
+
+
+}

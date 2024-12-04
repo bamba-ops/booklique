@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Booklique</string>
-    <!-- Menu -->
+    <!-- Nom de l'application -->
+    <string name="app_name" translatable="false">Booklique</string>
+
+    <!-- Genres -->
+    <string name="titre_genres">Genres</string>
+    <string name="genre_affaires">Affaires</string>
+    <string name="genre_biographies">Biographies</string>
+    <string name="genre_developpement_personnel">Développement personnel</string>
+    <string name="genre_fiction">Fiction</string>
+    <string name="genre_histoire">Histoire</string>
+
+    <!-- Menu principal -->
     <string name="accueil">Accueil</string>
     <string name="reservation">Réservation</string>
     <string name="recherche">Recherche</string>
     <string name="favoris">Favoris</string>
     <string name="historique">Historique</string>
 
-    <!--    Page Accueil -->
+    <!-- Page Accueil -->
     <string name="titre_librairie">Librairie</string>
     <string name="parcourir_genres">Parcourir les genres</string>
     <string name="parcourir_auteur">Parcourir par auteur</string>
     <string name="nouveautes">Nouveautés</string>
 
-<!--    Page Livre carde fragment recherche -->
+    <!-- Page Recherche -->
+    <string name="search_hint">Rechercher un livre ou un auteur</string>
+    <string name="search_label">Recherche : Toutes catégories</string>
+    <string name="no_books_found">Aucun livre trouvé</string>
+
+    <!-- Page Livre (dans Recherche) -->
     <string name="image_du_livre">Image du livre</string>
     <string name="titre_du_livre">Titre du livre</string>
     <string name="auteur">Auteur</string>
@@ -23,35 +38,31 @@
 
     <!-- Page Détails -->
     <string name="details">Détails</string>
-    <string name="statut">Statut :</string>
+    <string name="statut">Statut&#160;: </string>
     <string name="description">Description</string>
-    <string name="auteur_texte">Auteur :</string>
-    <string name="echeance">Échéance :</string>
+    <string name="auteur_texte">Auteur&#160;: </string>
+    <string name="echeance">Échéance&#160;: </string>
     <string name="reserver">Réserver</string>
+    <string name="disponible">Disponible</string>
+    <string name="indisponible">Indisponible</string>
 
-    <!-- Titres -->
-    <string name="titre_genres">Genres de livres</string>
-
-    <!-- Genres -->
-    <string name="genre_affaires">Affaires</string>
-    <string name="genre_biographies">Biographies et mémoires</string>
-    <string name="genre_developpement_personnel">Développement personnel</string>
-    <string name="genre_fiction">Fiction et littérature</string>
-    <string name="genre_histoire">Histoire</string>
-
-<!--    Page reservation -->
-    <string name="label_title">Titre :</string>
-    <string name="label_reservation_date">Date de réservation :</string>
-    <string name="label_due_date">À rendre :</string>
+    <!-- Page Réservation -->
+    <string name="label_title">Titre&#160;:</string>
+    <string name="label_reservation_date">Date de réservation&#160;:</string>
+    <string name="label_due_date">À rendre&#160;:</string>
     <string name="button_cancel">Annuler</string>
     <string name="button_extend">Prolonger</string>
+    <string name="editeur">Éditeur&#160;:</string>
+    <string name="date_publication">Date de publication&#160;:</string>
+    <string name="nombre_pages">Nombre de pages&#160;:</string>
+    <string name="confirmer_reservation">Confirmer la réservation</string>
 
-    <!--    Page Recherche -->
-    <string name="search_hint">Rechercher un livre ou un auteur</string>
-    <string name="search_label">Recherche : Toutes catégories</string>
-    <string name="no_books_found">Aucun livre trouvé</string>
-
-<!--    Général -->
-    <string name="date">Date : </string>
+    <!-- Général -->
+    <string name="date">Date&#160;:</string>
     <string name="reservations">Réservations</string>
+    <string name="message_no_favoris">Aucun favori dans la liste</string>
+    <string name="non_definit">Non défini</string>
+
+    <!-- Messages -->
+    <string name="message_description_calandar">Rappel de retour du livre avant la date limite</string>
 </resources>
