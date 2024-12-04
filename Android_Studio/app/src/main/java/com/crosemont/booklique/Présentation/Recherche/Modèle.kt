@@ -4,15 +4,30 @@ import Livre
 import android.content.Context
 import com.crosemont.booklique.domaine.dao.dbConfig.DatabaseBuilder
 import com.crosemont.booklique.domaine.entité.Favoris
+import com.crosemont.booklique.domaine.entité.Recherche
 import com.crosemont.booklique.domaine.mork_data.Data
 
 class Modèle(context: Context) {
+
     private val favorisDao = DatabaseBuilder.obtenirInstance(context).favorisDao()
+    private val rechercheDao = DatabaseBuilder.obtenirInstance(context).rechercheDao()
 
     var isObtenirLivreParAuteur: Boolean = false
     var isObtenirLivreParTitre: Boolean = false
     var isObtenirLivreParNouveautes: Boolean = false
     var isObtenirLivreParGenre: Boolean = false
+
+    suspend fun supprimerHistoriqueRecherche(){
+        rechercheDao.supprimerTout()
+    }
+
+    suspend fun obtenirHistoriqueRecherches(): List<String> {
+        return rechercheDao.obtenirHistoriqueRecherches()
+    }
+
+    suspend fun ajouterRecherche(requete:String){
+        rechercheDao.ajouterRecherche(Recherche(requete = requete))
+    }
 
     fun obtenirLivresParNomAuteur(auteur: String){
         Data.definirLivreParAuteur(auteur)

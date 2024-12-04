@@ -31,6 +31,7 @@ class Vue : Fragment() {
     private lateinit var groupeRadio: RadioGroup
     private lateinit var boutonRecherche: ImageButton
     private lateinit var présentateur: Présentateur
+    private lateinit var boutonSupprimerHistorique: ImageButton
 
 
     override fun onCreateView(
@@ -48,14 +49,34 @@ class Vue : Fragment() {
         barreRecherche = view.findViewById(R.id.entree_recherche)
         groupeRadio = view.findViewById(R.id.radioGroup)
         boutonRecherche = view.findViewById(R.id.btnRecherche)
+        boutonSupprimerHistorique = view.findViewById(R.id.btnSupprimerHistorique)
         présentateur = Présentateur(this, requireContext())
 
         présentateur.traiter_mise_a_jour_suggestions("titre")
+        présentateur.traiter_historique_recherche()
+
+        boutonSupprimerHistorique.setOnClickListener {
+            présentateur.traiter_supprimer_recherche_historique() // Appelle la méthode du présentateur pour supprimer l'historique
+        }
 
         groupeRadio.setOnCheckedChangeListener { _, checkedId ->
             val critère = if (checkedId == R.id.radioTitre) "titre" else "auteur"
             présentateur.traiter_mise_a_jour_suggestions(critère)
         }
+
+        barreRecherche.setOnItemClickListener { _, _, position, _ ->
+            val suggestion = barreRecherche.adapter.getItem(position).toString()
+
+            // Supprimer le préfixe avant de lancer la recherche
+            val texteSansPrefixe = suggestion.removePrefix("🔍 ").removePrefix("⏳ ")
+            barreRecherche.setText(texteSansPrefixe)
+
+            // Lancer la recherche
+            val critère = if (groupeRadio.checkedRadioButtonId == R.id.radioTitre) "titre" else "auteur"
+            présentateur.lancerRecherche(texteSansPrefixe, critère)
+        }
+
+
 
         // Action pour rechercher
         boutonRecherche.setOnClickListener {
