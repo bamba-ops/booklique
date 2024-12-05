@@ -4,7 +4,7 @@ import Livre
 import android.content.Context
 import com.crosemont.booklique.domaine.dao.dbConfig.DatabaseBuilder
 import com.crosemont.booklique.domaine.entité.Favoris
-import com.crosemont.booklique.domaine.mork_data.Data
+import com.crosemont.booklique.domaine.service.LivreService
 
 class Modèle(context: Context) {
 
@@ -28,8 +28,8 @@ class Modèle(context: Context) {
     }
 
     fun obtenirLivre(): Livre?{
-        if(Data.isObtenirLivre){
-            return Data.obtenirLivre(Data._obtenirLivre!!)
+        if(LivreService.isObtenirLivre){
+            return LivreService.obtenirLivre(LivreService._obtenirLivre!!)
         }
         return null
     }

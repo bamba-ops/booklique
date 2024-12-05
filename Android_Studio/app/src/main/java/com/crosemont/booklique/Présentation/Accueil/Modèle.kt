@@ -1,36 +1,28 @@
 package com.crosemont.booklique.Présentation.Accueil
 
 import Livre
-import com.crosemont.booklique.domaine.mork_data.Data
-import kotlinx.coroutines.delay
+import com.crosemont.booklique.domaine.service.LivreService
 
 class Modèle() {
 
-    suspend fun obtenirLivres(): List<Livre>{
-        delay(400)
-        return Data.obtenirLivresDemo()
+    fun obtenirLivreParNouveautes(): List<Livre>{
+        return LivreService.obtenirLivresParNouveautesPrend5()
     }
 
-    suspend fun obtenirLivreParNouveautes(): List<Livre>{
-        delay(600)
-        return Data.obtenirLivresDemo()
-    }
-
-    suspend fun obtenirLivresParAuteur(): List<Livre>{
-        delay(400)
-        return Data.obtenirLivresParAuteurs()
+    fun obtenirLivresParAuteur(): List<Livre>{
+        return LivreService.obtenirLivresParAuteur()
     }
 
     fun obtenirLivreParAuteur(auteur: String){
-        Data.definirLivreParAuteur(auteur)
+        LivreService.definirLivreParAuteur(auteur)
     }
 
     fun obtenirLivreParNouveaute(isbn: String){
-        Data.definirLivre(isbn)
+        LivreService.definirLivre(isbn)
     }
 
     fun obtenirLivresParNouveautes(){
-        Data.definirLivresParNouveautes()
+        LivreService.definirLivresParNouveautes()
     }
 
 }

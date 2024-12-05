@@ -6,6 +6,7 @@ import com.crosemont.booklique.domaine.dao.dbConfig.DatabaseBuilder
 import com.crosemont.booklique.domaine.entité.Reservation
 import com.crosemont.booklique.domaine.entité.ReservationHistorique
 import com.crosemont.booklique.domaine.mork_data.Data
+import com.crosemont.booklique.domaine.service.LivreService
 
 class Modèle(context: Context){
 
@@ -25,7 +26,7 @@ class Modèle(context: Context){
     }
 
     fun obtenirLivreParIsbn(isbn: String): Livre? {
-        return Data.obtenirLivreParISBN(isbn)
+        return LivreService.obtenirLivreParISBN(isbn)
     }
 
     fun obtenirReservation(): List<Reservation> {

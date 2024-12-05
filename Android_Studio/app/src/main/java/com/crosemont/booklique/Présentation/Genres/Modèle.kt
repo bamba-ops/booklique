@@ -1,10 +1,10 @@
 package com.crosemont.booklique.Présentation.Genres
 
-import com.crosemont.booklique.domaine.mork_data.Data
+import com.crosemont.booklique.domaine.service.LivreService
 
 class Modèle {
 
     fun obtenirLivreParGenre(genre: String){
-        Data.definirLivreParGenre(genre)
+        LivreService.definirLivreParGenre(genre)
     }
 }

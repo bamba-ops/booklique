@@ -5,7 +5,7 @@ import android.content.Context
 import com.crosemont.booklique.domaine.dao.dbConfig.DatabaseBuilder
 import com.crosemont.booklique.domaine.entité.Favoris
 import com.crosemont.booklique.domaine.entité.Recherche
-import com.crosemont.booklique.domaine.mork_data.Data
+import com.crosemont.booklique.domaine.service.LivreService
 
 class Modèle(context: Context) {
 
@@ -30,55 +30,55 @@ class Modèle(context: Context) {
     }
 
     fun obtenirLivresParNomAuteur(auteur: String){
-        Data.definirLivreParAuteur(auteur)
+        LivreService.definirLivreParAuteur(auteur)
     }
 
     fun obtenirLivresParNomTitre(titre: String){
-        Data.definirLivreParTitre(titre)
+        LivreService.definirLivreParTitre(titre)
     }
 
     fun obtenirLivresParTitres(): List<String>{
-        return Data.obtenirLivresParTires()
+        return LivreService.obtenirLivresParTires()
     }
 
     fun obtenirLivresParAuteursListString(): List<String>{
-        return Data.obtenirLivresParAuteursListString()
+        return LivreService.obtenirLivresParAuteursListString()
     }
 
     fun obtenirLivresParAuteur(): List<Livre>{
-        if(Data.isObtenirLivreParAuteur){
-            Data.isObtenirLivreParAuteur = false
+        if(LivreService.isObtenirLivreParAuteur){
+            LivreService.isObtenirLivreParAuteur = false
             isObtenirLivreParAuteur = true
-            return Data.obtenirLivresParAuteur(Data._obtenirLivreParAuteur!!)
+            return LivreService.obtenirLivresParAuteur(LivreService._obtenirLivreParAuteur!!)
         }
         return emptyList()
     }
 
     fun obtenirLivreParTitre(): Livre? {
-        if(Data.isObtenirLivreParTitre){
-            Data.isObtenirLivreParTitre = false
+        if(LivreService.isObtenirLivreParTitre){
+            LivreService.isObtenirLivreParTitre = false
             isObtenirLivreParTitre = true
-            return Data.obtenirLivreParTitre(Data._obtenirLivreParTitre!!)
+            return LivreService.obtenirLivreParTitre(LivreService._obtenirLivreParTitre!!)
         }
 
         return null
     }
 
      fun obtenirLivresParNouveautes(): List<Livre> {
-        if (Data.isObtenirLivresParNouveautes) {
-            Data.isObtenirLivresParNouveautes = false
+        if (LivreService.isObtenirLivresParNouveautes) {
+            LivreService.isObtenirLivresParNouveautes = false
             isObtenirLivreParNouveautes = true
-            return Data.obtenirLivresDemo()
+            return LivreService.obtenirLivresParNouveautesPrend10()
         }
         return emptyList()
     }
 
 
     fun _obtenirLivresParGenre(): List<Livre>{
-        if(Data.isObtenirLivresParGenre){
-            Data.isObtenirLivresParGenre = false
+        if(LivreService.isObtenirLivresParGenre){
+            LivreService.isObtenirLivresParGenre = false
             isObtenirLivreParGenre = true
-            return Data.obtenirLivresParGenre(Data._obtenirLivresParGenre!!)
+            return LivreService.obtenirLivresParGenre(LivreService._obtenirLivresParGenre!!)
         }
         return emptyList()
     }
@@ -96,7 +96,7 @@ class Modèle(context: Context) {
     }
 
     fun obtenirLivre(isbn: String){
-        Data.definirLivre(isbn)
+        LivreService.definirLivre(isbn)
     }
 
 

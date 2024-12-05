@@ -66,7 +66,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("androidx.room:room-runtime:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1") // Utiliser kapt pour le compilateur
+    ksp("androidx.room:room-compiler:2.6.1")
+    implementation("com.google.code.gson:gson:2.10")
+
 
     // Dépendances pour les tests unitaires et Mockito
     testImplementation("org.mockito:mockito-core:4.11.0")

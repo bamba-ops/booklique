@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Présentateur(private val vue: Vue, context: Context) {
     private var job: Job? = null
@@ -22,26 +23,28 @@ class Présentateur(private val vue: Vue, context: Context) {
 
     fun traiter_historique_recherche() {
         job = CoroutineScope(Dispatchers.Main).launch {
-            val historique = modèle.obtenirHistoriqueRecherches()
+            val historique = withContext(Dispatchers.IO) { modèle.obtenirHistoriqueRecherches() }
             val suggestionsAvecIcones = historique.map { "⏳ $it" }
             vue.mettreAJourSuggestions(suggestionsAvecIcones)
         }
     }
 
-    fun traiter_supprimer_recherche_historique(){
+    fun traiter_supprimer_recherche_historique() {
         job = CoroutineScope(Dispatchers.Main).launch {
-            modèle.supprimerHistoriqueRecherche()
+            withContext(Dispatchers.IO) { modèle.supprimerHistoriqueRecherche() }
             vue.mettreAJourSuggestions(emptyList())
         }
     }
 
-    fun traiter_mise_a_jour_suggestions(suggestions: String) {
+    fun traiter_mise_a_jour_suggestions(critère: String) {
         job = CoroutineScope(Dispatchers.Main).launch {
-            val historique = modèle.obtenirHistoriqueRecherches()
-            val suggestions  = if (suggestions == "titre") {
-                modèle.obtenirLivresParTitres()
-            } else {
-                modèle.obtenirLivresParAuteursListString()
+            val historique = withContext(Dispatchers.IO) { modèle.obtenirHistoriqueRecherches() }
+            val suggestions = withContext(Dispatchers.IO) {
+                if (critère == "titre") {
+                    modèle.obtenirLivresParTitres()
+                } else {
+                    modèle.obtenirLivresParAuteursListString()
+                }
             }
             val suggestionsAvecIcones = mutableListOf<String>()
 
@@ -53,15 +56,17 @@ class Présentateur(private val vue: Vue, context: Context) {
     }
 
     fun lancerRecherche(rechercheText: String, critere: String) {
-        if(rechercheText.isNotEmpty()){
-            CoroutineScope( Dispatchers.Main ).launch {
-                modèle.ajouterRecherche(rechercheText)
+        if (rechercheText.isNotEmpty()) {
+            job = CoroutineScope(Dispatchers.Main).launch {
+                withContext(Dispatchers.IO) {
+                    modèle.ajouterRecherche(rechercheText)
+                    when (critere) {
+                        "titre" -> modèle.obtenirLivresParNomTitre(rechercheText)
+                        "auteur" -> modèle.obtenirLivresParNomAuteur(rechercheText)
+                    }
+                }
+                vue.naviguer_resultat()
             }
-            when (critere) {
-                "titre" -> modèle.obtenirLivresParNomTitre(rechercheText)
-                "auteur" -> modèle.obtenirLivresParNomAuteur(rechercheText)
-            }
-            vue.naviguer_resultat()
         }
     }
 
