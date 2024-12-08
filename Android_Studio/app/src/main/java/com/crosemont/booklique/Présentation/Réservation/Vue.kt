@@ -39,9 +39,9 @@ class Vue : Fragment() {
         présentateur = Présentateur(this)
 
         // Récupération des données de réservation de démonstration
-        val reservations = Data.obtenirReservationsDemo()
+        //val reservations = Data.obtenirReservationsDemo()
 
-        afficherListeRéservation(reservations)
+        //afficherListeRéservation(reservations)
 
     }
 
@@ -58,13 +58,13 @@ class Vue : Fragment() {
             val btn_prolonger_reservation: Button = vueListeReservationView.findViewById(R.id.btn_prolonger_reservation)
 
 
-            Picasso.get()
-                .load(reservation.livre.image_url)
-                .placeholder(R.drawable.placeholder_image)
-                .error(R.drawable.error_image)
-                .into(imageReservation)
-
-            titreLivreReserver.text = reservation.livre.titre
+//            Picasso.get()
+//                .load(reservation.livre.image_url)
+//                .placeholder(R.drawable.placeholder_image)
+//                .error(R.drawable.error_image)
+//                .into(imageReservation)
+//
+//            titreLivreReserver.text = reservation.livre.titre
             date_reservation.text = dateFormat.format(reservation.debut)
             date_remise_livre.text = dateFormat.format(reservation.termine)
 

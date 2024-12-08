@@ -2,13 +2,11 @@ package com.crosemont.booklique.Présentation.DetailLivre
 
 import Livre
 import android.content.ActivityNotFoundException
-import android.content.ContentUris
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
-import android.widget.Toast
 import com.crosemont.booklique.domaine.entité.Favoris
+import com.crosemont.booklique.domaine.entité.Reservation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,6 +27,44 @@ class Présentateur(private val vue: Vue, context: Context) {
             val livre = withContext(Dispatchers.IO) { modèle.obtenirLivre() }
             if (livre != null) {
                 vue.afficherLivre(livre)
+            }
+        }
+    }
+
+    private fun traiter_échance(): Pair<Date, Date> {
+        val debut = Date()
+
+        val calendrier = Calendar.getInstance()
+        calendrier.time = debut
+        calendrier.add(Calendar.MONTH, 1)
+        val fin = calendrier.time
+
+        return Pair(debut, fin)
+    }
+
+    fun traiter_reservation(isbn: String, livre: Livre){
+        vue.afficher_echance_livre()
+        job = CoroutineScope(Dispatchers.Main).launch {
+            val (debut, fin) = traiter_échance()
+            livre.quantite -= 1
+
+            val livreReponse = withContext(Dispatchers.IO) { modèle.modifierLivreParIsbn(isbn, livre) }
+
+            if(livreReponse != null){
+                vue.afficherToast("Modifié avec succès pour le livre ISBN: $isbn")
+
+                val reservation = withContext(Dispatchers.IO) { modèle.ajouterReservation(Reservation(
+                    id = null,
+                    debut = debut,
+                    termine = fin,
+                    livreIsbn = isbn
+                )) }
+
+                if(reservation != null){
+                    vue.afficherToast("Réservation créée avec succès pour le livre ISBN: $isbn")
+                } else {
+                    vue.afficherToast("Erreur lors de la création de la réservation")
+                }
             }
         }
     }

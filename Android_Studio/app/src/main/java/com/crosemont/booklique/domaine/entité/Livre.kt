@@ -13,7 +13,7 @@ data class Livre(
     val genre: String,
     val date_publication: Date,
     val nombre_pages: Int,
-    val quantite: Int
+    var quantite: Int
 ) : Parcelable {
 
     fun estDisponible(): Boolean {

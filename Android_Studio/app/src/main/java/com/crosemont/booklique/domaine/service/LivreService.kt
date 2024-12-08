@@ -1,12 +1,6 @@
 package com.crosemont.booklique.domaine.service
 import Livre
-import com.crosemont.booklique.domaine.mork_data.Data
-import com.crosemont.booklique.domaine.mork_data.Data.Companion
-import com.crosemont.booklique.domaine.mork_data.Data.Companion.obtenirLivreParISBN
-import com.crosemont.booklique.domaine.mork_data.Data.Companion.obtenirLivresDemo
 import com.crosemont.booklique.sourcededonnées.SourceDeDonnéesLivreHTTP
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 class LivreService{
 
@@ -55,7 +49,7 @@ class LivreService{
         }
 
         fun obtenirLivreParISBN(isbn: String): Livre? {
-            return source_api.obtenirTousLivres().find { it.isbn == isbn }
+            return source_api.obtenirLivreParIsbn(isbn)
         }
 
         fun obtenirLivre(isbn: String): Livre? {
@@ -100,6 +94,10 @@ class LivreService{
 
         fun obtenirLivresParAuteur(): List<Livre>{
             return source_api.obtenirTousLivres().groupBy { it.auteur }.mapNotNull { (_, livresParAuteur) -> livresParAuteur.firstOrNull()}.take(5)
+        }
+
+        fun modifierLivreParIsbn(isbn: String, livre: Livre): Livre?{
+            return source_api.modifierLivreParIsbn(isbn, livre)
         }
     }
 

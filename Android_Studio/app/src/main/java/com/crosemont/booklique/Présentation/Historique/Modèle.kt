@@ -7,6 +7,7 @@ import com.crosemont.booklique.domaine.entité.Reservation
 import com.crosemont.booklique.domaine.entité.ReservationHistorique
 import com.crosemont.booklique.domaine.mork_data.Data
 import com.crosemont.booklique.domaine.service.LivreService
+import com.crosemont.booklique.domaine.service.ReservationService
 
 class Modèle(context: Context){
 
@@ -30,7 +31,7 @@ class Modèle(context: Context){
     }
 
     fun obtenirReservation(): List<Reservation> {
-        return Data.obtenirReservationsDemo()
+        return ReservationService.obtenirReservations()
     }
 
 }

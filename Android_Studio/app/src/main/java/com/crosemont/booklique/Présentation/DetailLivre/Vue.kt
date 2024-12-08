@@ -71,7 +71,7 @@ class Vue : Fragment() {
         // Gestion des actions
 
         buttonReservation.setOnClickListener {
-            effectuerReservation()
+            présentateur.traiter_reservation(isbnLivre, livre)
         }
 
         // Fonctionnalité pour le bouton favoris
@@ -99,7 +99,7 @@ class Vue : Fragment() {
         nombrePagesLivre.text = livre.nombre_pages.toString()
         echeanceLivre.text = getString(R.string.non_definit)
         isbnLivre = livre.isbn
-
+        this.livre = livre
         // Charger l'image
         Glide.with(this)
             .load(livre.image_url)
@@ -122,11 +122,10 @@ class Vue : Fragment() {
         )
     }
 
-    private fun effectuerReservation() {
+    fun afficher_echance_livre(){
         val dateÉchéance = présentateur.écheance()
         sectionEcheance.visibility = View.VISIBLE
         echeanceLivre.text = présentateur.getFormattedDate(dateÉchéance)
-        buttonReservation.text = getString(R.string.confirmer_reservation)
     }
 
     fun estLivreFavori(): Boolean {

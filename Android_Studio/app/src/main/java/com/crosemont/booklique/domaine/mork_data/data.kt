@@ -200,35 +200,35 @@ class Data {
             )
         }
 
-        fun obtenirReservationsDemo(): List<Reservation> {
-            val livres = obtenirLivresDemo()
-            return listOf(
-                Reservation(
-                    id = 1,
-                    debut = Date(124, 2, 20), // 2024-03-20
-                    termine = Date(124, 3, 10), // 2024-04-10
-                    livre = livres[0]
-                ),
-                Reservation(
-                    id = 2,
-                    debut = Date(124, 4, 5), // 2024-05-05
-                    termine = Date(124, 4, 25), // 2024-05-25
-                    livre = livres[1]
-                ),
-                Reservation(
-                    id = 3,
-                    debut = Date(124, 6, 12), // 2024-07-12
-                    termine = Date(124, 7, 1), // 2024-08-01
-                    livre = livres[2]
-                ),
-                Reservation(
-                    id = 4,
-                    debut = Date(124, 8, 15), // 2024-09-15
-                    termine = Date(124, 9, 5), // 2024-10-05
-                    livre = livres[3]
-                )
-            )
-        }
+//        fun obtenirReservationsDemo(): List<Reservation> {
+//            val livres = obtenirLivresDemo()
+//            return listOf(
+//                Reservation(
+//                    id = 1,
+//                    debut = Date(124, 2, 20), // 2024-03-20
+//                    termine = Date(124, 3, 10), // 2024-04-10
+//                    livre = livres[0]
+//                ),
+//                Reservation(
+//                    id = 2,
+//                    debut = Date(124, 4, 5), // 2024-05-05
+//                    termine = Date(124, 4, 25), // 2024-05-25
+//                    livre = livres[1]
+//                ),
+//                Reservation(
+//                    id = 3,
+//                    debut = Date(124, 6, 12), // 2024-07-12
+//                    termine = Date(124, 7, 1), // 2024-08-01
+//                    livre = livres[2]
+//                ),
+//                Reservation(
+//                    id = 4,
+//                    debut = Date(124, 8, 15), // 2024-09-15
+//                    termine = Date(124, 9, 5), // 2024-10-05
+//                    livre = livres[3]
+//                )
+//            )
+//        }
     }
 }
 

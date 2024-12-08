@@ -4,7 +4,9 @@ import Livre
 import android.content.Context
 import com.crosemont.booklique.domaine.dao.dbConfig.DatabaseBuilder
 import com.crosemont.booklique.domaine.entité.Favoris
+import com.crosemont.booklique.domaine.entité.Reservation
 import com.crosemont.booklique.domaine.service.LivreService
+import com.crosemont.booklique.domaine.service.ReservationService
 
 class Modèle(context: Context) {
 
@@ -21,6 +23,14 @@ class Modèle(context: Context) {
 
     suspend fun retirerLivreFavori(isbn: String) {
         favorisDao.supprimerFavoriParIsbn(isbn)
+    }
+
+    fun modifierLivreParIsbn(isbn: String, livre: Livre): Livre?{
+        return LivreService.modifierLivreParIsbn(isbn, livre)
+    }
+
+    fun ajouterReservation(reservation: Reservation): Reservation? {
+        return ReservationService.ajouterReservation(reservation)
     }
 
     fun estDisponible(disponibilite: String): Boolean {
