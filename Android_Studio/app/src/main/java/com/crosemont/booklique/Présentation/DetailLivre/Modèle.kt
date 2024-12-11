@@ -5,6 +5,7 @@ import android.content.Context
 import com.crosemont.booklique.domaine.dao.dbConfig.DatabaseBuilder
 import com.crosemont.booklique.domaine.entité.Favoris
 import com.crosemont.booklique.domaine.entité.Reservation
+import com.crosemont.booklique.domaine.entité.ReservationHistorique
 import com.crosemont.booklique.domaine.service.LivreService
 import com.crosemont.booklique.domaine.service.ReservationService
 
@@ -12,6 +13,7 @@ class Modèle(context: Context) {
 
     private val database = DatabaseBuilder.obtenirInstance(context)
     private val favorisDao = database.favorisDao()
+    private val reservationDao = database.reservationHistoriqueDao()
 
     suspend fun obtenirLivreFavori(isbn: String): Favoris? {
         return favorisDao.obtenirFavoriParIsbn(isbn)
@@ -31,6 +33,10 @@ class Modèle(context: Context) {
 
     fun ajouterReservation(reservation: Reservation): Reservation? {
         return ReservationService.ajouterReservation(reservation)
+    }
+
+    suspend fun ajouterReservationHistorique(reservationHistorique: ReservationHistorique){
+        reservationDao.ajouterReservationHistorique(reservationHistorique)
     }
 
     fun estDisponible(disponibilite: String): Boolean {
