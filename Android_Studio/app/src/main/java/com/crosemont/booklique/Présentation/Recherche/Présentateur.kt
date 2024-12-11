@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.Présentation.Recherche.Modèle
 import com.crosemont.booklique.R
@@ -22,10 +23,15 @@ class Présentateur(private val vue: Vue, context: Context) {
     private val modèle = Modèle(context)
 
     fun traiter_historique_recherche() {
-        job = CoroutineScope(Dispatchers.Main).launch {
-            val historique = withContext(Dispatchers.IO) { modèle.obtenirHistoriqueRecherches() }
-            val suggestionsAvecIcones = historique.map { "⏳ $it" }
-            vue.mettreAJourSuggestions(suggestionsAvecIcones)
+        if(!modèle.connexion(vue.requireContext())){
+            traiterConnexion(vue.requireContext())
+        }else{
+            job = CoroutineScope(Dispatchers.Main).launch {
+                val historique =
+                    withContext(Dispatchers.IO) { modèle.obtenirHistoriqueRecherches() }
+                val suggestionsAvecIcones = historique.map { "⏳ $it" }
+                vue.mettreAJourSuggestions(suggestionsAvecIcones)
+            }
         }
     }
 
@@ -70,4 +76,12 @@ class Présentateur(private val vue: Vue, context: Context) {
         }
     }
 
+    fun traiterConnexion(context : Context){
+        AlertDialog.Builder(context)
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
+    }
 }
