@@ -1,6 +1,8 @@
 package com.crosemont.booklique.Présentation.Favoris
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.net.ConnectivityManager
 import com.crosemont.booklique.domaine.dao.dbConfig.DatabaseBuilder
 import com.crosemont.booklique.domaine.entité.Favoris
 import com.crosemont.booklique.domaine.service.LivreService
@@ -30,5 +32,10 @@ class Modèle(context: Context) {
         LivreService.definirLivre(isbn)
     }
 
-
+    @SuppressLint("ServiceCast")
+    fun connexion(context : Context) : Boolean{
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
 }
