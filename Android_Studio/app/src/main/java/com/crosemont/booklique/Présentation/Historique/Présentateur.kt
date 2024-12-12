@@ -10,6 +10,7 @@ import com.crosemont.booklique.domaine.entité.ReservationHistorique
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,7 +40,7 @@ class Présentateur(private val vue: Vue, context: Context) {
 
     fun traiter_titre_historique_reservation(isbn: String, titre: TextView){
         CoroutineScope( Dispatchers.Main ).launch {
-            var livre = modèle.obtenirLivreParIsbn(isbn)
+            var livre = withContext(Dispatchers.IO) { modèle.obtenirLivreParIsbn(isbn) }
             if(livre != null){
                 vue.changer_text(titre, livre.titre)
             }
@@ -48,7 +49,7 @@ class Présentateur(private val vue: Vue, context: Context) {
 
     fun supprimerHistoriqueReservation() {
         CoroutineScope(Dispatchers.Main).launch {
-            modèle.supprimerHistoriqueReservation()
+            withContext(Dispatchers.IO) { modèle.supprimerHistoriqueReservation()}
         }
     }
 

@@ -1,6 +1,7 @@
 package com.crosemont.booklique.Présentation.DetailLivre
 
 import Livre
+import android.app.AlertDialog
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.crosemont.booklique.R
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 class Vue : Fragment() {
 
@@ -71,8 +73,9 @@ class Vue : Fragment() {
         // Gestion des actions
 
         buttonReservation.setOnClickListener {
-            présentateur.traiter_reservation(isbnLivre, livre)
+            présentateur.traiter_confirmation_réservation()
         }
+
 
         // Fonctionnalité pour le bouton favoris
         buttonFavoris.setOnClickListener {
@@ -85,6 +88,10 @@ class Vue : Fragment() {
             ouvrirCalendrierPourAjouterEvenement()
         }
 
+    }
+
+    fun naviguer_accueil(){
+        findNavController().navigate(R.id.action_detail_livre_to_accueil)
     }
 
     fun afficherLivre(livre: Livre) {
@@ -150,6 +157,25 @@ class Vue : Fragment() {
             lieu,
             dateÉchéance
         )
+    }
+
+
+    fun afficherConfirmationReservation() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Confirmation")
+        builder.setMessage("Êtes-vous sûr de vouloir continuer ?")
+
+        builder.setPositiveButton("Oui") { dialog, _ ->
+            présentateur.traiter_reservation(isbnLivre, livre)
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Non") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
 
