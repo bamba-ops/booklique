@@ -43,6 +43,10 @@ class Présentateur(private val vue: Vue, context: Context) {
         return Pair(debut, fin)
     }
 
+    fun traiter_confirmation_réservation(){
+        vue.afficherConfirmationReservation()
+    }
+
     fun traiter_reservation(isbn: String, livre: Livre){
         vue.afficher_echance_livre()
         job = CoroutineScope(Dispatchers.Main).launch {
@@ -61,7 +65,6 @@ class Présentateur(private val vue: Vue, context: Context) {
 
                 if (reservation != null) {
                     val reservationHistorique = ReservationHistorique(
-                        id = reservation.id ?: 0,
                         debut = reservation.debut,
                         termine = reservation.termine,
                         livreIsbn = reservation.livreIsbn
@@ -70,9 +73,15 @@ class Présentateur(private val vue: Vue, context: Context) {
                     withContext(Dispatchers.IO) {
                         modèle.ajouterReservationHistorique(reservationHistorique)
                     }
+
+                    traiter_navigation_accueil()
                 }
             }
         }
+    }
+
+    fun traiter_navigation_accueil(){
+        vue.naviguer_accueil()
     }
 
     fun estFavori(isbn: String) {
