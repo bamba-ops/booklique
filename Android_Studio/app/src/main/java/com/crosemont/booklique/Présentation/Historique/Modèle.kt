@@ -5,7 +5,6 @@ import android.content.Context
 import com.crosemont.booklique.domaine.dao.dbConfig.DatabaseBuilder
 import com.crosemont.booklique.domaine.entité.Reservation
 import com.crosemont.booklique.domaine.entité.ReservationHistorique
-import com.crosemont.booklique.domaine.mork_data.Data
 import com.crosemont.booklique.domaine.service.LivreService
 import com.crosemont.booklique.domaine.service.ReservationService
 
@@ -16,10 +15,6 @@ class Modèle(context: Context){
 
     suspend fun obtenirHistoriqueReservation(): List<ReservationHistorique> {
         return reservationHistoriqueDao.obtenirToutesLesReservations()
-    }
-
-    suspend fun ajouterHistoriqueReservation(reservationHistorique: ReservationHistorique){
-        reservationHistoriqueDao.ajouterReservationHistorique(reservationHistorique)
     }
 
     suspend fun supprimerHistoriqueReservation(){

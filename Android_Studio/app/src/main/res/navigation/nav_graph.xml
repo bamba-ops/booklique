@@ -59,6 +59,7 @@
         <action android:id="@+id/action_detail_livre_to_genres" app:destination="@id/genres" />
         <action android:id="@+id/action_detail_livre_to_recherche" app:destination="@id/recherche" />
         <action android:id="@+id/action_detail_livre_to_reservation" app:destination="@id/reservation" />
+        <action android:id="@+id/action_detail_livre_to_reservation_historique" app:destination="@id/historique" />
     </fragment>
 
     <!-- Fragment Reservation -->

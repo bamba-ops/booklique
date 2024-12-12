@@ -7,6 +7,7 @@ import android.content.Intent
 import android.provider.CalendarContract
 import com.crosemont.booklique.domaine.entité.Favoris
 import com.crosemont.booklique.domaine.entité.Reservation
+import com.crosemont.booklique.domaine.entité.ReservationHistorique
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -42,6 +43,10 @@ class Présentateur(private val vue: Vue, context: Context) {
         return Pair(debut, fin)
     }
 
+    fun traiter_confirmation_réservation(){
+        vue.afficherConfirmationReservation()
+    }
+
     fun traiter_reservation(isbn: String, livre: Livre){
         vue.afficher_echance_livre()
         job = CoroutineScope(Dispatchers.Main).launch {
@@ -51,8 +56,6 @@ class Présentateur(private val vue: Vue, context: Context) {
             val livreReponse = withContext(Dispatchers.IO) { modèle.modifierLivreParIsbn(isbn, livre) }
 
             if(livreReponse != null){
-                vue.afficherToast("Modifié avec succès pour le livre ISBN: $isbn")
-
                 val reservation = withContext(Dispatchers.IO) { modèle.ajouterReservation(Reservation(
                     id = null,
                     debut = debut,
@@ -60,13 +63,25 @@ class Présentateur(private val vue: Vue, context: Context) {
                     livreIsbn = isbn
                 )) }
 
-                if(reservation != null){
-                    vue.afficherToast("Réservation créée avec succès pour le livre ISBN: $isbn")
-                } else {
-                    vue.afficherToast("Erreur lors de la création de la réservation")
+                if (reservation != null) {
+                    val reservationHistorique = ReservationHistorique(
+                        debut = reservation.debut,
+                        termine = reservation.termine,
+                        livreIsbn = reservation.livreIsbn
+                    )
+
+                    withContext(Dispatchers.IO) {
+                        modèle.ajouterReservationHistorique(reservationHistorique)
+                    }
+
+                    traiter_navigation_accueil()
                 }
             }
         }
+    }
+
+    fun traiter_navigation_accueil(){
+        vue.naviguer_accueil()
     }
 
     fun estFavori(isbn: String) {
