@@ -3,6 +3,7 @@ package com.crosemont.booklique.Présentation.Recherche
 import Livre
 import android.content.Context
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import com.crosemont.booklique.Présentation.Recherche.Modèle
 import com.crosemont.booklique.domaine.entité.Favoris
 import kotlinx.coroutines.CoroutineScope
@@ -67,23 +68,33 @@ class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context){
     }
 
     fun traiter_livre() {
-        vue.afficherChargement(true)
-        job = CoroutineScope(Dispatchers.Main).launch {
-            val livreParTitre = withContext(Dispatchers.IO) { modèle.obtenirLivreParTitre()?.let { listOf(it) } }
-            val livreParNouveautes = withContext(Dispatchers.IO) { modèle.obtenirLivresParNouveautes() }
-            val livreParAuteur = withContext(Dispatchers.IO) { modèle.obtenirLivresParAuteur() }
-            val livreParGenre = withContext(Dispatchers.IO) { modèle._obtenirLivresParGenre() }
+        if(!modèle.connexion(vue.requireContext())){
+            traiterConnexion(vue.requireContext())
+        }else{
+            vue.afficherChargement(true)
+            job = CoroutineScope(Dispatchers.Main).launch {
+                val livreParTitre =
+                    withContext(Dispatchers.IO) { modèle.obtenirLivreParTitre()?.let { listOf(it) } }
+                val livreParNouveautes =
+                    withContext(Dispatchers.IO) { modèle.obtenirLivresParNouveautes() }
+                val livreParAuteur = withContext(Dispatchers.IO) { modèle.obtenirLivresParAuteur() }
+                val livreParGenre = withContext(Dispatchers.IO) { modèle._obtenirLivresParGenre() }
 
-            when {
-                modèle.isObtenirLivreParTitre && !livreParTitre.isNullOrEmpty() ->
-                    afficherLivres(livreParTitre, "Critère de recherche : Titre")
-                modèle.isObtenirLivreParNouveautes && livreParNouveautes.isNotEmpty() ->
-                    afficherLivres(livreParNouveautes, "Critère de recherche : Nouveautes")
-                modèle.isObtenirLivreParAuteur && livreParAuteur.isNotEmpty() ->
-                    afficherLivres(livreParAuteur, "Critère de recherche : Auteur")
-                modèle.isObtenirLivreParGenre && livreParGenre.isNotEmpty() ->
-                    afficherLivres(livreParGenre, "Critère de recherche : Genre")
-                else -> afficherAucunLivreTrouvé()
+                when {
+                    modèle.isObtenirLivreParTitre && !livreParTitre.isNullOrEmpty() ->
+                        afficherLivres(livreParTitre, "Critère de recherche : Titre")
+
+                    modèle.isObtenirLivreParNouveautes && livreParNouveautes.isNotEmpty() ->
+                        afficherLivres(livreParNouveautes, "Critère de recherche : Nouveautes")
+
+                    modèle.isObtenirLivreParAuteur && livreParAuteur.isNotEmpty() ->
+                        afficherLivres(livreParAuteur, "Critère de recherche : Auteur")
+
+                    modèle.isObtenirLivreParGenre && livreParGenre.isNotEmpty() ->
+                        afficherLivres(livreParGenre, "Critère de recherche : Genre")
+
+                    else -> afficherAucunLivreTrouvé()
+                }
             }
         }
     }
@@ -102,5 +113,12 @@ class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context){
         vue.afficherTextParDefaut(true)
     }
 
-
+    fun traiterConnexion(context : Context){
+        AlertDialog.Builder(context)
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
+    }
 }

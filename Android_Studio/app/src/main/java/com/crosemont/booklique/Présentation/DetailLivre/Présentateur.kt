@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
+import androidx.appcompat.app.AlertDialog
 import com.crosemont.booklique.domaine.entité.Favoris
 import com.crosemont.booklique.domaine.entité.Reservation
 import com.crosemont.booklique.domaine.entité.ReservationHistorique
@@ -24,10 +25,14 @@ class Présentateur(private val vue: Vue, context: Context) {
     private var job: Job? = null
 
     fun initialiserLivre() {
-        job = CoroutineScope(Dispatchers.Main).launch {
-            val livre = withContext(Dispatchers.IO) { modèle.obtenirLivre() }
-            if (livre != null) {
-                vue.afficherLivre(livre)
+        if(!modèle.connexion(vue.requireContext())){
+            traiterConnexion(vue.requireContext())
+        }else{
+            job = CoroutineScope(Dispatchers.Main).launch {
+                val livre = withContext(Dispatchers.IO) { modèle.obtenirLivre() }
+                if (livre != null) {
+                    vue.afficherLivre(livre)
+                }
             }
         }
     }
@@ -147,5 +152,14 @@ class Présentateur(private val vue: Vue, context: Context) {
         } catch (e: ActivityNotFoundException) {
             vue.afficherToast("Erreur: Aucune application capable de gérer cet événement.")
         }
+    }
+
+    fun traiterConnexion(context : Context){
+        AlertDialog.Builder(context)
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
     }
 }

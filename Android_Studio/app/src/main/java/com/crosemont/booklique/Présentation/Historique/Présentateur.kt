@@ -2,6 +2,11 @@ package com.crosemont.booklique.Présentation.Historique
 
 import android.content.Context
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import com.crosemont.booklique.Présentation.Historique.Modèle
+import com.crosemont.booklique.domaine.mork_data.Data
+import com.crosemont.booklique.domaine.entité.Reservation
+import com.crosemont.booklique.domaine.entité.ReservationHistorique
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,10 +26,14 @@ class Présentateur(private val vue: Vue, context: Context) {
     }
 
     fun afficherHistoriqueReservation() {
-        CoroutineScope( Dispatchers.Main ).launch{
-            var reservationHistoriqueList = withContext(Dispatchers.IO) {modèle.obtenirHistoriqueReservation()}
-            if(reservationHistoriqueList.isNotEmpty()){
-                vue.afficherHistoriqueReservation(reservationHistoriqueList)
+        if(!modèle.connexion(vue.requireContext())){
+            traiterConnexion(vue.requireContext())
+        }else{
+            CoroutineScope( Dispatchers.Main ).launch {
+                var reservationHistoriqueList = modèle.obtenirHistoriqueReservation()
+                if (reservationHistoriqueList.isNotEmpty()) {
+                    vue.afficherHistoriqueReservation(reservationHistoriqueList)
+                }
             }
         }
     }
@@ -44,5 +53,12 @@ class Présentateur(private val vue: Vue, context: Context) {
         }
     }
 
-
+    fun traiterConnexion(context : Context){
+        AlertDialog.Builder(context)
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
+    }
 }
