@@ -51,6 +51,4 @@ class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
     fun traiter_obtenir_livre_par_nouveaute(isbn: String){
         modèle.obtenirLivreParNouveaute(isbn)
     }
-
-
 }

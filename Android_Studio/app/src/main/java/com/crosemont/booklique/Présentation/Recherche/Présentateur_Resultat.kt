@@ -3,8 +3,6 @@ package com.crosemont.booklique.Présentation.Recherche
 import Livre
 import android.content.Context
 import android.widget.ImageView
-import androidx.appcompat.app.AlertDialog
-import com.crosemont.booklique.Présentation.Recherche.Modèle
 import com.crosemont.booklique.domaine.entité.Favoris
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -68,8 +66,8 @@ class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context){
     }
 
     fun traiter_livre() {
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         }else{
             vue.afficherChargement(true)
             job = CoroutineScope(Dispatchers.Main).launch {
@@ -111,14 +109,5 @@ class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context){
         vue.afficherChargement(false)
         vue.modifierTextRechercheParDefaut("Aucun livre trouvé.")
         vue.afficherTextParDefaut(true)
-    }
-
-    fun traiterConnexion(context : Context){
-        AlertDialog.Builder(context)
-            .setTitle("Connexion internet perdue")
-            .setMessage("Veuillez vous reconnecter")
-            .setNegativeButton("OK"){
-                    dialog, which -> dialog.dismiss()
-            }.show()
     }
 }
