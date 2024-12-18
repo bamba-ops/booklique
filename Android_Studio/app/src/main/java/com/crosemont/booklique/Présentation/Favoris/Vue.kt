@@ -2,6 +2,7 @@ package com.crosemont.booklique.Présentation.Favoris
 
 import Livre
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +22,7 @@ class Vue : Fragment() {
     private lateinit var resultatLivresFavoris: LinearLayout
     private lateinit var présentateur: Présentateur
     private lateinit var  textView: TextView
-    private lateinit var iconeFavorisList: MutableList<ImageView>
+    private var iconeFavorisList: MutableList<ImageView> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
