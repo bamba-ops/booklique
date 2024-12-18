@@ -32,6 +32,7 @@ class Vue : Fragment() {
     private lateinit var boutonRecherche: ImageButton
     private lateinit var présentateur: Présentateur
     private lateinit var boutonSupprimerHistorique: ImageButton
+    private lateinit var radioTitre: TextView
 
 
     override fun onCreateView(
@@ -49,71 +50,57 @@ class Vue : Fragment() {
         barreRecherche = view.findViewById(R.id.entree_recherche)
         groupeRadio = view.findViewById(R.id.radioGroup)
         boutonRecherche = view.findViewById(R.id.btnRecherche)
+        radioTitre = view.findViewById(R.id.radioTitre)
         boutonSupprimerHistorique = view.findViewById(R.id.btnSupprimerHistorique)
         présentateur = Présentateur(this, requireContext())
 
-        présentateur.traiter_mise_a_jour_suggestions("titre")
+        présentateur.traiter_mise_a_jour_suggestions(radioTitre.id)
         présentateur.traiter_historique_recherche()
 
         boutonSupprimerHistorique.setOnClickListener {
-            présentateur.traiter_supprimer_recherche_historique() // Appelle la méthode du présentateur pour supprimer l'historique
+            présentateur.traiter_supprimer_recherche_historique()
         }
 
         groupeRadio.setOnCheckedChangeListener { _, checkedId ->
-            val critère = if (checkedId == R.id.radioTitre) "titre" else "auteur"
-            présentateur.traiter_mise_a_jour_suggestions(critère)
+            présentateur.traiter_mise_a_jour_suggestions(checkedId)
         }
 
         barreRecherche.setOnItemClickListener { _, _, position, _ ->
-            val suggestion = barreRecherche.adapter.getItem(position).toString()
-
-            // Supprimer le préfixe avant de lancer la recherche
-            val texteSansPrefixe = suggestion.removePrefix("🔍 ").removePrefix("⏳ ")
-            barreRecherche.setText(texteSansPrefixe)
-
-            // Lancer la recherche
-            val critère = if (groupeRadio.checkedRadioButtonId == R.id.radioTitre) "titre" else "auteur"
-            présentateur.lancerRecherche(texteSansPrefixe, critère)
+            présentateur.traiter_lancer_recherche(position)
         }
 
 
-
-        // Action pour rechercher
         boutonRecherche.setOnClickListener {
-            val rechercheTexte = barreRecherche.text.toString().trim()
-            val critère = if (groupeRadio.checkedRadioButtonId == R.id.radioTitre) "titre" else "auteur"
-
-            présentateur.lancerRecherche(rechercheTexte, critère)
+            présentateur.traiter_boutton_recherche()
         }
-
-//        entreeRecherche.setOnEditorActionListener { _, actionId, _ ->
-//            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                val rechercheTexte = entreeRecherche.text.toString()
-//                présentateur.lancerRecherche(rechercheTexte)
-//                true
-//            } else {
-//                false
-//            }
-//        }
-//
-//        // Action pour le bouton de recherche
-//        btnRecherhce.setOnClickListener {
-//            val rechercheTexte = entreeRecherche.text.toString().trim()
-//            if (btnAuteur.isChecked) {
-//                présentateur.afficherLivresParAuteur(rechercheTexte)
-//            } else if (btnTitre.isChecked) {
-//                présentateur.afficherLivresParTitre(rechercheTexte)
-//            }
-//            findNavController().navigate(R.id.action_recherche_to_resultat)
-//        }
 
 
     }
 
-    fun mettreAJourSuggestions(suggestions: List<String>) {
+    fun mettre_a_jour_suggestion(suggestions: List<String>) {
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, suggestions)
         barreRecherche.setAdapter(adapter)
         barreRecherche.threshold = 1 // Déclenche les suggestions après 1 caractère
+    }
+
+    fun charger_barre_recherche(position: Int): String {
+        return barreRecherche.adapter.getItem(position).toString()
+    }
+
+    fun charger_radio_id(): Int{
+        return radioTitre.id
+    }
+
+    fun charger_group_radio_checked_id(): Int{
+        return groupeRadio.checkedRadioButtonId
+    }
+
+    fun charger_text_barre_recherche(text: String){
+        barreRecherche.setText(text)
+    }
+
+    fun avoir_text_barre_recherche(): String{
+        return barreRecherche.text.toString()
     }
 
     fun naviguer_resultat(){
