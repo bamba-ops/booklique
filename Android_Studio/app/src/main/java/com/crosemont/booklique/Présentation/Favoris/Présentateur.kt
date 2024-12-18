@@ -1,12 +1,7 @@
 package com.crosemont.booklique.Présentation.Favoris
 
-import Livre
-import android.annotation.SuppressLint
 import android.content.Context
-import android.net.ConnectivityManager
 import android.widget.ImageView
-import androidx.appcompat.app.AlertDialog
-import com.crosemont.booklique.Présentation.Favoris.Modèle
 import com.crosemont.booklique.domaine.entité.Favoris
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +13,8 @@ class Présentateur(val vue: Vue, context: Context) {
     private val modèle = Modèle(context)
 
     fun chargerLivresFavoris(){
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         }else{
             job = CoroutineScope( Dispatchers.Main ).launch {
                 val favoris = modèle.obtenirLivresFavoris()
@@ -50,14 +45,5 @@ class Présentateur(val vue: Vue, context: Context) {
                 chargerLivresFavoris()
             }
         }
-    }
-
-    fun traiterConnexion(context : Context){
-        AlertDialog.Builder(context)
-            .setTitle("Connexion internet perdue")
-            .setMessage("Veuillez vous reconnecter")
-            .setNegativeButton("OK"){
-                    dialog, which -> dialog.dismiss()
-            }.show()
     }
 }
