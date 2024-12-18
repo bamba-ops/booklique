@@ -147,9 +147,9 @@ class Présentateur(private val vue: Vue, context: Context) {
             putExtra(CalendarContract.EXTRA_EVENT_END_TIME, fin.time)
         }
 
-        try {
+        if (intent.resolveActivity(context.packageManager) != null) {
             context.startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
+        }else{
             vue.afficherToast("Erreur: Aucune application capable de gérer cet événement.")
         }
     }

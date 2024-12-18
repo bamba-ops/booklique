@@ -19,29 +19,23 @@ class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
             traiterConnexion(vue.requireContext())
         }else{
             job = CoroutineScope(Dispatchers.Main).launch {
-                try {
-                    vue.afficherChargement(true)
-                    // Fetch data in IO thread
-                    val livreAuteurList = withContext(Dispatchers.IO) {
-                        modèle.obtenirLivresParAuteur()
-                    }
-                    val livreList = withContext(Dispatchers.IO) {
-                        modèle.obtenirLivreParNouveautes()
-                    }
-
-                    livreAuteurList.forEach { livre ->
-                        vue.afficherCartesAuteurs(livre) // This runs on Main
-                    }
-                    livreList.forEach { livre ->
-                        vue.afficherListeNouveautes(livre) // This runs on Main
-                    }
-
-                    vue.afficherAccueil(true)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                } finally {
-                    vue.afficherChargement(false)
+                vue.afficherChargement(true)
+                // Fetch data in IO thread
+                val livreAuteurList = withContext(Dispatchers.IO) {
+                    modèle.obtenirLivresParAuteur()
                 }
+                val livreList = withContext(Dispatchers.IO) {
+                    modèle.obtenirLivreParNouveautes()
+                }
+
+                livreAuteurList.forEach { livre ->
+                    vue.afficherCartesAuteurs(livre) // This runs on Main
+                }
+                livreList.forEach { livre ->
+                    vue.afficherListeNouveautes(livre) // This runs on Main
+                }
+                vue.afficherAccueil(true)
+                vue.afficherChargement(false)
             }
         }
     }
