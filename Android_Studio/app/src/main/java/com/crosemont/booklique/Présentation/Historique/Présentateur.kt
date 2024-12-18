@@ -31,18 +31,19 @@ class Présentateur(private val vue: Vue, context: Context) {
         }else{
             CoroutineScope( Dispatchers.Main ).launch {
                 var reservationHistoriqueList = modèle.obtenirHistoriqueReservation()
+                var i = 0
                 if (reservationHistoriqueList.isNotEmpty()) {
-                    vue.afficherHistoriqueReservation(reservationHistoriqueList)
+                    vue.afficherHistoriqueReservation(reservationHistoriqueList, i)
                 }
             }
         }
     }
 
-    fun traiter_titre_historique_reservation(isbn: String, titre: TextView){
+    fun traiter_titre_historique_reservation(isbn: String, index: Int){
         CoroutineScope( Dispatchers.Main ).launch {
             var livre = withContext(Dispatchers.IO) { modèle.obtenirLivreParIsbn(isbn) }
             if(livre != null){
-                vue.changer_text(titre, livre.titre)
+                vue.changer_text(index, livre.titre)
             }
         }
     }
