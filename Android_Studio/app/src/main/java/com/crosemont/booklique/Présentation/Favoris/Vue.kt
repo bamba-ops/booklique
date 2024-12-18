@@ -1,6 +1,8 @@
 package com.crosemont.booklique.Présentation.Favoris
 
-import Livre
+import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,10 +11,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.entité.Favoris
-import com.crosemont.booklique.domaine.mork_data.Data
 import com.squareup.picasso.Picasso
 
 
@@ -64,38 +66,54 @@ class Vue : Fragment() {
     fun afficherLivresFavoris(favoris: Favoris) {
         val inflater = layoutInflater
 
-            val livresFavorisView = inflater.inflate(
-                R.layout.fragment_article_livre,
-                resultatLivresFavoris,
-                false
-            )
+        val livresFavorisView = inflater.inflate(
+            R.layout.fragment_article_livre,
+            resultatLivresFavoris,
+            false
+        )
 
-            val imageView = livresFavorisView.findViewById<ImageView>(R.id.livre_image)
-            val titreTextView = livresFavorisView.findViewById<TextView>(R.id.livre_titre)
-            val auteurTextView = livresFavorisView.findViewById<TextView>(R.id.livre_auteur)
-            val genreTextView = livresFavorisView.findViewById<TextView>(R.id.livre_genre)
-            val iconeFavoris = livresFavorisView.findViewById<ImageView>(R.id.icone_favoris)
+        val imageView = livresFavorisView.findViewById<ImageView>(R.id.livre_image)
+        val titreTextView = livresFavorisView.findViewById<TextView>(R.id.livre_titre)
+        val auteurTextView = livresFavorisView.findViewById<TextView>(R.id.livre_auteur)
+        val genreTextView = livresFavorisView.findViewById<TextView>(R.id.livre_genre)
+        val iconeFavoris = livresFavorisView.findViewById<ImageView>(R.id.icone_favoris)
 
-            titreTextView.text = favoris.titre
-            auteurTextView.text = favoris.auteur
-            genreTextView.text = favoris.genre
-            iconeFavoris.setImageResource(R.drawable.favoris_true)
+        titreTextView.text = favoris.titre
+        auteurTextView.text = favoris.auteur
+        genreTextView.text = favoris.genre
+        iconeFavoris.setImageResource(R.drawable.favoris_true)
 
-            Picasso.get()
-                .load(favoris.image_url)
-                .placeholder(R.drawable.placeholder_image)
-                .error(R.drawable.error_image)
-                .into(imageView)
+        Picasso.get()
+            .load(favoris.image_url)
+            .placeholder(R.drawable.placeholder_image)
+            .error(R.drawable.error_image)
+            .into(imageView)
 
-            livresFavorisView.setOnClickListener {
-                présentateur.traiter_obtenir_livre(favoris.isbn)
-                findNavController().navigate(R.id.action_favoris_to_detail_livre)
-            }
-
-            iconeFavoris.setOnClickListener {
-                présentateur.traiter_favoris(favoris, iconeFavoris)
-            }
-
-            resultatLivresFavoris.addView(livresFavorisView)
+        livresFavorisView.setOnClickListener {
+            présentateur.traiter_obtenir_livre(favoris.isbn)
+            findNavController().navigate(R.id.action_favoris_to_detail_livre)
         }
+
+        iconeFavoris.setOnClickListener {
+            présentateur.traiter_favoris(favoris, iconeFavoris)
+        }
+
+        resultatLivresFavoris.addView(livresFavorisView)
+    }
+
+    fun afficherDialogueConnexion(){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
+    }
+
+    @SuppressLint("ServiceCast")
+    fun connexion() : Boolean{
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
 }
