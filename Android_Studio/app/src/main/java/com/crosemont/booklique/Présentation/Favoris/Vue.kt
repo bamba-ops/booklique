@@ -2,6 +2,7 @@ package com.crosemont.booklique.Présentation.Favoris
 
 import Livre
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ class Vue : Fragment() {
     private lateinit var resultatLivresFavoris: LinearLayout
     private lateinit var présentateur: Présentateur
     private lateinit var  textView: TextView
+    private var iconeFavorisList: MutableList<ImageView> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,11 +59,15 @@ class Vue : Fragment() {
         iconeFavoris.setImageResource(R.drawable.favoris_true)
     }
 
-    fun changer_resource_iconeFavoris_false(iconeFavoris: ImageView){
-        iconeFavoris.setImageResource(R.drawable.favoris_false)
+    fun changer_resource_iconeFavoris_false(index: Int){
+        iconeFavorisList[index].setImageResource(R.drawable.favoris_false)
     }
 
-    fun afficherLivresFavoris(favoris: Favoris) {
+    fun ajout_iconeFavoris_list(iconeFavoris: ImageView){
+        this.iconeFavorisList.add(iconeFavoris)
+    }
+
+    fun afficherLivresFavoris(favoris: Favoris, index: Int) {
         val inflater = layoutInflater
 
             val livresFavorisView = inflater.inflate(
@@ -80,6 +86,9 @@ class Vue : Fragment() {
             auteurTextView.text = favoris.auteur
             genreTextView.text = favoris.genre
             iconeFavoris.setImageResource(R.drawable.favoris_true)
+            iconeFavoris.tag = index
+
+            ajout_iconeFavoris_list(iconeFavoris)
 
             Picasso.get()
                 .load(favoris.image_url)
@@ -93,7 +102,7 @@ class Vue : Fragment() {
             }
 
             iconeFavoris.setOnClickListener {
-                présentateur.traiter_favoris(favoris, iconeFavoris)
+                présentateur.traiter_favoris(favoris, iconeFavoris.tag as Int)
             }
 
             resultatLivresFavoris.addView(livresFavorisView)
