@@ -1,9 +1,6 @@
 package com.crosemont.booklique.Présentation.Accueil
 
 import Livre
-import android.annotation.SuppressLint
-import android.content.Context
-import android.net.ConnectivityManager
 import com.crosemont.booklique.domaine.service.LivreService
 
 class Modèle() {

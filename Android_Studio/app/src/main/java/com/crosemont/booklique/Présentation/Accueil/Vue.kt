@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
 import com.squareup.picasso.Picasso
-import com.crosemont.booklique.domaine.mork_data.Data
 import java.lang.Exception
 
 class Vue : Fragment() {
