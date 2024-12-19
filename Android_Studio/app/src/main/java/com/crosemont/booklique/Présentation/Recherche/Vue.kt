@@ -1,29 +1,20 @@
 package com.crosemont.booklique.Présentation.Recherche
 
-import Livre
 import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.ScrollView
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
-import com.crosemont.booklique.domaine.mork_data.Data
-import com.squareup.picasso.Picasso
-import java.util.Date
 
 class Vue : Fragment() {
 
@@ -50,7 +41,7 @@ class Vue : Fragment() {
         groupeRadio = view.findViewById(R.id.radioGroup)
         boutonRecherche = view.findViewById(R.id.btnRecherche)
         boutonSupprimerHistorique = view.findViewById(R.id.btnSupprimerHistorique)
-        présentateur = Présentateur(this, requireContext())
+        présentateur = Présentateur(this)
 
         présentateur.traiter_mise_a_jour_suggestions("titre")
         présentateur.traiter_historique_recherche()
@@ -120,5 +111,20 @@ class Vue : Fragment() {
         findNavController().navigate(R.id.action_recherche_to_resultat)
     }
 
+    fun afficherDialogueConnexion(){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
+    }
+
+    @SuppressLint("ServiceCast")
+    fun connexion() : Boolean{
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
 }
 

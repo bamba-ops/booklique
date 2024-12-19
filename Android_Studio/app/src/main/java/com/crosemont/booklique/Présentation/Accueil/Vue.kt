@@ -1,6 +1,9 @@
 package com.crosemont.booklique.Présentation.Accueil
 
 import Livre
+import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +14,11 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
 import com.squareup.picasso.Picasso
-import com.crosemont.booklique.domaine.mork_data.Data
 import java.lang.Exception
 
 class Vue : Fragment() {
@@ -128,25 +131,35 @@ class Vue : Fragment() {
 
     }
 
-    fun afficherChargement(isTrue: Boolean){
-        if (isTrue){
-            chargement.visibility = View.VISIBLE
-        } else {
-            chargement.visibility = View.GONE
-        }
-
+    fun afficherChargement(){
+        chargement.visibility = View.VISIBLE
     }
 
-    fun afficherAccueil(isTrue: Boolean){
-        if(isTrue){
-            accueil.visibility = View.VISIBLE
-        } else {
-            accueil.visibility = View.GONE
-        }
-
+    fun afficherAccueil(){
+        accueil.visibility = View.VISIBLE
     }
 
+    fun enleverAccueil(){
+        accueil.visibility = View.GONE
+    }
 
+    fun enleverChargement(){
+        chargement.visibility = View.GONE
+    }
 
+    fun afficherDialogueConnexion(){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
+    }
 
+    @SuppressLint("ServiceCast")
+    fun connexion() : Boolean{
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
 }

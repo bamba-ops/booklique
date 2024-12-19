@@ -1,16 +1,19 @@
 package com.crosemont.booklique.Présentation.Recherche
 
 import Livre
+import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
@@ -21,7 +24,7 @@ class Vue_Resultat : Fragment() {
     lateinit var resultatRechercheConteneur: LinearLayout
     lateinit var textRechercheParDefaut: TextView
     private lateinit var présentateur: Présentateur_Resultat
-    private lateinit var affichageDefilementResultatRecherche: ScrollView
+    lateinit var affichageDefilementResultatRecherche: ScrollView
     private lateinit var chargement: ProgressBar
     private lateinit var text_critere_recherche: TextView
 
@@ -43,7 +46,7 @@ class Vue_Resultat : Fragment() {
         textRechercheParDefaut = view.findViewById(R.id.text_recherche_par_defaut)
         text_critere_recherche = view.findViewById(R.id.text_critere_recherche)
         chargement = view.findViewById(R.id.chargement)
-        présentateur = Présentateur_Resultat(this, requireContext())
+        présentateur = Présentateur_Resultat(this)
 
         présentateur.traiter_livre()
 
@@ -97,40 +100,41 @@ class Vue_Resultat : Fragment() {
 
     }
 
-    fun afficherChargement(isCharger: Boolean){
-        if(isCharger){
-            chargement.visibility = View.VISIBLE
-        } else {
-            chargement.visibility = View.GONE
-        }
+    fun afficherChargement(){
+        chargement.visibility = View.VISIBLE
+
+    }
+
+    fun enleverChargement(){
+        chargement.visibility = View.GONE
     }
 
     fun supprimerResultatRechercheConteneur(){
         resultatRechercheConteneur.removeAllViews()
     }
 
-    fun afficherTextParDefaut(isVisible: Boolean){
-        if(isVisible && textRechercheParDefaut.visibility == View.GONE){
-            textRechercheParDefaut.visibility = View.VISIBLE
-        } else if(!isVisible && textRechercheParDefaut.visibility == View.VISIBLE) {
-            textRechercheParDefaut.visibility = View.GONE
-        }
+    fun afficherTextParDefaut(){
+        textRechercheParDefaut.visibility = View.VISIBLE
     }
 
-    fun afficherDefilementResultatRecherche(isVisible: Boolean){
-        if(isVisible && affichageDefilementResultatRecherche.visibility == View.GONE){
-            affichageDefilementResultatRecherche.visibility = View.VISIBLE
-        } else if(!isVisible && affichageDefilementResultatRecherche.visibility == View.VISIBLE) {
-            affichageDefilementResultatRecherche.visibility = View.GONE
-        }
+    fun enleverTextParDefaut(){
+        textRechercheParDefaut.visibility = View.GONE
     }
 
-    fun afficherTextCritereRecherche(isVisible: Boolean){
-        if(isVisible && text_critere_recherche.visibility == View.GONE){
-            text_critere_recherche.visibility = View.VISIBLE
-        } else if(!isVisible && text_critere_recherche.visibility == View.VISIBLE) {
-            text_critere_recherche.visibility = View.GONE
-        }
+    fun afficherDefilementResultatRecherche(){
+        affichageDefilementResultatRecherche.visibility = View.VISIBLE
+    }
+
+    fun enleverDefilementResultatRecherche(){
+        affichageDefilementResultatRecherche.visibility = View.GONE
+    }
+
+    fun afficherTextCritereRecherche(){
+        text_critere_recherche.visibility = View.VISIBLE
+    }
+
+    fun enleverTextCritereRecherche(){
+        text_critere_recherche.visibility = View.GONE
     }
 
     fun modifierTextCritereRecherche(text: String){
@@ -141,11 +145,27 @@ class Vue_Resultat : Fragment() {
         textRechercheParDefaut.text = text
     }
 
-
-    fun préparationAfficherLivres(){
-        afficherTextParDefaut(false)
-        afficherDefilementResultatRecherche(true)
+    fun chargerTextRechercheParDefaut(): Boolean {
+        return textRechercheParDefaut.visibility == View.GONE
     }
 
+    fun chargerDefilementResultatRecherche(): Boolean{
+        return affichageDefilementResultatRecherche.visibility == View.GONE
+    }
 
+    fun afficherDialogueConnexion(){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
+    }
+
+    @SuppressLint("ServiceCast")
+    fun connexion() : Boolean{
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
 }

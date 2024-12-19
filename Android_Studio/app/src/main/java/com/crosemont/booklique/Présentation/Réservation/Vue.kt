@@ -7,16 +7,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.Présentation.Réservation.Présentateur
 import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.entité.Reservation
-import com.crosemont.booklique.domaine.mork_data.Data
-import com.squareup.picasso.Picasso
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.Locale
 

@@ -1,4 +1,4 @@
-package com.crosemont.booklique.domaine.dao.dbConfig
+package com.crosemont.booklique.sourcededonnées.dao.dbConfig
 
 import androidx.room.TypeConverter
 import java.util.Date

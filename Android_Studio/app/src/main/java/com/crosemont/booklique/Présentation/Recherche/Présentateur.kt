@@ -1,30 +1,18 @@
 package com.crosemont.booklique.Présentation.Recherche
 
-import Livre
-import android.content.Context
-import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-import androidx.navigation.fragment.findNavController
-import com.crosemont.booklique.Présentation.Recherche.Modèle
-import com.crosemont.booklique.R
-import com.crosemont.booklique.domaine.mork_data.Data
-import com.google.android.material.tabs.TabLayout.Mode
-import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class Présentateur(private val vue: Vue, context: Context) {
+class Présentateur(private val vue: Vue) {
     private var job: Job? = null
-    private val modèle = Modèle(context)
+    private val modèle = Modèle(vue.requireContext())
 
     fun traiter_historique_recherche() {
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         }else{
             job = CoroutineScope(Dispatchers.Main).launch {
                 val historique =
@@ -36,8 +24,8 @@ class Présentateur(private val vue: Vue, context: Context) {
     }
 
     fun traiter_supprimer_recherche_historique() {
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         } else {
             job = CoroutineScope(Dispatchers.Main).launch {
                 withContext(Dispatchers.IO) { modèle.supprimerHistoriqueRecherche() }
@@ -47,8 +35,8 @@ class Présentateur(private val vue: Vue, context: Context) {
     }
 
     fun traiter_mise_a_jour_suggestions(critère: String) {
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         } else {
             job = CoroutineScope(Dispatchers.Main).launch {
                 val historique =
@@ -71,8 +59,8 @@ class Présentateur(private val vue: Vue, context: Context) {
     }
 
     fun lancerRecherche(rechercheText: String, critere: String) {
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         } else {
             if (rechercheText.isNotEmpty()) {
                 job = CoroutineScope(Dispatchers.Main).launch {
@@ -87,14 +75,5 @@ class Présentateur(private val vue: Vue, context: Context) {
                 }
             }
         }
-    }
-
-    fun traiterConnexion(context : Context){
-        AlertDialog.Builder(context)
-            .setTitle("Connexion internet perdue")
-            .setMessage("Veuillez vous reconnecter")
-            .setNegativeButton("OK"){
-                    dialog, which -> dialog.dismiss()
-            }.show()
     }
 }

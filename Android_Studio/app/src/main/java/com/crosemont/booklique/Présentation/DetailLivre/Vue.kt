@@ -1,9 +1,15 @@
 package com.crosemont.booklique.Présentation.DetailLivre
 
 import Livre
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import android.icu.util.Calendar
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,7 +71,7 @@ class Vue : Fragment() {
         nombrePagesLivre = view.findViewById(R.id.nombre_pages_livre_details)
         sectionEcheance = view.findViewById(R.id.echeance_section)
 
-        présentateur = Présentateur(this, requireContext())
+        présentateur = Présentateur(this)
 
         // Initialisation des données
         présentateur.initialiserLivre()
@@ -85,7 +91,7 @@ class Vue : Fragment() {
         // Fonctionnalité pour l'ajout à l'agenda
 
         buttonAjouterAgenda.setOnClickListener {
-            ouvrirCalendrierPourAjouterEvenement()
+            présentateur.traiterAfficherCalendrier()
         }
 
     }
@@ -139,25 +145,7 @@ class Vue : Fragment() {
         return isFavoris
     }
 
-    private fun ouvrirCalendrierPourAjouterEvenement() {
-        // Récupérer les valeurs des champs de texte pour le titre et la description
-        val titre = titreLivre.text?.toString()?.takeIf { it.isNotBlank() } ?: "Booklique"
-        val description = getString(R.string.message_description_calandar)
 
-        val lieu = "6400 16e Avenue, Montréal, QC H1X 2S9"
-
-        // Obtenir la date d'échéance depuis le présentateur
-        val dateÉchéance = présentateur.écheance()
-
-        // Ouvrir le calendrier pour ajouter un événement avec les informations collectées
-        présentateur.ouvrirCalendrierPourAjouterEvenement(
-            requireContext(),
-            titre,
-            description,
-            lieu,
-            dateÉchéance
-        )
-    }
 
 
     fun afficherConfirmationReservation() {
@@ -178,10 +166,47 @@ class Vue : Fragment() {
         dialog.show()
     }
 
-
+    fun afficherCalendrier() {
+        val intent = Intent(Intent.ACTION_INSERT).apply {
+            data = CalendarContract.Events.CONTENT_URI
+            putExtra(CalendarContract.Events.TITLE, afficherTitre())
+            putExtra(CalendarContract.Events.DESCRIPTION, afficherDescription())
+            afficherLieu()?.let { putExtra(CalendarContract.Events.EVENT_LOCATION, it) }
+            putExtra(CalendarContract.EXTRA_EVENT_END_TIME, présentateur.écheance().time)
+        }
+        requireContext().startActivity(intent)
+    }
 
     // En cas d'erreur
     fun afficherToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun afficherTitre() : String{
+        return titreLivre.text?.toString()?.takeIf { it.isNotBlank() } ?: "Booklique"
+    }
+
+    fun afficherDescription() : String{
+        return getString(R.string.message_description_calandar)
+    }
+
+    fun afficherLieu() : String{
+        return "6400 16e Avenue, Montréal, QC H1X 2S9"
+    }
+
+    fun afficherDialogueConnexion(){
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
+    }
+
+    @SuppressLint("ServiceCast")
+    fun connexion() : Boolean{
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 }
