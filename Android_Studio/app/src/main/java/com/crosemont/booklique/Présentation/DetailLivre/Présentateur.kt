@@ -19,7 +19,7 @@ class Présentateur(private val vue: Vue) {
     private val modèle = Modèle(vue.requireContext())
     private var job: Job? = null
 
-    fun initialiserLivre() {
+    fun traiter_afficher_livre() {
         if(!vue.connexion()){
             vue.afficherDialogueConnexion()
         }else{

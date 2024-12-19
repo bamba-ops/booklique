@@ -108,13 +108,6 @@ class Vue : Fragment() {
             }
 
             resultatLivresFavoris.addView(livresFavorisView)
-        }
-
-        iconeFavoris.setOnClickListener {
-            présentateur.traiter_favoris(favoris, iconeFavoris)
-        }
-
-        resultatLivresFavoris.addView(livresFavorisView)
     }
 
     fun afficherDialogueConnexion(){

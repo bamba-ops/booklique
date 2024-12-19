@@ -34,7 +34,7 @@ class Présentateur(private val vue: Vue) {
         }
     }
 
-    fun traiter_mise_a_jour_suggestions(critère: String) {
+    fun traiter_mise_a_jour_suggestions(checkedId: Int) {
         if(!vue.connexion()){
             vue.afficherDialogueConnexion()
         } else {
@@ -59,7 +59,7 @@ class Présentateur(private val vue: Vue) {
         }
     }
 
-    fun lancerRecherche(rechercheText: String, critere: String) {
+    fun traiter_lancer_recherche(position: Int) {
         if(!vue.connexion()){
             vue.afficherDialogueConnexion()
         } else {
@@ -85,8 +85,8 @@ class Présentateur(private val vue: Vue) {
     }
 
     fun traiter_boutton_recherche(){
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         } else {
 
             val rechercheText = vue.avoir_text_barre_recherche().trim()

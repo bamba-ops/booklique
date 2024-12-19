@@ -1,6 +1,5 @@
 package com.crosemont.booklique.Présentation.Favoris
 
-import android.widget.ImageView
 import com.crosemont.booklique.domaine.entité.Favoris
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -2,8 +2,6 @@ package com.crosemont.booklique.Présentation.Accueil
 
 import kotlinx.coroutines.*
 
-
-
 class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
     private var job: Job? = null
 
@@ -13,7 +11,7 @@ class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
         }else{
             job = CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    vue.afficherChargement(true)
+                    vue.afficherChargement()
 
                     val livreAuteurList = withContext(Dispatchers.IO) {
                         modèle.obtenirLivresParAuteur()
