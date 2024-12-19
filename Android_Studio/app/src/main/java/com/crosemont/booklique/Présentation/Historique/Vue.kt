@@ -37,9 +37,7 @@ class Vue : Fragment() {
 
     }
 
-    fun afficherHistoriqueReservation(reservationHistorique: List<ReservationHistorique>) {
-        resultatHistoriqueResrvation.removeAllViews()
-        for (historique in reservationHistorique) {
+    fun afficherHistoriqueReservation(historique: ReservationHistorique) {
             val itemView = LayoutInflater.from(context).inflate(
                 R.layout.item_historique,
                 resultatHistoriqueResrvation,
@@ -52,10 +50,14 @@ class Vue : Fragment() {
             présentateur.traiter_titre_historique_reservation(historique.livreIsbn, titre)
             dateReservation.text = présentateur.formaterDateHistorique(historique.debut)
             dateRetour.text = présentateur.formaterDateHistorique(historique.termine)
-
             resultatHistoriqueResrvation.addView(itemView)
-        }
+
     }
+
+    fun enleverAffichageHistoriqueReservation() {
+        resultatHistoriqueResrvation.removeAllViews()
+    }
+
 
     fun changer_text(titre: TextView, livreTitre: String){
         titre.text = livreTitre

@@ -32,7 +32,10 @@ class Présentateur(private val vue: Vue, context: Context) {
             CoroutineScope( Dispatchers.Main ).launch {
                 var reservationHistoriqueList = modèle.obtenirHistoriqueReservation()
                 if (reservationHistoriqueList.isNotEmpty()) {
-                    vue.afficherHistoriqueReservation(reservationHistoriqueList)
+                    vue.enleverAffichageHistoriqueReservation()
+                    for (historique in reservationHistoriqueList) {
+                        vue.afficherHistoriqueReservation(historique)
+                    }
                 }
             }
         }
@@ -46,6 +49,7 @@ class Présentateur(private val vue: Vue, context: Context) {
             }
         }
     }
+
 
     fun supprimerHistoriqueReservation() {
         CoroutineScope(Dispatchers.Main).launch {
