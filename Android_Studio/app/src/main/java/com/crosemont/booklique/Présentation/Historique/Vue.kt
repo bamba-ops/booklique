@@ -1,5 +1,8 @@
 package com.crosemont.booklique.Présentation.Historique
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.entité.ReservationHistorique
@@ -29,7 +33,7 @@ class Vue : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         resultatHistoriqueResrvation = view.findViewById(R.id.resultatHistoriqueReservation)
         boutonSupprimerHistorique = view.findViewById(R.id.btnSupprimerHistorique)
-        présentateur = Présentateur(this, requireContext())
+        présentateur = Présentateur(this)
         présentateur.afficherHistoriqueReservation()
 
         boutonSupprimerHistorique.setOnClickListener {
@@ -67,5 +71,21 @@ class Vue : Fragment() {
 
     fun changer_text(index: Int, livreTitre: String){
         titreList[index].text = livreTitre
+    }
+
+    fun afficherDialogueConnexion(){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
+    }
+
+    @SuppressLint("ServiceCast")
+    fun connexion() : Boolean{
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 }

@@ -1,10 +1,8 @@
 package com.crosemont.booklique.Présentation.Historique
 
 import Livre
-import android.annotation.SuppressLint
 import android.content.Context
-import android.net.ConnectivityManager
-import com.crosemont.booklique.domaine.dao.dbConfig.DatabaseBuilder
+import com.crosemont.booklique.sourcededonnées.dao.dbConfig.DatabaseBuilder
 import com.crosemont.booklique.domaine.entité.Reservation
 import com.crosemont.booklique.domaine.entité.ReservationHistorique
 import com.crosemont.booklique.domaine.service.LivreService
@@ -29,12 +27,5 @@ class Modèle(context: Context){
 
     fun obtenirReservation(): List<Reservation> {
         return ReservationService.obtenirReservations()
-    }
-
-    @SuppressLint("ServiceCast")
-    fun connexion(context : Context) : Boolean{
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetworkInfo = connectivityManager.activeNetworkInfo
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 }

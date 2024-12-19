@@ -1,11 +1,6 @@
 package com.crosemont.booklique.Présentation.DetailLivre
 
 import Livre
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
-import android.provider.CalendarContract
-import androidx.appcompat.app.AlertDialog
 import com.crosemont.booklique.domaine.entité.Favoris
 import com.crosemont.booklique.domaine.entité.Reservation
 import com.crosemont.booklique.domaine.entité.ReservationHistorique
@@ -19,14 +14,14 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class Présentateur(private val vue: Vue, context: Context) {
+class Présentateur(private val vue: Vue) {
 
-    private val modèle = Modèle(context)
+    private val modèle = Modèle(vue.requireContext())
     private var job: Job? = null
 
-    fun traiter_afficher_livre() {
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+    fun initialiserLivre() {
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         }else{
             job = CoroutineScope(Dispatchers.Main).launch {
                 val livre = withContext(Dispatchers.IO) { modèle.obtenirLivre() }
@@ -151,34 +146,9 @@ class Présentateur(private val vue: Vue, context: Context) {
         return calendar.time
     }
 
-    fun ouvrirCalendrierPourAjouterEvenement(
-        context: Context,
-        titre: String,
-        description: String,
-        lieu: String?,
-        fin: Date
-    ) {
-        val intent = Intent(Intent.ACTION_INSERT).apply {
-            data = CalendarContract.Events.CONTENT_URI
-            putExtra(CalendarContract.Events.TITLE, titre)
-            putExtra(CalendarContract.Events.DESCRIPTION, description)
-            lieu?.let { putExtra(CalendarContract.Events.EVENT_LOCATION, it) }
-            putExtra(CalendarContract.EXTRA_EVENT_END_TIME, fin.time)
-        }
-
-        try {
-            context.startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            vue.afficherToast("Erreur: Aucune application capable de gérer cet événement.")
-        }
+    fun traiterAfficherCalendrier(){
+        vue.afficherCalendrier()
     }
 
-    fun traiterConnexion(context : Context){
-        AlertDialog.Builder(context)
-            .setTitle("Connexion internet perdue")
-            .setMessage("Veuillez vous reconnecter")
-            .setNegativeButton("OK"){
-                    dialog, which -> dialog.dismiss()
-            }.show()
-    }
+
 }

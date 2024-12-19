@@ -1,10 +1,7 @@
 package com.crosemont.booklique.Présentation.Recherche
 
 import Livre
-import android.content.Context
 import android.widget.ImageView
-import androidx.appcompat.app.AlertDialog
-import com.crosemont.booklique.Présentation.Recherche.Modèle
 import com.crosemont.booklique.domaine.entité.Favoris
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,9 +9,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context){
+class Présentateur_Resultat(private val vue: Vue_Resultat){
     private var job: Job? = null
-    private val modèle = Modèle(context)
+    private val modèle = Modèle(vue.requireContext())
 
     fun traiter_livre_favori(isbn: String, iconFavori: ImageView) {
         job = CoroutineScope(Dispatchers.Main).launch {
@@ -68,10 +65,10 @@ class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context){
     }
 
     fun traiter_livre() {
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         }else{
-            vue.afficherChargement(true)
+            vue.afficherChargement()
             job = CoroutineScope(Dispatchers.Main).launch {
                 val livreParTitre =
                     withContext(Dispatchers.IO) { modèle.obtenirLivreParTitre()?.let { listOf(it) } }
@@ -100,25 +97,21 @@ class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context){
     }
 
     private fun afficherLivres(livres: List<Livre>, critère: String) {
-        vue.afficherChargement(false)
+        vue.enleverChargement()
         vue.modifierTextCritereRecherche(critère)
-        vue.afficherTextCritereRecherche(true)
-        vue.préparationAfficherLivres()
+        vue.afficherTextCritereRecherche()
+        traiterAffichageLivres()
         livres.forEach { vue.afficherLivres(it) }
     }
 
     private fun afficherAucunLivreTrouvé() {
-        vue.afficherChargement(false)
+        vue.enleverChargement()
         vue.modifierTextRechercheParDefaut("Aucun livre trouvé.")
-        vue.afficherTextParDefaut(true)
+        vue.afficherTextParDefaut()
     }
 
-    fun traiterConnexion(context : Context){
-        AlertDialog.Builder(context)
-            .setTitle("Connexion internet perdue")
-            .setMessage("Veuillez vous reconnecter")
-            .setNegativeButton("OK"){
-                    dialog, which -> dialog.dismiss()
-            }.show()
+    fun traiterAffichageLivres() {
+        vue.enleverTextParDefaut()
+        vue.afficherDefilementResultatRecherche()
     }
 }
