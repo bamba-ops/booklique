@@ -34,7 +34,9 @@ class Vue : Fragment() {
         genreDeveloppementPersonnel = view.findViewById(R.id.genre_developpement_personnel)
         genreFiction = view.findViewById(R.id.genre_fiction)
         genreHistoire = view.findViewById(R.id.genre_histoire)
-        présentateur = Présentateur(this)
+        présentateur = Présentateur(this){ action ->
+            findNavController().navigate(action)
+        }
 
         genreAffaires.setOnClickListener { navigateToRecherche("Afffaires") }
         genreBiographies.setOnClickListener { navigateToRecherche("Biographies") }
@@ -45,6 +47,5 @@ class Vue : Fragment() {
 
     private fun navigateToRecherche(genre: String) {
         présentateur.traiter_obtenir_livres_par_genre(genre)
-        findNavController().navigate(R.id.action_genres_to_resultat)
     }
 }

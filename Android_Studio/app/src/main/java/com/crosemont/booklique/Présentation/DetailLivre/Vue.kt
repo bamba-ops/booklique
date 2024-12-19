@@ -65,7 +65,9 @@ class Vue : Fragment() {
         nombrePagesLivre = view.findViewById(R.id.nombre_pages_livre_details)
         sectionEcheance = view.findViewById(R.id.echeance_section)
 
-        présentateur = Présentateur(this, requireContext())
+        présentateur = Présentateur(this, requireContext()) { action ->
+            findNavController().navigate(action)
+        }
 
         // Initialisation des données
         présentateur.initialiserLivre()
@@ -90,9 +92,6 @@ class Vue : Fragment() {
 
     }
 
-    fun naviguer_accueil(){
-        findNavController().navigate(R.id.action_detail_livre_to_accueil)
-    }
 
     fun afficherLivre(livre: Livre) {
         this.livre = livre
@@ -178,10 +177,4 @@ class Vue : Fragment() {
         dialog.show()
     }
 
-
-
-    // En cas d'erreur
-    fun afficherToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
 }

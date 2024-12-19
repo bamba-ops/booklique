@@ -44,19 +44,21 @@ class Vue : Fragment() {
         sectionNouveautes = view.findViewById(R.id.section_nouveautes)
         listeNouveautes = view.findViewById(R.id.liste_nouveautes)
         carteAuteur = view.findViewById(R.id.carte_auteurs)
-        présentateur = Présentateur(this)
         chargement = view.findViewById(R.id.chargement)
         accueil = view.findViewById(R.id.accueil)
+
+        présentateur = Présentateur(this, modèle = Modèle()) { action ->
+            findNavController().navigate(action)
+        }
 
         présentateur.traiter_affichage_livre()
 
         sectionGenres.setOnClickListener {
-            findNavController().navigate(R.id.action_accueil_to_genres)
+            présentateur.traiter_naviguer_genres()
         }
 
         sectionNouveautes.setOnClickListener {
             présentateur.traiter_obtenir_livres_par_nouveautes()
-            findNavController().navigate(R.id.action_accueil_to_resultats)
         }
 
 
@@ -86,7 +88,6 @@ class Vue : Fragment() {
 
             imageNouveaute.setOnClickListener {
                 présentateur.traiter_obtenir_livre_par_nouveaute(livre.isbn)
-                findNavController().navigate(R.id.action_accueil_to_detail_livre)
             }
 
 
@@ -121,7 +122,6 @@ class Vue : Fragment() {
 
             btnCarteAuteur.setOnClickListener{
                 présentateur.traiter_obtenir_livres_par_auteur(livre.auteur)
-                findNavController().navigate(R.id.action_accueil_to_resultats)
             }
 
             carteAuteur.addView(carteAuteurView)

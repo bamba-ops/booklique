@@ -6,14 +6,16 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.Présentation.Favoris.Modèle
+import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.entité.Favoris
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class Présentateur(val vue: Vue, context: Context) {
+class Présentateur(val vue: Vue, context: Context, private val navigationHandler: (Int) -> Unit) {
     private var job: Job? = null
     private val modèle = Modèle(context)
 
@@ -39,6 +41,7 @@ class Présentateur(val vue: Vue, context: Context) {
 
     fun traiter_obtenir_livre(isbn: String){
         modèle.obtenirLivre(isbn)
+        navigationHandler(R.id.action_favoris_to_detail_livre)
     }
 
     fun traiter_favoris(favoris: Favoris, iconFavoris: ImageView){

@@ -4,7 +4,9 @@ import Livre
 import android.content.Context
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.Présentation.Recherche.Modèle
+import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.entité.Favoris
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +14,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context){
+class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context,private val navigationHandler: (Int) -> Unit){
     private var job: Job? = null
     private val modèle = Modèle(context)
 
@@ -65,6 +67,7 @@ class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context){
         job = CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) { modèle.obtenirLivre(isbn) }
         }
+        navigationHandler(R.id.action_resultat_to_detail_livre)
     }
 
     fun traiter_livre() {

@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.fragment.findNavController
+import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.entité.Favoris
 import com.crosemont.booklique.domaine.entité.Reservation
 import com.crosemont.booklique.domaine.entité.ReservationHistorique
@@ -19,7 +21,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class Présentateur(private val vue: Vue, context: Context) {
+class Présentateur(private val vue: Vue, context: Context, private val navigationHandler: (Int) -> Unit) {
 
     private val modèle = Modèle(context)
     private var job: Job? = null
@@ -86,7 +88,7 @@ class Présentateur(private val vue: Vue, context: Context) {
     }
 
     fun traiter_navigation_accueil(){
-        vue.naviguer_accueil()
+        naviguer_accueil()
     }
 
     fun estFavori(isbn: String) {
@@ -99,6 +101,10 @@ class Présentateur(private val vue: Vue, context: Context) {
     fun getFormattedDate(date: Date): String {
         val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         return dateFormat.format(date)
+    }
+
+    fun naviguer_accueil(){
+        navigationHandler(R.id.action_detail_livre_to_accueil)
     }
 
     fun basculerFavori(livre: Livre) {
@@ -147,12 +153,9 @@ class Présentateur(private val vue: Vue, context: Context) {
             putExtra(CalendarContract.EXTRA_EVENT_END_TIME, fin.time)
         }
 
-        try {
-            context.startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            vue.afficherToast("Erreur: Aucune application capable de gérer cet événement.")
-        }
+        context.startActivity(intent)
     }
+
 
     fun traiterConnexion(context : Context){
         AlertDialog.Builder(context)

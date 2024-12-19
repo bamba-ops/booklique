@@ -35,7 +35,11 @@ class Vue : Fragment() {
 
         resultatLivresFavoris = view.findViewById(R.id.resultat_livres_favoris)
         textView = view.findViewById(R.id.rienFavoris)
-        présentateur = Présentateur(this, requireContext())
+        présentateur = Présentateur(this, requireContext()) { action ->
+            findNavController().navigate(action)
+        }
+
+
         présentateur.chargerLivresFavoris()
 
 
@@ -89,7 +93,6 @@ class Vue : Fragment() {
 
             livresFavorisView.setOnClickListener {
                 présentateur.traiter_obtenir_livre(favoris.isbn)
-                findNavController().navigate(R.id.action_favoris_to_detail_livre)
             }
 
             iconeFavoris.setOnClickListener {
