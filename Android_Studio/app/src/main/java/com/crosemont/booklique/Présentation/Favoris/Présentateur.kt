@@ -1,6 +1,5 @@
 package com.crosemont.booklique.Présentation.Favoris
 
-import android.content.Context
 import android.widget.ImageView
 import com.crosemont.booklique.domaine.entité.Favoris
 import kotlinx.coroutines.CoroutineScope
@@ -8,9 +7,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class Présentateur(val vue: Vue, context: Context) {
+class Présentateur(val vue: Vue) {
     private var job: Job? = null
-    private val modèle = Modèle(context)
+    private val modèle = Modèle(vue.requireContext())
 
     fun chargerLivresFavoris(){
         if(!vue.connexion()){

@@ -37,7 +37,7 @@ class Vue : Fragment() {
 
         resultatLivresFavoris = view.findViewById(R.id.resultat_livres_favoris)
         textView = view.findViewById(R.id.rienFavoris)
-        présentateur = Présentateur(this, requireContext())
+        présentateur = Présentateur(this)
         présentateur.chargerLivresFavoris()
 
 
