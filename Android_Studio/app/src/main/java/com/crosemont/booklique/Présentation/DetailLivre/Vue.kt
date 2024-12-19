@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.crosemont.booklique.R
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 
 class Vue : Fragment() {
@@ -35,6 +36,7 @@ class Vue : Fragment() {
     private lateinit var sectionEcheance: View
     private lateinit var présentateur: Présentateur
     private lateinit var livre: Livre
+    lateinit var navControlleur: NavController
 
     private var isFavoris: Boolean = false
     private var isbnLivre: String = ""
@@ -65,9 +67,7 @@ class Vue : Fragment() {
         nombrePagesLivre = view.findViewById(R.id.nombre_pages_livre_details)
         sectionEcheance = view.findViewById(R.id.echeance_section)
 
-        présentateur = Présentateur(this, requireContext()) { action ->
-            findNavController().navigate(action)
-        }
+        présentateur = Présentateur(this, requireContext())
 
         // Initialisation des données
         présentateur.initialiserLivre()
@@ -175,6 +175,10 @@ class Vue : Fragment() {
 
         val dialog = builder.create()
         dialog.show()
+    }
+
+     fun naviguer_accueil() {
+         navControlleur.navigate(R.id.action_detail_livre_to_accueil)
     }
 
 }

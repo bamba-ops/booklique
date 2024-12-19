@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
 
@@ -17,6 +18,7 @@ class Vue : Fragment() {
     private lateinit var genreFiction: LinearLayout
     private lateinit var genreHistoire: LinearLayout
     private lateinit var présentateur: Présentateur
+    private lateinit var navControlleur: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +36,7 @@ class Vue : Fragment() {
         genreDeveloppementPersonnel = view.findViewById(R.id.genre_developpement_personnel)
         genreFiction = view.findViewById(R.id.genre_fiction)
         genreHistoire = view.findViewById(R.id.genre_histoire)
-        présentateur = Présentateur(this){ action ->
-            findNavController().navigate(action)
-        }
+        présentateur = Présentateur(this)
 
         genreAffaires.setOnClickListener { navigateToRecherche("Afffaires") }
         genreBiographies.setOnClickListener { navigateToRecherche("Biographies") }
@@ -47,5 +47,9 @@ class Vue : Fragment() {
 
     private fun navigateToRecherche(genre: String) {
         présentateur.traiter_obtenir_livres_par_genre(genre)
+    }
+
+     fun naviguerVersResultats() {
+         navControlleur.navigate(R.id.action_genres_to_resultat)
     }
 }

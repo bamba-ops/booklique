@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.entité.Favoris
@@ -21,6 +22,7 @@ class Vue : Fragment() {
     private lateinit var resultatLivresFavoris: LinearLayout
     private lateinit var présentateur: Présentateur
     private lateinit var  textView: TextView
+    private lateinit var navControlleur: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +37,7 @@ class Vue : Fragment() {
 
         resultatLivresFavoris = view.findViewById(R.id.resultat_livres_favoris)
         textView = view.findViewById(R.id.rienFavoris)
-        présentateur = Présentateur(this, requireContext()) { action ->
-            findNavController().navigate(action)
-        }
+        présentateur = Présentateur(this, requireContext())
 
 
         présentateur.chargerLivresFavoris()
@@ -64,6 +64,8 @@ class Vue : Fragment() {
     fun changer_resource_iconeFavoris_false(iconeFavoris: ImageView){
         iconeFavoris.setImageResource(R.drawable.favoris_false)
     }
+
+
 
     fun afficherLivresFavoris(favoris: Favoris) {
         val inflater = layoutInflater
@@ -101,4 +103,9 @@ class Vue : Fragment() {
 
             resultatLivresFavoris.addView(livresFavorisView)
         }
+
+     fun naviguerVersDetailLivre() {
+         navControlleur.navigate(R.id.action_favoris_to_detail_livre)
+    }
+
 }

@@ -21,7 +21,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class Présentateur(private val vue: Vue, context: Context, private val navigationHandler: (Int) -> Unit) {
+class Présentateur(private val vue: Vue, context: Context) {
 
     private val modèle = Modèle(context)
     private var job: Job? = null
@@ -88,7 +88,7 @@ class Présentateur(private val vue: Vue, context: Context, private val navigati
     }
 
     fun traiter_navigation_accueil(){
-        naviguer_accueil()
+        vue.naviguer_accueil()
     }
 
     fun estFavori(isbn: String) {
@@ -103,9 +103,6 @@ class Présentateur(private val vue: Vue, context: Context, private val navigati
         return dateFormat.format(date)
     }
 
-    fun naviguer_accueil(){
-        navigationHandler(R.id.action_detail_livre_to_accueil)
-    }
 
     fun basculerFavori(livre: Livre) {
         job = CoroutineScope(Dispatchers.Main).launch {

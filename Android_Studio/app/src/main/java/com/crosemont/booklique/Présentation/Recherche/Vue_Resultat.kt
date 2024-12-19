@@ -12,6 +12,7 @@ import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.Présentation.Favoris.Présentateur
 import com.crosemont.booklique.R
@@ -25,7 +26,7 @@ class Vue_Resultat : Fragment() {
     private lateinit var affichageDefilementResultatRecherche: ScrollView
     private lateinit var chargement: ProgressBar
     private lateinit var text_critere_recherche: TextView
-
+    private lateinit var navControlleur: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,9 +45,7 @@ class Vue_Resultat : Fragment() {
         textRechercheParDefaut = view.findViewById(R.id.text_recherche_par_defaut)
         text_critere_recherche = view.findViewById(R.id.text_critere_recherche)
         chargement = view.findViewById(R.id.chargement)
-        présentateur = Présentateur_Resultat(this, requireContext()) { action ->
-            findNavController().navigate(action)
-        }
+        présentateur = Présentateur_Resultat(this, requireContext())
 
 
         présentateur.traiter_livre()
@@ -147,6 +146,10 @@ class Vue_Resultat : Fragment() {
     fun préparationAfficherLivres(){
         afficherTextParDefaut(false)
         afficherDefilementResultatRecherche(true)
+    }
+
+     fun naviguerVersDetailLivre() {
+         navControlleur.navigate(R.id.action_resultat_to_detail_livre)
     }
 
 

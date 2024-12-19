@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class Présentateur(val vue: Vue, context: Context, private val navigationHandler: (Int) -> Unit) {
+class Présentateur(val vue: Vue, context: Context) {
     private var job: Job? = null
     private val modèle = Modèle(context)
 
@@ -41,7 +41,7 @@ class Présentateur(val vue: Vue, context: Context, private val navigationHandle
 
     fun traiter_obtenir_livre(isbn: String){
         modèle.obtenirLivre(isbn)
-        navigationHandler(R.id.action_favoris_to_detail_livre)
+        vue.naviguerVersDetailLivre()
     }
 
     fun traiter_favoris(favoris: Favoris, iconFavoris: ImageView){

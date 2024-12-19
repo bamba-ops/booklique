@@ -14,7 +14,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context,private val navigationHandler: (Int) -> Unit){
+class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context){
     private var job: Job? = null
     private val modèle = Modèle(context)
 
@@ -67,7 +67,7 @@ class Présentateur_Resultat(private val vue: Vue_Resultat, context: Context,pri
         job = CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) { modèle.obtenirLivre(isbn) }
         }
-        navigationHandler(R.id.action_resultat_to_detail_livre)
+        vue.naviguerVersDetailLivre()
     }
 
     fun traiter_livre() {

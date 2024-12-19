@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso
 import kotlin.coroutines.CoroutineContext
 
 
-class Présentateur(val vue: Vue, val modèle: Modèle = Modèle(), private val navigationHandler: (Int) -> Unit) {
+class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
     private var job: Job? = null
     //private val modèle = Modèle()
 
@@ -42,22 +42,22 @@ class Présentateur(val vue: Vue, val modèle: Modèle = Modèle(), private val 
     }
 
     fun traiter_naviguer_genres() {
-        navigationHandler(R.id.action_accueil_to_genres)
+        vue.naviguerVersGenres()
     }
 
     fun traiter_obtenir_livres_par_auteur(auteur: String){
         modèle.obtenirLivreParAuteur(auteur)
-        navigationHandler(R.id.action_accueil_to_resultats)
+        vue.naviguerVersResultatsAvecAuteur(auteur)
     }
 
     fun traiter_obtenir_livres_par_nouveautes(){
         modèle.obtenirLivresParNouveautes()
-        navigationHandler(R.id.action_accueil_to_resultats)
+        vue.naviguerVersResultatsAvecNouveautes()
     }
 
     fun traiter_obtenir_livre_par_nouveaute(isbn: String){
         modèle.obtenirLivreParNouveaute(isbn)
-        navigationHandler(R.id.action_accueil_to_detail_livre)
+        vue.naviguerVersDetailLivre(isbn)
     }
 
     fun traiterConnexion(context : Context){
