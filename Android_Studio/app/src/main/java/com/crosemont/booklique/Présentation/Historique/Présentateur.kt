@@ -1,6 +1,5 @@
 package com.crosemont.booklique.Présentation.Historique
 
-import android.content.Context
 import android.widget.TextView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -9,8 +8,8 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Présentateur(private val vue: Vue, context: Context) {
-    private val modèle = Modèle(context)
+class Présentateur(private val vue: Vue) {
+    private val modèle = Modèle(vue.requireContext())
 
     fun formaterDateHistorique(date: Date?): String {
         if (date == null) {

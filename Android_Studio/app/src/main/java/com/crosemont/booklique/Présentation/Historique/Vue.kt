@@ -32,7 +32,7 @@ class Vue : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         resultatHistoriqueResrvation = view.findViewById(R.id.resultatHistoriqueReservation)
         boutonSupprimerHistorique = view.findViewById(R.id.btnSupprimerHistorique)
-        présentateur = Présentateur(this, requireContext())
+        présentateur = Présentateur(this)
         présentateur.afficherHistoriqueReservation()
 
         boutonSupprimerHistorique.setOnClickListener {
