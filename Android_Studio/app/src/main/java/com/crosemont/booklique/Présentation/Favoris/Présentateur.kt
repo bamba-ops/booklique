@@ -17,11 +17,13 @@ class Présentateur(val vue: Vue) {
         }else{
             job = CoroutineScope( Dispatchers.Main ).launch {
                 val favoris = modèle.obtenirLivresFavoris()
+                var i = 0
                 if (favoris.isNotEmpty()) {
                     vue.enlever_text_view()
                     vue.charger_affichage_livre_favoris()
                     for (favori in favoris) {
-                        vue.afficherLivresFavoris(favori)
+                        vue.afficherLivresFavoris(favori, i)
+                        i += 1
                     }
                 } else {
                     vue.charger_affichage_livre_favoris()
@@ -35,12 +37,12 @@ class Présentateur(val vue: Vue) {
         modèle.obtenirLivre(isbn)
     }
 
-    fun traiter_favoris(favoris: Favoris, iconFavoris: ImageView){
+    fun traiter_favoris(favoris: Favoris, index: Int){
         job = CoroutineScope( Dispatchers.Main ).launch {
             val favori = modèle.obtenirLivreFavorisParISBN(favoris.isbn)
             if(favori != null){
                 modèle.retirerLivreFavorisParISBN(favoris.isbn)
-                vue.changer_resource_iconeFavoris_false(iconFavoris)
+                vue.changer_resource_iconeFavoris_false(index)
                 chargerLivresFavoris()
             }
         }

@@ -20,6 +20,7 @@ class Vue : Fragment() {
     lateinit var resultatHistoriqueResrvation: LinearLayout
     private lateinit var présentateur: Présentateur
     private lateinit var boutonSupprimerHistorique: Button
+    private var titreList: MutableList<TextView> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +42,11 @@ class Vue : Fragment() {
 
     }
 
-    fun afficherHistoriqueReservation(reservationHistorique: List<ReservationHistorique>) {
+    fun ajouter_titre_list(titre: TextView){
+        this.titreList.add(titre)
+    }
+
+    fun afficherHistoriqueReservation(reservationHistorique: List<ReservationHistorique>, index: Int) {
         resultatHistoriqueResrvation.removeAllViews()
         for (historique in reservationHistorique) {
             val itemView = LayoutInflater.from(context).inflate(
@@ -50,10 +55,13 @@ class Vue : Fragment() {
                 false
             )
             val titre: TextView = itemView.findViewById(R.id.idTitre)
+            titre.tag = index
+            ajouter_titre_list(titre)
+
             val dateReservation: TextView = itemView.findViewById(R.id.dateRerservation)
             val dateRetour: TextView = itemView.findViewById(R.id.dateRetour)
 
-            présentateur.traiter_titre_historique_reservation(historique.livreIsbn, titre)
+            présentateur.traiter_titre_historique_reservation(historique.livreIsbn, titre.tag as Int)
             dateReservation.text = présentateur.formaterDateHistorique(historique.debut)
             dateRetour.text = présentateur.formaterDateHistorique(historique.termine)
 
@@ -61,8 +69,8 @@ class Vue : Fragment() {
         }
     }
 
-    fun changer_text(titre: TextView, livreTitre: String){
-        titre.text = livreTitre
+    fun changer_text(index: Int, livreTitre: String){
+        titreList[index].text = livreTitre
     }
 
     fun afficherDialogueConnexion(){

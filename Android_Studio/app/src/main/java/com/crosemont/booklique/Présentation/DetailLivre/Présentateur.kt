@@ -84,10 +84,20 @@ class Présentateur(private val vue: Vue) {
         vue.naviguer_accueil()
     }
 
-    fun estFavori(isbn: String) {
+    fun traiter_est_Favori(isbn: String) {
         job = CoroutineScope(Dispatchers.Main).launch {
             val favori = withContext(Dispatchers.IO) { modèle.obtenirLivreFavori(isbn) }
-            vue.mettreÀJourFavori(favori != null)
+            val isFavori = favori != null
+            vue.changer_isFavoris(isFavori)
+            traiter_favoris_image(isFavori)
+        }
+    }
+
+    private fun traiter_favoris_image(estFavori: Boolean){
+        if(estFavori){
+            vue.afficher_favoris()
+        } else {
+            vue.enlever_favoris()
         }
     }
 
@@ -96,9 +106,17 @@ class Présentateur(private val vue: Vue) {
         return dateFormat.format(date)
     }
 
-    fun basculerFavori(livre: Livre) {
+    fun traiter_boutton_favoris(estDisponible: Boolean){
+       if(estDisponible){
+           vue.afficher_boutton_reservation()
+       } else {
+           vue.enlever_boutton_reservation()
+       }
+    }
+
+    fun traiter_favoris(livre: Livre) {
         job = CoroutineScope(Dispatchers.Main).launch {
-            val actuelFavori = vue.estLivreFavori()
+            val actuelFavori = vue.avoir_isFavoris()
             withContext(Dispatchers.IO) {
                 if (actuelFavori) {
                     modèle.retirerLivreFavori(livre.isbn)
@@ -116,7 +134,8 @@ class Présentateur(private val vue: Vue) {
                     )
                 }
             }
-            vue.mettreÀJourFavori(!actuelFavori)
+            vue.changer_isFavoris(!actuelFavori)
+            traiter_favoris_image(!actuelFavori)
         }
     }
 

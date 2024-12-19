@@ -13,8 +13,8 @@ class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
         }else{
             job = CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    vue.afficherChargement()
-                    // Fetch data in IO thread
+                    vue.afficherChargement(true)
+
                     val livreAuteurList = withContext(Dispatchers.IO) {
                         modèle.obtenirLivresParAuteur()
                     }
@@ -23,10 +23,10 @@ class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
                     }
 
                     livreAuteurList.forEach { livre ->
-                        vue.afficherCartesAuteurs(livre) // This runs on Main
+                        vue.afficher_livre_par_auteur(livre)
                     }
                     livreList.forEach { livre ->
-                        vue.afficherListeNouveautes(livre) // This runs on Main
+                        vue.afficher_livre_par_nouveautes(livre)
                     }
 
                     vue.afficherAccueil()

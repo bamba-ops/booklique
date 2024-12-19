@@ -65,7 +65,7 @@ class Vue : Fragment() {
 
     }
 
-    fun afficherListeNouveautes(livre: Livre) {
+    fun afficher_livre_par_nouveautes(livre: Livre) {
             val listeNouveautesView = LayoutInflater.from(context).inflate(R.layout.fragment_section_nouveautes, listeNouveautes, false)
 
             val imageNouveaute: ImageView = listeNouveautesView.findViewById(R.id.image_nouveaute)
@@ -98,7 +98,7 @@ class Vue : Fragment() {
 
     }
 
-    fun afficherCartesAuteurs(livre: Livre){
+    fun afficher_livre_par_auteur(livre: Livre){
             val carteAuteurView = LayoutInflater.from(context).inflate(R.layout.fragment_carte_auteur, carteAuteur, false)
 
             val nomAuteur: TextView = carteAuteurView.findViewById(R.id.nom_auteur)
