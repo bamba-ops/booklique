@@ -27,6 +27,7 @@ class Vue_Resultat : Fragment() {
     lateinit var affichageDefilementResultatRecherche: ScrollView
     private lateinit var chargement: ProgressBar
     private lateinit var text_critere_recherche: TextView
+    private var favorisList: MutableList<ImageView> = mutableListOf()
 
 
     override fun onCreateView(
@@ -52,15 +53,19 @@ class Vue_Resultat : Fragment() {
 
     }
 
-    fun changer_image_resource_true(iconFavoris: ImageView ){
-        iconFavoris.setImageResource(R.drawable.favoris_true)
+    fun changer_image_resource_true(index: Int ){
+        favorisList[index].setImageResource(R.drawable.favoris_true)
     }
 
-    fun changer_image_resource_false(iconFavoris: ImageView){
-        iconFavoris.setImageResource(R.drawable.favoris_false)
+    fun changer_image_resource_false(index: Int){
+        favorisList[index].setImageResource(R.drawable.favoris_false)
     }
 
-    fun afficherLivres(livre: Livre){
+    fun ajouter_favoris_list(favoris: ImageView){
+        this.favorisList.add(favoris)
+    }
+
+    fun afficherLivres(livre: Livre, index: Int){
         val inflater = layoutInflater
         textRechercheParDefaut.text = "Aucun résultat trouvé."
         val livreView = inflater.inflate(
@@ -75,10 +80,13 @@ class Vue_Resultat : Fragment() {
         val genreTextView = livreView.findViewById<TextView>(R.id.livre_genre)
         val favoris = livreView.findViewById<ImageView>(R.id.icone_favoris)
 
+        favoris.tag = index
+        ajouter_favoris_list(favoris)
+
         titreTextView.text = livre.titre
         auteurTextView.text = livre.auteur
         genreTextView.text = livre.genre
-        présentateur.traiter_livre_favori(livre.isbn, favoris)
+        présentateur.traiter_livre_favori(livre.isbn, favoris.tag as Int)
 
         Picasso.get()
             .load(livre.image_url)
@@ -87,7 +95,7 @@ class Vue_Resultat : Fragment() {
             .into(imageView)
 
         favoris.setOnClickListener {
-            présentateur.traiter_livre_favori_boutton(livre, favoris)
+            présentateur.traiter_livre_favori_boutton(livre, favoris.tag as Int)
         }
 
         livreView.setOnClickListener {
