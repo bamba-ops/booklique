@@ -41,7 +41,7 @@ class Vue : Fragment() {
         groupeRadio = view.findViewById(R.id.radioGroup)
         boutonRecherche = view.findViewById(R.id.btnRecherche)
         boutonSupprimerHistorique = view.findViewById(R.id.btnSupprimerHistorique)
-        présentateur = Présentateur(this, requireContext())
+        présentateur = Présentateur(this)
 
         présentateur.traiter_mise_a_jour_suggestions("titre")
         présentateur.traiter_historique_recherche()

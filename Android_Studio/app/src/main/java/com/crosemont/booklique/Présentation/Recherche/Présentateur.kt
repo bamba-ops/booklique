@@ -1,15 +1,14 @@
 package com.crosemont.booklique.Présentation.Recherche
 
-import android.content.Context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class Présentateur(private val vue: Vue, context: Context) {
+class Présentateur(private val vue: Vue) {
     private var job: Job? = null
-    private val modèle = Modèle(context)
+    private val modèle = Modèle(vue.requireContext())
 
     fun traiter_historique_recherche() {
         if(!vue.connexion()){
