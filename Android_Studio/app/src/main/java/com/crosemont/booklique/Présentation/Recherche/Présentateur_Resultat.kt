@@ -1,7 +1,6 @@
 package com.crosemont.booklique.Présentation.Recherche
 
 import Livre
-import android.widget.ImageView
 import com.crosemont.booklique.domaine.entité.Favoris
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,26 +12,26 @@ class Présentateur_Resultat(private val vue: Vue_Resultat){
     private var job: Job? = null
     private val modèle = Modèle(vue.requireContext())
 
-    fun traiter_livre_favori(isbn: String, iconFavori: ImageView) {
+    fun traiter_livre_favori(isbn: String, index: Int) {
         job = CoroutineScope(Dispatchers.Main).launch {
             val favori = withContext(Dispatchers.IO) { modèle.obtenirLivreFavori(isbn) }
             if (favori != null) {
-                vue.changer_image_resource_true(iconFavori)
+                vue.changer_image_resource_true(index)
             } else {
-                vue.changer_image_resource_false(iconFavori)
+                vue.changer_image_resource_false(index)
             }
         }
     }
 
-    fun traiter_livre_favori_boutton(livre: Livre, iconFavori: ImageView) {
+    fun traiter_livre_favori_boutton(livre: Livre, index: Int) {
         job = CoroutineScope(Dispatchers.Main).launch {
             val favori = withContext(Dispatchers.IO) { modèle.obtenirLivreFavori(livre.isbn) }
             if (favori != null) {
                 traiter_retirer_livre_favori(livre.isbn)
-                vue.changer_image_resource_false(iconFavori)
+                vue.changer_image_resource_false(index)
             } else {
                 traiter_ajouter_livre_favori(livre)
-                vue.changer_image_resource_true(iconFavori)
+                vue.changer_image_resource_true(index)
             }
         }
     }
@@ -101,7 +100,9 @@ class Présentateur_Resultat(private val vue: Vue_Resultat){
         vue.modifierTextCritereRecherche(critère)
         vue.afficherTextCritereRecherche()
         traiterAffichageLivres()
-        livres.forEach { vue.afficherLivres(it) }
+        livres.forEachIndexed { index, livre ->
+            vue.afficherLivres(livre, index)
+        }
     }
 
     private fun afficherAucunLivreTrouvé() {

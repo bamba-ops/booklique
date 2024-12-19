@@ -1,6 +1,5 @@
 package com.crosemont.booklique.Présentation.Historique
 
-import android.widget.TextView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
