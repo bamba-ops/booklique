@@ -15,7 +15,9 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.crosemont.booklique.Présentation.Favoris.Présentateur
 import com.crosemont.booklique.R
 import com.squareup.picasso.Picasso
 
@@ -48,6 +50,7 @@ class Vue_Resultat : Fragment() {
         text_critere_recherche = view.findViewById(R.id.text_critere_recherche)
         chargement = view.findViewById(R.id.chargement)
         présentateur = Présentateur_Resultat(this)
+
 
         présentateur.traiter_livre()
 
@@ -100,8 +103,6 @@ class Vue_Resultat : Fragment() {
 
         livreView.setOnClickListener {
             présentateur.traiter_obtenir_livre(livre.isbn)
-            findNavController().navigate(R.id.action_resultat_to_detail_livre)
-
         }
 
         resultatRechercheConteneur.addView(livreView)
@@ -157,9 +158,10 @@ class Vue_Resultat : Fragment() {
         return textRechercheParDefaut.visibility == View.GONE
     }
 
-    fun chargerDefilementResultatRecherche(): Boolean{
-        return affichageDefilementResultatRecherche.visibility == View.GONE
+     fun naviguerVersDetailLivre() {
+         navControlleur.navigate(R.id.action_resultat_to_detail_livre)
     }
+
 
     fun afficherDialogueConnexion(){
         AlertDialog.Builder(requireContext())

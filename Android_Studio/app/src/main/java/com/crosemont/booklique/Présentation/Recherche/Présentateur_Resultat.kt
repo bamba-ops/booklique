@@ -61,6 +61,7 @@ class Présentateur_Resultat(private val vue: Vue_Resultat){
         job = CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) { modèle.obtenirLivre(isbn) }
         }
+        vue.naviguerVersDetailLivre()
     }
 
     fun traiter_livre() {

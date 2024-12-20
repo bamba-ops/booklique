@@ -34,6 +34,7 @@ class Présentateur(val vue: Vue) {
 
     fun traiter_obtenir_livre(isbn: String){
         modèle.obtenirLivre(isbn)
+        vue.naviguerVersDetailLivre()
     }
 
     fun traiter_favoris(favoris: Favoris, index: Int){

@@ -16,6 +16,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
 import com.squareup.picasso.Picasso
@@ -26,6 +27,7 @@ class Vue : Fragment() {
     lateinit var sectionGenres: LinearLayout
     lateinit var sectionNouveautes: LinearLayout
     lateinit var carteAuteur: LinearLayout
+    lateinit var navControlleur: NavController
     lateinit var listeNouveautes: LinearLayout
     lateinit var présentateur: Présentateur
     lateinit var chargement: FrameLayout
@@ -47,19 +49,19 @@ class Vue : Fragment() {
         sectionNouveautes = view.findViewById(R.id.section_nouveautes)
         listeNouveautes = view.findViewById(R.id.liste_nouveautes)
         carteAuteur = view.findViewById(R.id.carte_auteurs)
-        présentateur = Présentateur(this)
         chargement = view.findViewById(R.id.chargement)
         accueil = view.findViewById(R.id.accueil)
+
+        présentateur = Présentateur(this, modèle = Modèle())
 
         présentateur.traiter_affichage_livre()
 
         sectionGenres.setOnClickListener {
-            findNavController().navigate(R.id.action_accueil_to_genres)
+            présentateur.traiter_naviguer_genres()
         }
 
         sectionNouveautes.setOnClickListener {
             présentateur.traiter_obtenir_livres_par_nouveautes()
-            findNavController().navigate(R.id.action_accueil_to_resultats)
         }
 
 
@@ -89,7 +91,6 @@ class Vue : Fragment() {
 
             imageNouveaute.setOnClickListener {
                 présentateur.traiter_obtenir_livre_par_nouveaute(livre.isbn)
-                findNavController().navigate(R.id.action_accueil_to_detail_livre)
             }
 
 
@@ -124,7 +125,6 @@ class Vue : Fragment() {
 
             btnCarteAuteur.setOnClickListener{
                 présentateur.traiter_obtenir_livres_par_auteur(livre.auteur)
-                findNavController().navigate(R.id.action_accueil_to_resultats)
             }
 
             carteAuteur.addView(carteAuteurView)
@@ -143,17 +143,20 @@ class Vue : Fragment() {
         accueil.visibility = View.GONE
     }
 
-    fun enleverChargement(){
-        chargement.visibility = View.GONE
+    fun naviguerVersGenres() {
+        navControlleur.navigate(R.id.action_accueil_to_genres)
     }
 
-    fun afficherDialogueConnexion(){
-        AlertDialog.Builder(requireContext())
-            .setTitle("Connexion internet perdue")
-            .setMessage("Veuillez vous reconnecter")
-            .setNegativeButton("OK"){
-                    dialog, which -> dialog.dismiss()
-            }.show()
+     fun naviguerVersResultatsAvecAuteur(auteur: String) {
+        navControlleur.navigate(R.id.action_accueil_to_resultats)
+    }
+
+     fun naviguerVersResultatsAvecNouveautes() {
+        navControlleur.navigate(R.id.action_accueil_to_resultats)
+    }
+
+     fun naviguerVersDetailLivre(isbn: String) {
+        navControlleur.navigate(R.id.action_accueil_to_detail_livre)
     }
 
     @SuppressLint("ServiceCast")

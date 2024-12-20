@@ -21,6 +21,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.crosemont.booklique.R
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 
 class Vue : Fragment() {
@@ -41,6 +42,7 @@ class Vue : Fragment() {
     private lateinit var sectionEcheance: View
     private lateinit var présentateur: Présentateur
     private lateinit var livre: Livre
+    lateinit var navControlleur: NavController
 
     private var isFavoris: Boolean = false
     private var isbnLivre: String = ""
@@ -89,9 +91,6 @@ class Vue : Fragment() {
 
     }
 
-    fun naviguer_accueil(){
-        findNavController().navigate(R.id.action_detail_livre_to_accueil)
-    }
 
     fun afficherLivre(livre: Livre) {
         this.livre = livre
@@ -169,47 +168,8 @@ class Vue : Fragment() {
         dialog.show()
     }
 
-    fun afficherCalendrier() {
-        val intent = Intent(Intent.ACTION_INSERT).apply {
-            data = CalendarContract.Events.CONTENT_URI
-            putExtra(CalendarContract.Events.TITLE, afficherTitre())
-            putExtra(CalendarContract.Events.DESCRIPTION, afficherDescription())
-            afficherLieu()?.let { putExtra(CalendarContract.Events.EVENT_LOCATION, it) }
-            putExtra(CalendarContract.EXTRA_EVENT_END_TIME, présentateur.écheance().time)
-        }
-        requireContext().startActivity(intent)
+     fun naviguer_accueil() {
+         navControlleur.navigate(R.id.action_detail_livre_to_accueil)
     }
 
-
-    fun afficherToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
-
-    fun afficherTitre() : String{
-        return titreLivre.text?.toString()?.takeIf { it.isNotBlank() } ?: "Booklique"
-    }
-
-    fun afficherDescription() : String{
-        return getString(R.string.message_description_calandar)
-    }
-
-    fun afficherLieu() : String{
-        return "6400 16e Avenue, Montréal, QC H1X 2S9"
-    }
-
-    fun afficherDialogueConnexion(){
-        androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle("Connexion internet perdue")
-            .setMessage("Veuillez vous reconnecter")
-            .setNegativeButton("OK"){
-                    dialog, which -> dialog.dismiss()
-            }.show()
-    }
-
-    @SuppressLint("ServiceCast")
-    fun connexion() : Boolean{
-        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetworkInfo = connectivityManager.activeNetworkInfo
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected
-    }
 }
