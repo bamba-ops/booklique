@@ -6,7 +6,7 @@ class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
     private var job: Job? = null
 
     fun traiter_affichage_livre() {
-        if (vue.connexion()) {
+        if (!vue.connexion()) {
             vue.afficherDialogueConnexion()
         } else {
             job = CoroutineScope(Dispatchers.Main).launch {
