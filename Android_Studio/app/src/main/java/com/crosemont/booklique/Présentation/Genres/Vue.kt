@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
 
@@ -45,6 +46,9 @@ class Vue : Fragment() {
 
     private fun navigateToRecherche(genre: String) {
         présentateur.traiter_obtenir_livres_par_genre(genre)
-        findNavController().navigate(R.id.action_genres_to_resultat)
+    }
+
+     fun naviguerVersResultats() {
+         findNavController().navigate(R.id.action_genres_to_resultat)
     }
 }

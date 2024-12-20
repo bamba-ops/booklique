@@ -1,59 +1,48 @@
 package com.crosemont.booklique.Présentation.Recherche
 
-import Livre
-import android.content.Context
-import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-import androidx.navigation.fragment.findNavController
-import com.crosemont.booklique.Présentation.Recherche.Modèle
-import com.crosemont.booklique.R
-import com.crosemont.booklique.domaine.mork_data.Data
-import com.google.android.material.tabs.TabLayout.Mode
-import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class Présentateur(private val vue: Vue, context: Context) {
+class Présentateur(private val vue: Vue) {
     private var job: Job? = null
-    private val modèle = Modèle(context)
+    private val modèle = Modèle(vue.requireContext())
 
     fun traiter_historique_recherche() {
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         }else{
             job = CoroutineScope(Dispatchers.Main).launch {
                 val historique =
                     withContext(Dispatchers.IO) { modèle.obtenirHistoriqueRecherches() }
                 val suggestionsAvecIcones = historique.map { "⏳ $it" }
-                vue.mettreAJourSuggestions(suggestionsAvecIcones)
+                vue.mettre_a_jour_suggestion(suggestionsAvecIcones)
             }
         }
     }
 
     fun traiter_supprimer_recherche_historique() {
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         } else {
             job = CoroutineScope(Dispatchers.Main).launch {
                 withContext(Dispatchers.IO) { modèle.supprimerHistoriqueRecherche() }
-                vue.mettreAJourSuggestions(emptyList())
+                vue.mettre_a_jour_suggestion(emptyList())
             }
         }
     }
 
-    fun traiter_mise_a_jour_suggestions(critère: String) {
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+    fun traiter_mise_a_jour_suggestions(checkedId: Int) {
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         } else {
             job = CoroutineScope(Dispatchers.Main).launch {
                 val historique =
                     withContext(Dispatchers.IO) { modèle.obtenirHistoriqueRecherches() }
                 val suggestions = withContext(Dispatchers.IO) {
+                    val critère = if ( checkedId == vue.charger_radio_id()) "titre" else "auteur"
                     if (critère == "titre") {
                         modèle.obtenirLivresParTitres()
                     } else {
@@ -65,15 +54,21 @@ class Présentateur(private val vue: Vue, context: Context) {
                 suggestionsAvecIcones.addAll(historique.map { "⏳ $it" })
                 suggestionsAvecIcones.addAll(suggestions.map { "🔍 $it" })
 
-                vue.mettreAJourSuggestions(suggestionsAvecIcones)
+                vue.mettre_a_jour_suggestion(suggestionsAvecIcones)
             }
         }
     }
 
-    fun lancerRecherche(rechercheText: String, critere: String) {
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+    fun traiter_lancer_recherche(position: Int) {
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         } else {
+
+            val suggestion = vue.charger_barre_recherche(position)
+            val rechercheText = suggestion.removePrefix("🔍 ").removePrefix("⏳ ")
+            vue.charger_text_barre_recherche(rechercheText)
+            val critere = if (vue.charger_group_radio_checked_id() == vue.charger_radio_id()) "titre" else "auteur"
+
             if (rechercheText.isNotEmpty()) {
                 job = CoroutineScope(Dispatchers.Main).launch {
                     withContext(Dispatchers.IO) {
@@ -89,12 +84,26 @@ class Présentateur(private val vue: Vue, context: Context) {
         }
     }
 
-    fun traiterConnexion(context : Context){
-        AlertDialog.Builder(context)
-            .setTitle("Connexion internet perdue")
-            .setMessage("Veuillez vous reconnecter")
-            .setNegativeButton("OK"){
-                    dialog, which -> dialog.dismiss()
-            }.show()
+    fun traiter_boutton_recherche(){
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
+        } else {
+
+            val rechercheText = vue.avoir_text_barre_recherche().trim()
+            val critere = if (vue.charger_group_radio_checked_id() == vue.charger_radio_id()) "titre" else "auteur"
+
+            if (rechercheText.isNotEmpty()) {
+                job = CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.IO) {
+                        modèle.ajouterRecherche(rechercheText)
+                        when (critere) {
+                            "titre" -> modèle.obtenirLivresParNomTitre(rechercheText)
+                            "auteur" -> modèle.obtenirLivresParNomAuteur(rechercheText)
+                        }
+                    }
+                    vue.naviguer_resultat()
+                }
+            }
+        }
     }
 }

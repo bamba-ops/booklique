@@ -1,6 +1,9 @@
 package com.crosemont.booklique.Présentation.Accueil
 
 import Livre
+import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +14,12 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
 import com.squareup.picasso.Picasso
-import com.crosemont.booklique.domaine.mork_data.Data
 import java.lang.Exception
 
 class Vue : Fragment() {
@@ -44,25 +48,25 @@ class Vue : Fragment() {
         sectionNouveautes = view.findViewById(R.id.section_nouveautes)
         listeNouveautes = view.findViewById(R.id.liste_nouveautes)
         carteAuteur = view.findViewById(R.id.carte_auteurs)
-        présentateur = Présentateur(this)
         chargement = view.findViewById(R.id.chargement)
         accueil = view.findViewById(R.id.accueil)
+
+        présentateur = Présentateur(this, modèle = Modèle())
 
         présentateur.traiter_affichage_livre()
 
         sectionGenres.setOnClickListener {
-            findNavController().navigate(R.id.action_accueil_to_genres)
+            présentateur.traiter_naviguer_genres()
         }
 
         sectionNouveautes.setOnClickListener {
             présentateur.traiter_obtenir_livres_par_nouveautes()
-            findNavController().navigate(R.id.action_accueil_to_resultats)
         }
 
 
     }
 
-    fun afficherListeNouveautes(livre: Livre) {
+    fun afficher_livre_par_nouveautes(livre: Livre) {
             val listeNouveautesView = LayoutInflater.from(context).inflate(R.layout.fragment_section_nouveautes, listeNouveautes, false)
 
             val imageNouveaute: ImageView = listeNouveautesView.findViewById(R.id.image_nouveaute)
@@ -86,7 +90,6 @@ class Vue : Fragment() {
 
             imageNouveaute.setOnClickListener {
                 présentateur.traiter_obtenir_livre_par_nouveaute(livre.isbn)
-                findNavController().navigate(R.id.action_accueil_to_detail_livre)
             }
 
 
@@ -95,7 +98,7 @@ class Vue : Fragment() {
 
     }
 
-    fun afficherCartesAuteurs(livre: Livre){
+    fun afficher_livre_par_auteur(livre: Livre){
             val carteAuteurView = LayoutInflater.from(context).inflate(R.layout.fragment_carte_auteur, carteAuteur, false)
 
             val nomAuteur: TextView = carteAuteurView.findViewById(R.id.nom_auteur)
@@ -121,32 +124,53 @@ class Vue : Fragment() {
 
             btnCarteAuteur.setOnClickListener{
                 présentateur.traiter_obtenir_livres_par_auteur(livre.auteur)
-                findNavController().navigate(R.id.action_accueil_to_resultats)
             }
 
             carteAuteur.addView(carteAuteurView)
 
     }
 
-    fun afficherChargement(isTrue: Boolean){
-        if (isTrue){
-            chargement.visibility = View.VISIBLE
-        } else {
-            chargement.visibility = View.GONE
-        }
-
+    fun afficherChargement(){
+        chargement.visibility = View.VISIBLE
     }
 
-    fun afficherAccueil(isTrue: Boolean){
-        if(isTrue){
-            accueil.visibility = View.VISIBLE
-        } else {
-            accueil.visibility = View.GONE
-        }
-
+    fun afficherAccueil(){
+        accueil.visibility = View.VISIBLE
     }
 
+    fun enleverAccueil(){
+        accueil.visibility = View.GONE
+    }
 
+    fun naviguerVersGenres() {
+        findNavController().navigate(R.id.action_accueil_to_genres)
+    }
 
+     fun naviguerVersResultatsAvecAuteur() {
+        findNavController().navigate(R.id.action_accueil_to_resultats)
+    }
 
+     fun naviguerVersResultatsAvecNouveautes() {
+        findNavController().navigate(R.id.action_accueil_to_resultats)
+    }
+
+     fun naviguerVersDetailLivre(isbn: String) {
+        findNavController().navigate(R.id.action_accueil_to_detail_livre)
+    }
+
+    fun afficherDialogueConnexion(){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
+
+    }
+    @SuppressLint("ServiceCast")
+    fun connexion() : Boolean{
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
 }
