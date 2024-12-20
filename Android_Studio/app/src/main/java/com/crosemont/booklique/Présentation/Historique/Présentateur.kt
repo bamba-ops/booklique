@@ -41,6 +41,7 @@ class Présentateur(private val vue: Vue) {
         }
     }
 
+
     fun supprimerHistoriqueReservation() {
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) { modèle.supprimerHistoriqueReservation()}

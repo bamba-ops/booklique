@@ -64,9 +64,8 @@ class Vue : Fragment() {
             présentateur.traiter_titre_historique_reservation(historique.livreIsbn, titre.tag as Int)
             dateReservation.text = présentateur.formaterDateHistorique(historique.debut)
             dateRetour.text = présentateur.formaterDateHistorique(historique.termine)
-
             resultatHistoriqueResrvation.addView(itemView)
-        }
+
     }
 
     fun changer_text(index: Int, livreTitre: String){
