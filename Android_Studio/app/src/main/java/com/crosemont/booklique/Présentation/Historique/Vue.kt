@@ -46,9 +46,8 @@ class Vue : Fragment() {
         this.titreList.add(titre)
     }
 
-    fun afficherHistoriqueReservation(reservationHistorique: List<ReservationHistorique>, index: Int) {
+    fun afficherHistoriqueReservation(historique: ReservationHistorique, index: Int) {
         resultatHistoriqueResrvation.removeAllViews()
-        for (historique in reservationHistorique) {
             val itemView = LayoutInflater.from(context).inflate(
                 R.layout.item_historique,
                 resultatHistoriqueResrvation,

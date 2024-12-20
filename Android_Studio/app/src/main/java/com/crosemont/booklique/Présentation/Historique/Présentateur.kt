@@ -26,7 +26,9 @@ class Présentateur(private val vue: Vue) {
                 var reservationHistoriqueList = modèle.obtenirHistoriqueReservation()
                 var i = 0
                 if (reservationHistoriqueList.isNotEmpty()) {
-                    vue.afficherHistoriqueReservation(reservationHistoriqueList, i)
+                    for (historique in reservationHistoriqueList) {
+                        vue.afficherHistoriqueReservation(historique, i)
+                    }
                 }
             }
         }
