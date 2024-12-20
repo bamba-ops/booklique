@@ -1,4 +1,4 @@
-package com.crosemont.booklique.domaine.dao
+package com.crosemont.booklique.sourcededonnées.dao
 
 import androidx.room.Dao
 import androidx.room.Delete

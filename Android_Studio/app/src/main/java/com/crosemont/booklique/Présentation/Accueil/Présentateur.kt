@@ -1,18 +1,9 @@
 package com.crosemont.booklique.Présentation.Accueil
 
-import android.content.Context
-import android.view.LayoutInflater
-import androidx.appcompat.app.AlertDialog
 import kotlinx.coroutines.*
-import com.crosemont.booklique.Présentation.Accueil.Modèle
-import com.crosemont.booklique.R
-import com.squareup.picasso.Picasso
-import kotlin.coroutines.CoroutineContext
-
 
 class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
     private var job: Job? = null
-    //private val modèle = Modèle()
 
     fun traiter_affichage_livre() {
         if (!modèle.connexion(vue.requireContext())) {
@@ -58,14 +49,5 @@ class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
     fun traiter_obtenir_livre_par_nouveaute(isbn: String){
         modèle.obtenirLivreParNouveaute(isbn)
         vue.naviguerVersDetailLivre(isbn)
-    }
-
-    fun traiterConnexion(context : Context){
-        AlertDialog.Builder(context)
-            .setTitle("Connexion internet perdue")
-            .setMessage("Veuillez vous reconnecter")
-            .setNegativeButton("OK"){
-                                    dialog, which -> dialog.dismiss()
-            }.show()
     }
 }

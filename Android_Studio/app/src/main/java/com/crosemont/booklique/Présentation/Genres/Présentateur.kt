@@ -1,8 +1,5 @@
 package com.crosemont.booklique.Présentation.Genres
 
-import androidx.navigation.fragment.findNavController
-import com.crosemont.booklique.Présentation.Genres.Modèle
-import com.crosemont.booklique.R
 import kotlinx.coroutines.Job
 
 class Présentateur( private val vue: Vue) {

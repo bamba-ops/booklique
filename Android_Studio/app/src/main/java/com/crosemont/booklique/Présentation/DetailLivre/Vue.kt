@@ -1,9 +1,15 @@
 package com.crosemont.booklique.Présentation.DetailLivre
 
 import Livre
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import android.icu.util.Calendar
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,7 +57,7 @@ class Vue : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialisation des vues
+
         imageLivre = view.findViewById(R.id.image_livre_details)
         titreLivre = view.findViewById(R.id.titre_livre_details)
         statutLivre = view.findViewById(R.id.statut_livre)
@@ -67,27 +73,20 @@ class Vue : Fragment() {
         nombrePagesLivre = view.findViewById(R.id.nombre_pages_livre_details)
         sectionEcheance = view.findViewById(R.id.echeance_section)
 
-        présentateur = Présentateur(this, requireContext())
+        présentateur = Présentateur(this)
 
-        // Initialisation des données
-        présentateur.initialiserLivre()
-
-        // Gestion des actions
+        présentateur.traiter_afficher_livre()
 
         buttonReservation.setOnClickListener {
             présentateur.traiter_confirmation_réservation()
         }
 
-
-        // Fonctionnalité pour le bouton favoris
         buttonFavoris.setOnClickListener {
-            présentateur.basculerFavori(livre)
+            présentateur.traiter_favoris(livre)
         }
 
-        // Fonctionnalité pour l'ajout à l'agenda
-
         buttonAjouterAgenda.setOnClickListener {
-            ouvrirCalendrierPourAjouterEvenement()
+            présentateur.traiterAfficherCalendrier()
         }
 
     }
@@ -113,19 +112,29 @@ class Vue : Fragment() {
             .error(R.drawable.error_image)
             .into(imageLivre)
 
-        mettreAJourBoutonReservation(livre.estDisponible())
-        présentateur.estFavori(livre.isbn)
+        présentateur.traiter_boutton_favoris(livre.estDisponible())
+
+        présentateur.traiter_est_Favori(livre.isbn)
     }
 
-    private fun mettreAJourBoutonReservation(estDisponible: Boolean) {
-        buttonReservation.isEnabled = estDisponible
+    fun afficher_boutton_reservation(){
+        buttonReservation.isEnabled = true
     }
 
-    fun mettreÀJourFavori(isFavori: Boolean) {
+    fun enlever_boutton_reservation(){
+        buttonReservation.isEnabled = false
+    }
+
+    fun changer_isFavoris(isFavori: Boolean){
         this.isFavoris = isFavori
-        buttonFavoris.setImageResource(
-            if (isFavoris) R.drawable.favoris_true else R.drawable.favoris_false
-        )
+    }
+
+    fun afficher_favoris(){
+        buttonFavoris.setImageResource(R.drawable.favoris_true)
+    }
+
+    fun enlever_favoris(){
+        buttonFavoris.setImageResource(R.drawable.favoris_false)
     }
 
     fun afficher_echance_livre(){
@@ -134,29 +143,11 @@ class Vue : Fragment() {
         echeanceLivre.text = présentateur.getFormattedDate(dateÉchéance)
     }
 
-    fun estLivreFavori(): Boolean {
+    fun avoir_isFavoris(): Boolean {
         return isFavoris
     }
 
-    private fun ouvrirCalendrierPourAjouterEvenement() {
-        // Récupérer les valeurs des champs de texte pour le titre et la description
-        val titre = titreLivre.text?.toString()?.takeIf { it.isNotBlank() } ?: "Booklique"
-        val description = getString(R.string.message_description_calandar)
 
-        val lieu = "6400 16e Avenue, Montréal, QC H1X 2S9"
-
-        // Obtenir la date d'échéance depuis le présentateur
-        val dateÉchéance = présentateur.écheance()
-
-        // Ouvrir le calendrier pour ajouter un événement avec les informations collectées
-        présentateur.ouvrirCalendrierPourAjouterEvenement(
-            requireContext(),
-            titre,
-            description,
-            lieu,
-            dateÉchéance
-        )
-    }
 
 
     fun afficherConfirmationReservation() {

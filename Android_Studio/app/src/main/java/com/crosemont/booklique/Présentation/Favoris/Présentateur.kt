@@ -1,35 +1,28 @@
 package com.crosemont.booklique.Présentation.Favoris
 
-import Livre
-import android.annotation.SuppressLint
-import android.content.Context
-import android.net.ConnectivityManager
-import android.widget.ImageView
-import androidx.appcompat.app.AlertDialog
-import androidx.navigation.fragment.findNavController
-import com.crosemont.booklique.Présentation.Favoris.Modèle
-import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.entité.Favoris
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class Présentateur(val vue: Vue, context: Context) {
+class Présentateur(val vue: Vue) {
     private var job: Job? = null
-    private val modèle = Modèle(context)
+    private val modèle = Modèle(vue.requireContext())
 
     fun chargerLivresFavoris(){
-        if(!modèle.connexion(vue.requireContext())){
-            traiterConnexion(vue.requireContext())
+        if(!vue.connexion()){
+            vue.afficherDialogueConnexion()
         }else{
             job = CoroutineScope( Dispatchers.Main ).launch {
                 val favoris = modèle.obtenirLivresFavoris()
+                var i = 0
                 if (favoris.isNotEmpty()) {
                     vue.enlever_text_view()
                     vue.charger_affichage_livre_favoris()
                     for (favori in favoris) {
-                        vue.afficherLivresFavoris(favori)
+                        vue.afficherLivresFavoris(favori, i)
+                        i += 1
                     }
                 } else {
                     vue.charger_affichage_livre_favoris()
@@ -44,23 +37,14 @@ class Présentateur(val vue: Vue, context: Context) {
         vue.naviguerVersDetailLivre()
     }
 
-    fun traiter_favoris(favoris: Favoris, iconFavoris: ImageView){
+    fun traiter_favoris(favoris: Favoris, index: Int){
         job = CoroutineScope( Dispatchers.Main ).launch {
             val favori = modèle.obtenirLivreFavorisParISBN(favoris.isbn)
             if(favori != null){
                 modèle.retirerLivreFavorisParISBN(favoris.isbn)
-                vue.changer_resource_iconeFavoris_false(iconFavoris)
+                vue.changer_resource_iconeFavoris_false(index)
                 chargerLivresFavoris()
             }
         }
-    }
-
-    fun traiterConnexion(context : Context){
-        AlertDialog.Builder(context)
-            .setTitle("Connexion internet perdue")
-            .setMessage("Veuillez vous reconnecter")
-            .setNegativeButton("OK"){
-                    dialog, which -> dialog.dismiss()
-            }.show()
     }
 }

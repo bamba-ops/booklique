@@ -1,7 +1,10 @@
 package com.crosemont.booklique.Présentation.Favoris
 
-import Livre
+import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +12,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.navigation.NavController
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.crosemont.booklique.R
 import com.crosemont.booklique.domaine.entité.Favoris
-import com.crosemont.booklique.domaine.mork_data.Data
 import com.squareup.picasso.Picasso
 
 
@@ -22,7 +24,7 @@ class Vue : Fragment() {
     private lateinit var resultatLivresFavoris: LinearLayout
     private lateinit var présentateur: Présentateur
     private lateinit var  textView: TextView
-    private lateinit var navControlleur: NavController
+    private var iconeFavorisList: MutableList<ImageView> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,9 +39,7 @@ class Vue : Fragment() {
 
         resultatLivresFavoris = view.findViewById(R.id.resultat_livres_favoris)
         textView = view.findViewById(R.id.rienFavoris)
-        présentateur = Présentateur(this, requireContext())
-
-
+        présentateur = Présentateur(this)
         présentateur.chargerLivresFavoris()
 
 
@@ -61,44 +61,49 @@ class Vue : Fragment() {
         iconeFavoris.setImageResource(R.drawable.favoris_true)
     }
 
-    fun changer_resource_iconeFavoris_false(iconeFavoris: ImageView){
-        iconeFavoris.setImageResource(R.drawable.favoris_false)
+    fun changer_resource_iconeFavoris_false(index: Int){
+        iconeFavorisList[index].setImageResource(R.drawable.favoris_false)
     }
 
+    fun ajout_iconeFavoris_list(iconeFavoris: ImageView){
+        this.iconeFavorisList.add(iconeFavoris)
+    }
 
-
-    fun afficherLivresFavoris(favoris: Favoris) {
+    fun afficherLivresFavoris(favoris: Favoris, index: Int) {
         val inflater = layoutInflater
 
-            val livresFavorisView = inflater.inflate(
-                R.layout.fragment_article_livre,
-                resultatLivresFavoris,
-                false
-            )
+        val livresFavorisView = inflater.inflate(
+            R.layout.fragment_article_livre,
+            resultatLivresFavoris,
+            false
+        )
 
-            val imageView = livresFavorisView.findViewById<ImageView>(R.id.livre_image)
-            val titreTextView = livresFavorisView.findViewById<TextView>(R.id.livre_titre)
-            val auteurTextView = livresFavorisView.findViewById<TextView>(R.id.livre_auteur)
-            val genreTextView = livresFavorisView.findViewById<TextView>(R.id.livre_genre)
-            val iconeFavoris = livresFavorisView.findViewById<ImageView>(R.id.icone_favoris)
+        val imageView = livresFavorisView.findViewById<ImageView>(R.id.livre_image)
+        val titreTextView = livresFavorisView.findViewById<TextView>(R.id.livre_titre)
+        val auteurTextView = livresFavorisView.findViewById<TextView>(R.id.livre_auteur)
+        val genreTextView = livresFavorisView.findViewById<TextView>(R.id.livre_genre)
+        val iconeFavoris = livresFavorisView.findViewById<ImageView>(R.id.icone_favoris)
 
             titreTextView.text = favoris.titre
             auteurTextView.text = favoris.auteur
             genreTextView.text = favoris.genre
             iconeFavoris.setImageResource(R.drawable.favoris_true)
+            iconeFavoris.tag = index
 
-            Picasso.get()
-                .load(favoris.image_url)
-                .placeholder(R.drawable.placeholder_image)
-                .error(R.drawable.error_image)
-                .into(imageView)
+            ajout_iconeFavoris_list(iconeFavoris)
+
+        Picasso.get()
+            .load(favoris.image_url)
+            .placeholder(R.drawable.placeholder_image)
+            .error(R.drawable.error_image)
+            .into(imageView)
 
             livresFavorisView.setOnClickListener {
                 présentateur.traiter_obtenir_livre(favoris.isbn)
             }
 
             iconeFavoris.setOnClickListener {
-                présentateur.traiter_favoris(favoris, iconeFavoris)
+                présentateur.traiter_favoris(favoris, iconeFavoris.tag as Int)
             }
 
             resultatLivresFavoris.addView(livresFavorisView)
