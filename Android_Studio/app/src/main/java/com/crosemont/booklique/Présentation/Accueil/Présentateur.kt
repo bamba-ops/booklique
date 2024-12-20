@@ -6,11 +6,11 @@ class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
     private var job: Job? = null
 
     fun traiter_affichage_livre() {
-        if (!modèle.connexion(vue.requireContext())) {
-            traiterConnexion(vue.requireContext())
+        if (vue.connexion()) {
+            vue.afficherDialogueConnexion()
         } else {
             job = CoroutineScope(Dispatchers.Main).launch {
-                vue.afficherChargement(true)
+                vue.afficherChargement()
 
                 val livreAuteurList = withContext(Dispatchers.IO) {
                     modèle.obtenirLivresParAuteur()
@@ -20,14 +20,14 @@ class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
                 }
 
                 livreAuteurList.forEach { livre ->
-                    vue.afficherCartesAuteurs(livre)// This runs on Main
+                    vue.afficher_livre_par_auteur(livre)// This runs on Main
                 }
                 livreList.forEach { livre ->
-                    vue.afficherListeNouveautes(livre) // This runs on Main
+                    vue.afficher_livre_par_nouveautes(livre) // This runs on Main
                 }
 
-                vue.afficherAccueil(true)
-                vue.afficherChargement(false)
+                vue.afficherAccueil()
+                vue.afficherChargement()
             }
         }
     }
@@ -38,7 +38,7 @@ class Présentateur(val vue: Vue, val modèle: Modèle = Modèle()) {
 
     fun traiter_obtenir_livres_par_auteur(auteur: String){
         modèle.obtenirLivreParAuteur(auteur)
-        vue.naviguerVersResultatsAvecAuteur(auteur)
+        vue.naviguerVersResultatsAvecAuteur()
     }
 
     fun traiter_obtenir_livres_par_nouveautes(){

@@ -159,8 +159,14 @@ class Vue_Resultat : Fragment() {
     }
 
      fun naviguerVersDetailLivre() {
-         navControlleur.navigate(R.id.action_resultat_to_detail_livre)
+         findNavController().navigate(R.id.action_resultat_to_detail_livre)
     }
+
+    fun chargerDefilementResultatRecherche(): Boolean{
+        return affichageDefilementResultatRecherche.visibility == View.GONE
+    }
+
+
 
 
     fun afficherDialogueConnexion(){

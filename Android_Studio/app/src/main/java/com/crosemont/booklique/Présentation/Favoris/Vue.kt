@@ -109,8 +109,25 @@ class Vue : Fragment() {
             resultatLivresFavoris.addView(livresFavorisView)
         }
 
-     fun naviguerVersDetailLivre() {
-         navControlleur.navigate(R.id.action_favoris_to_detail_livre)
+    fun naviguerVersDetailLivre() {
+         findNavController().navigate(R.id.action_favoris_to_detail_livre)
     }
+    fun afficherDialogueConnexion(){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
+    }
+
+    @SuppressLint("ServiceCast")
+    fun connexion() : Boolean{
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
+
+
 
 }

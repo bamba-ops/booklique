@@ -18,7 +18,6 @@ class Vue : Fragment() {
     private lateinit var genreFiction: LinearLayout
     private lateinit var genreHistoire: LinearLayout
     private lateinit var présentateur: Présentateur
-    private lateinit var navControlleur: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +49,6 @@ class Vue : Fragment() {
     }
 
      fun naviguerVersResultats() {
-         navControlleur.navigate(R.id.action_genres_to_resultat)
+         findNavController().navigate(R.id.action_genres_to_resultat)
     }
 }

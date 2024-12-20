@@ -27,7 +27,6 @@ class Vue : Fragment() {
     lateinit var sectionGenres: LinearLayout
     lateinit var sectionNouveautes: LinearLayout
     lateinit var carteAuteur: LinearLayout
-    lateinit var navControlleur: NavController
     lateinit var listeNouveautes: LinearLayout
     lateinit var présentateur: Présentateur
     lateinit var chargement: FrameLayout
@@ -144,21 +143,30 @@ class Vue : Fragment() {
     }
 
     fun naviguerVersGenres() {
-        navControlleur.navigate(R.id.action_accueil_to_genres)
+        findNavController().navigate(R.id.action_accueil_to_genres)
     }
 
-     fun naviguerVersResultatsAvecAuteur(auteur: String) {
-        navControlleur.navigate(R.id.action_accueil_to_resultats)
+     fun naviguerVersResultatsAvecAuteur() {
+        findNavController().navigate(R.id.action_accueil_to_resultats)
     }
 
      fun naviguerVersResultatsAvecNouveautes() {
-        navControlleur.navigate(R.id.action_accueil_to_resultats)
+        findNavController().navigate(R.id.action_accueil_to_resultats)
     }
 
      fun naviguerVersDetailLivre(isbn: String) {
-        navControlleur.navigate(R.id.action_accueil_to_detail_livre)
+        findNavController().navigate(R.id.action_accueil_to_detail_livre)
     }
 
+    fun afficherDialogueConnexion(){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Connexion internet perdue")
+            .setMessage("Veuillez vous reconnecter")
+            .setNegativeButton("OK"){
+                    dialog, which -> dialog.dismiss()
+            }.show()
+
+    }
     @SuppressLint("ServiceCast")
     fun connexion() : Boolean{
         val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
