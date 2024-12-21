@@ -1,10 +1,19 @@
 package com.crosemont.booklique.Présentation.Accueil
 
+import Livre
 import kotlin.test.*
 import kotlinx.coroutines.*
 import io.mockk.*
 import org.junit.After
 import org.junit.Before
+import android.content.Context
+import com.crosemont.booklique.domaine.entité.Favoris
+import com.crosemont.booklique.domaine.entité.Recherche
+import com.crosemont.booklique.domaine.service.LivreService
+import com.crosemont.booklique.sourcededonnées.dao.FavorisDao
+import com.crosemont.booklique.sourcededonnées.dao.RechercheDao
+import com.crosemont.booklique.sourcededonnées.dao.dbConfig.DatabaseBuilder
+import kotlinx.coroutines.test.runTest
 import java.util.Date
 import com.crosemont.booklique.domaine.service.LivreService
 import Livre
@@ -14,17 +23,22 @@ import kotlinx.coroutines.test.setMain
 
 class ModèleTest {
 
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
+    private lateinit var modèle: Modèle
+    private val mockContext: Context = mockk(relaxed = true)
+    private val mockRechercheDao: RechercheDao = mockk(relaxed = true)
+    private val mockFavorisDao: FavorisDao = mockk(relaxed = true)
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(mainThreadSurrogate)
+        mockkObject(DatabaseBuilder)
+        every { DatabaseBuilder.obtenirInstance(mockContext).favorisDao() } returns mockFavorisDao
+        every { DatabaseBuilder.obtenirInstance(mockContext).rechercheDao() } returns mockRechercheDao
+        modèle = Modèle()
     }
 
     @After
     fun tearDown() {
-        Dispatchers.resetMain()
-        mainThreadSurrogate.close()
+        unmockkAll()
     }
 
     @Test
@@ -36,8 +50,7 @@ class ModèleTest {
         mockkObject(LivreService)
         every { LivreService.obtenirLivresParNouveautesPrend5() } returns livresMockés
 
-        val modèle = Modèle()
-        val résultat = modèle.obtenirLivreParNouveautes()
+        modèle.ajouterRecherche(requete)
 
         assertEquals(livresMockés, résultat)
         verify { LivreService.obtenirLivresParNouveautesPrend5() }
@@ -89,8 +102,7 @@ class ModèleTest {
         mockkObject(LivreService)
         every { LivreService.definirLivresParNouveautes() } just Runs
 
-        val modèle = Modèle()
-        modèle.obtenirLivresParNouveautes()
+        modèle.retirerLivreFavori(isbn)
 
         verify { LivreService.definirLivresParNouveautes() }
     }
