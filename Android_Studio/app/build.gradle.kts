@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.firebase.vertexai)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.datastore.core.android)
+    implementation(libs.core)
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
     implementation(libs.androidx.constraintlayout)
     implementation("androidx.cardview:cardview:1.0.0")

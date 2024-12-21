@@ -1,50 +1,96 @@
 package com.crosemont.booklique.Présentation.Historique
 
-import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertNotNull
-import kotlin.test.Test
+import Livre
+import android.content.Context
+import com.crosemont.booklique.domaine.entité.Reservation
+import com.crosemont.booklique.domaine.entité.ReservationHistorique
+import com.crosemont.booklique.domaine.service.LivreService
+import com.crosemont.booklique.domaine.service.ReservationService
+import com.crosemont.booklique.sourcededonnées.dao.ReservationHistoriqueDao
+import com.crosemont.booklique.sourcededonnées.dao.dbConfig.AppDatabase
+import io.mockk.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
+import java.util.Date
 
-class ModèleTest{
+class ModèleTest {
+
+    private lateinit var mockContext: Context
+    private lateinit var mockDatabase: AppDatabase
+    private lateinit var mockReservationHistoriqueDao: ReservationHistoriqueDao
+    private lateinit var modèle: Modèle
+    private val testDispatcher = StandardTestDispatcher()
+
+
+    @Before
+    fun setUp() {
+        Dispatchers.setMain(testDispatcher)
+
+        mockContext = mockk(relaxed = true)
+        mockDatabase = mockk(relaxed = true)
+        mockReservationHistoriqueDao = mockk(relaxed = true)
+
+        mockkStatic(androidx.room.Room::class)
+        every { androidx.room.Room.databaseBuilder(mockContext, AppDatabase::class.java, "app_database").build() } returns mockDatabase
+        every { mockDatabase.reservationHistoriqueDao() } returns mockReservationHistoriqueDao
+
+        modèle = Modèle(mockContext)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
+
+
 
     @Test
-    fun `étant donné un modèle de réservation, lorsqu'on accède aux propriétés, elles doivent être correctement initialisées`() {
-        // Données de test
-        val titre = "Les secrets de la forêt"
-        val dateReservation = "20/03/2024"
-        val dateRetour = "10/04/2024"
+    fun `test obtenirLivreParIsbn returns expected Livre`() {
+        val isbn = "123456"
+        val livre = Livre(
+            isbn = isbn,
+            image_url = "URL",
+            titre = "Livre Historique",
+            description = "Description",
+            auteur = "Auteur",
+            editeur = "Editeur",
+            genre = "Genre",
+            date_publication = java.util.Date(),
+            nombre_pages = 300,
+            quantite = 5
+        )
 
-        // Initialisation du modèle
-        val modèle = Modèle(titre, dateReservation, dateRetour)
+        mockkObject(LivreService)
+        every { LivreService.obtenirLivreParISBN(isbn) } returns livre
 
-        // Vérification que les propriétés sont correctement initialisées
-        assertEquals(titre, modèle.titre)
-        assertEquals(dateReservation, modèle.dateReservation)
-        assertEquals(dateRetour, modèle.dateRetour)
+        val result = modèle.obtenirLivreParIsbn(isbn)
+
+        assertEquals(livre, result)
+        verify { LivreService.obtenirLivreParISBN(isbn) }
     }
 
     @Test
-    fun `étant donné un modèle de réservation, lorsqu'on accède aux propriétés, les valeurs doivent être les bonnes`() {
-        // Création d'un modèle avec des valeurs
-        val modèle = Modèle("Le voyage du temps", "15/09/2024", "05/10/2024")
+    fun `test obtenirReservation returns expected list`() {
+        val reservationList = listOf(
+            Reservation(id = 1, debut = java.util.Date(), termine = java.util.Date(), livreIsbn = "123456"),
+            Reservation(id = 2, debut = java.util.Date(), termine = java.util.Date(), livreIsbn = "654321")
+        )
 
-        // Vérification des valeurs des propriétés
-        assertNotNull(modèle.titre)
-        assertEquals("Le voyage du temps", modèle.titre)
+        mockkObject(ReservationService)
+        every { ReservationService.obtenirReservations() } returns reservationList
 
-        assertNotNull(modèle.dateReservation)
-        assertEquals("15/09/2024", modèle.dateReservation)
+        val result = modèle.obtenirReservation()
 
-        assertNotNull(modèle.dateRetour)
-        assertEquals("05/10/2024", modèle.dateRetour)
-    }
-
-    @Test
-    fun `étant donné un modèle avec des dates invalides, lorsqu'on vérifie, les valeurs doivent être nulles ou invalides`() {
-        // Création d'un modèle avec des dates invalides
-        val modèle = Modèle("Book Titre", "", "")
-
-        // Vérification des valeurs invalides
-        assertEquals("", modèle.dateReservation)
-        assertEquals("", modèle.dateRetour)
+        assertEquals(reservationList, result)
+        verify { ReservationService.obtenirReservations() }
     }
 }
