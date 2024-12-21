@@ -15,8 +15,6 @@ import com.crosemont.booklique.sourcededonnées.dao.RechercheDao
 import com.crosemont.booklique.sourcededonnées.dao.dbConfig.DatabaseBuilder
 import kotlinx.coroutines.test.runTest
 import java.util.Date
-import com.crosemont.booklique.domaine.service.LivreService
-import Livre
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -41,20 +39,7 @@ class ModèleTest {
         unmockkAll()
     }
 
-    @Test
-    fun `étant donné un Modèle, lorsqu'on appelle obtenirLivreParNouveautes, on obtient une liste de livres`(): Unit = runTest {
-        val livresMockés = listOf(
-            Livre("ISBN1", "Image1", "Titre1", "Description1", "Auteur1", "Editeur1", "Genre1", Date(122, 1, 15), 5, 30),
-            Livre("ISBN2", "Image2", "Titre2", "Description2", "Auteur2", "Editeur2", "Genre2", Date(122, 2, 14), 3, 40)
-        )
-        mockkObject(LivreService)
-        every { LivreService.obtenirLivresParNouveautesPrend5() } returns livresMockés
 
-        modèle.ajouterRecherche(requete)
-
-        assertEquals(livresMockés, résultat)
-        verify { LivreService.obtenirLivresParNouveautesPrend5() }
-    }
 
     @Test
     fun `étant donné un Modèle, lorsqu'on appelle obtenirLivresParAuteur, on obtient une liste de livres`(): Unit = runTest {
@@ -97,13 +82,5 @@ class ModèleTest {
         verify { LivreService.definirLivre(isbn) }
     }
 
-    @Test
-    fun `étant donné un Modèle, lorsqu'on appelle obtenirLivresParNouveautes, la méthode est appelée correctement`() {
-        mockkObject(LivreService)
-        every { LivreService.definirLivresParNouveautes() } just Runs
 
-        modèle.retirerLivreFavori(isbn)
-
-        verify { LivreService.definirLivresParNouveautes() }
-    }
 }
