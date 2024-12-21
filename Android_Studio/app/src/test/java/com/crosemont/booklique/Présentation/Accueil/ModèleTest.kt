@@ -1,115 +1,110 @@
 package com.crosemont.booklique.Présentation.Accueil
 
+import Livre
 import kotlin.test.*
 import kotlinx.coroutines.*
-import org.mockito.Mockito
-import kotlinx.coroutines.test.*
-import org.mockito.junit.MockitoJUnitRunner
-import org.junit.runner.RunWith
-import com.crosemont.booklique.domaine.mork_data.Data
-import Livre
-import io.mockk.Runs
-import io.mockk.every
-import io.mockk.just
-import io.mockk.mockkObject
-import io.mockk.verify
+import io.mockk.*
 import org.junit.After
 import org.junit.Before
+import android.content.Context
+import com.crosemont.booklique.domaine.entité.Favoris
+import com.crosemont.booklique.domaine.entité.Recherche
+import com.crosemont.booklique.domaine.service.LivreService
+import com.crosemont.booklique.sourcededonnées.dao.FavorisDao
+import com.crosemont.booklique.sourcededonnées.dao.RechercheDao
+import com.crosemont.booklique.sourcededonnées.dao.dbConfig.DatabaseBuilder
+import kotlinx.coroutines.test.runTest
 import java.util.Date
 
-@RunWith(MockitoJUnitRunner::class)
 class ModèleTest {
 
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
+    private lateinit var modèle: Modèle
+    private val mockContext: Context = mockk(relaxed = true)
+    private val mockRechercheDao: RechercheDao = mockk(relaxed = true)
+    private val mockFavorisDao: FavorisDao = mockk(relaxed = true)
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(mainThreadSurrogate)
+        mockkObject(DatabaseBuilder)
+        every { DatabaseBuilder.obtenirInstance(mockContext).favorisDao() } returns mockFavorisDao
+        every { DatabaseBuilder.obtenirInstance(mockContext).rechercheDao() } returns mockRechercheDao
+        modèle = Modèle()
     }
 
     @After
     fun tearDown() {
-        Dispatchers.resetMain()
-        mainThreadSurrogate.close()
+        unmockkAll()
     }
 
     @Test
-    fun `étant donné un Modèle, lorsqu'on appelle obtenirLivres, on obtient une liste de livres`() = runTest{
+    fun `étant donné un Modèle, lorsqu'on appelle obtenirLivresParNouveautes, on obtient une liste de livres`() {
         val livresMockés = listOf(
-            Livre("ISBN1", "Image1", "titre1", "Description1", "Auteur1", "Editeur1", "Genre1", Date(122, 1, 15), 5, 30),
-            Livre("ISBN2", "Image2", "titre2", "Description2", "Auteur2", "Editeur2", "Genre2", Date(122, 2, 14), 3, 40)
+            Livre("ISBN1", "Image1", "titre1", "Description1", "Auteur1", "Editeur1", "Genre1", Date(122, 1, 15), 5, 30)
         )
-        mockkObject(Data.Companion)
-        every { Data.obtenirLivresDemo() } returns livresMockés
 
-        val modèle = Modèle()
-        val résultat = modèle.obtenirLivres()
+        mockkObject(LivreService)
+        every { LivreService.isObtenirLivresParNouveautes } returns true
+        every { LivreService.obtenirLivresParNouveautesPrend10() } returns livresMockés
+
+        val résultat = modèle.obtenirLivresParNouveautes()
 
         assertEquals(livresMockés, résultat)
+        verify { LivreService.obtenirLivresParNouveautesPrend10() }
     }
 
     @Test
-    fun `étant donné un Modèle, lorsqu'on appelle obtenirLivreParNouveautes, on obtient une liste de livres`() = runTest {
-        val livresMockés = listOf(
-            Livre("ISBN3", "Image3", "titre3", "Description3", "Auteur3", "Editeur3", "Genre3", Date(122, 1, 15), 10, 20)
-        )
-        mockkObject(Data.Companion)
-        every { Data.obtenirLivresDemo() } returns livresMockés
+    fun `étant donné un Modèle, lorsqu'on ajoute une recherche, celle-ci est enregistrée`() = runTest {
+        val requete = "RechercheTest"
 
-        val modèle = Modèle()
-        val résultat = modèle.obtenirLivreParNouveautes()
+        modèle.ajouterRecherche(requete)
 
-        assertEquals(livresMockés, résultat)
+        coVerify { mockRechercheDao.ajouterRecherche(Recherche(requete = requete)) }
     }
 
     @Test
-    fun `étant donné un Modèle, lorsqu'on appelle obtenirLivresParAuteur, on obtient une liste de livres classés par auteur`() = runTest {
-        val livresMockés = listOf(
-            Livre("ISBN4", "Image4", "titre4", "Description3", "Auteur3", "Editeur3", "Genre3", Date(122, 1, 15), 10, 20)
-        )
-        mockkObject(Data.Companion)
-        every { Data.obtenirLivresParAuteurs() } returns livresMockés
+    fun `étant donné un Modèle, lorsqu'on supprime l'historique, il est vidé`() = runTest {
+        modèle.supprimerHistoriqueRecherche()
 
-        val modèle = Modèle()
-        val résultat = modèle.obtenirLivresParAuteur()
-
-        assertEquals(livresMockés, résultat)
+        coVerify { mockRechercheDao.supprimerTout() }
     }
 
     @Test
-    fun `étant donné un Modèle, lorsqu'on définit un livre par auteur, la méthode Data est appelée avec le bon auteur`() {
-        val auteur = "Auteur1"
+    fun `étant donné un Modèle, lorsqu'on appelle obtenirHistoriqueRecherches, on obtient une liste`() = runTest {
+        val historiqueMocké = listOf("Recherche1", "Recherche2")
+        coEvery { mockRechercheDao.obtenirHistoriqueRecherches() } returns historiqueMocké
 
-        mockkObject(Data.Companion)
-        every { Data.definirLivreParAuteur(auteur) } just Runs
+        val résultat = modèle.obtenirHistoriqueRecherches()
 
-        val modèle = Modèle()
-        modèle.obtenirLivreParAuteur(auteur)
-
-        verify { Data.definirLivreParAuteur(auteur) }
+        assertEquals(historiqueMocké, résultat)
+        coVerify { mockRechercheDao.obtenirHistoriqueRecherches() }
     }
 
     @Test
-    fun `étant donné un Modèle, lorsqu'on définit un livre par nouveauté, la méthode Data est appelée avec le bon ISBN`() {
-        val isbn = "ISBN123"
+    fun `étant donné un Modèle, lorsqu'on ajoute un livre favori, il est sauvegardé`() = runTest {
+        val favori = Favoris("ISBN1", "Titre1", "Auteur1", "Image1")
 
-        mockkObject(Data.Companion)
-        every { Data.definirLivre(isbn) } just Runs
+        modèle.ajouterLivreFavori(favori)
 
-        val modèle = Modèle()
-        modèle.obtenirLivreParNouveaute(isbn)
-
-        verify { Data.definirLivre(isbn) }
+        coVerify { mockFavorisDao.ajouterFavori(favori) }
     }
 
     @Test
-    fun `étant donné un Modèle, lorsqu'on définit des livres par nouveautés, la méthode Data est appelée`() {
-        mockkObject(Data.Companion)
-        every { Data.definirLivresParNouveautes() } just Runs
+    fun `étant donné un Modèle, lorsqu'on supprime un livre favori, il est retiré`() = runTest {
+        val isbn = "ISBN1"
 
-        val modèle = Modèle()
-        modèle.obtenirLivresParNouveautes()
+        modèle.retirerLivreFavori(isbn)
 
-        verify { Data.definirLivresParNouveautes() }
+        coVerify { mockFavorisDao.supprimerFavoriParIsbn(isbn) }
+    }
+
+    @Test
+    fun `étant donné un Modèle, lorsqu'on appelle obtenirLivreFavori, on obtient un livre favori`() = runTest {
+        val favoriMocké = Favoris("ISBN1", "Titre1", "Auteur1", "Image1")
+        coEvery { mockFavorisDao.obtenirFavoriParIsbn("ISBN1") } returns favoriMocké
+
+        val résultat = modèle.obtenirLivreFavori("ISBN1")
+
+        assertEquals(favoriMocké, résultat)
+        coVerify { mockFavorisDao.obtenirFavoriParIsbn("ISBN1") }
     }
 }
