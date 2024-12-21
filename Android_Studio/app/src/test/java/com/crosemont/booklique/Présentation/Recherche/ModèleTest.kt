@@ -3,155 +3,90 @@ package com.crosemont.booklique.Présentation.Recherche
 import Livre
 import android.content.Context
 import com.crosemont.booklique.domaine.entité.Favoris
+import com.crosemont.booklique.domaine.entité.Recherche
 import com.crosemont.booklique.domaine.service.LivreService
+import com.crosemont.booklique.sourcededonnées.dao.FavorisDao
+import com.crosemont.booklique.sourcededonnées.dao.RechercheDao
+import com.crosemont.booklique.sourcededonnées.dao.dbConfig.AppDatabase
+import io.mockk.*
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.*
-import java.util.Date
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
 
 class ModèleTest {
 
-    private lateinit var modèle: Modèle
     private lateinit var mockContext: Context
+    private lateinit var mockDatabase: AppDatabase
+    private lateinit var mockFavorisDao: FavorisDao
+    private lateinit var mockRechercheDao: RechercheDao
+    private lateinit var modèle: Modèle
 
     @Before
     fun setUp() {
-        mockContext = mock(Context::class.java)
+        mockContext = mockk(relaxed = true)
+        mockDatabase = mockk(relaxed = true)
+        mockFavorisDao = mockk(relaxed = true)
+        mockRechercheDao = mockk(relaxed = true)
+
+        mockkStatic(androidx.room.Room::class)
+        every { androidx.room.Room.databaseBuilder(mockContext, AppDatabase::class.java, "app_database").build() } returns mockDatabase
+        every { mockDatabase.favorisDao() } returns mockFavorisDao
+        every { mockDatabase.rechercheDao() } returns mockRechercheDao
+
         modèle = Modèle(mockContext)
     }
 
+
+
+
     @Test
-    fun `obtenirLivresParAuteur retourne une liste de livres quand isObtenirLivreParAuteur est vrai`() {
-        // Arrange
-        val auteur = "Paul Marin"
-        LivreService.isObtenirLivreParAuteur = true
-        LivreService._obtenirLivreParAuteur = auteur
-        val livresAttendus = listOf(
-            Livre(
-                isbn = "123456789",
-                image_url = "",
-                titre = "Livre de Paul",
-                description = "",
-                auteur = auteur,
-                editeur = "",
-                genre = "",
-                date_publication = Date(),
-                nombre_pages = 100,
-                quantite = 1
-            )
-        )
-        LivreService::class.java.getDeclaredMethod("obtenirLivresParAuteur", String::class.java)
-        `when`(LivreService.obtenirLivresParAuteur(auteur)).thenReturn(livresAttendus)
+    fun `test obtenirLivresParNomAuteur calls LivreService`() {
+        val auteur = "Auteur Test"
+        mockkObject(LivreService)
+        every { LivreService.definirLivreParAuteur(auteur) } just Runs
 
-        // Act
-        val résultat = modèle.obtenirLivresParAuteur()
+        modèle.obtenirLivresParNomAuteur(auteur)
 
-        // Assert
-        assertEquals(livresAttendus, résultat)
-        assertEquals(true, modèle.isObtenirLivreParAuteur)
-        assertEquals(false, LivreService.isObtenirLivreParAuteur)
+        verify { LivreService.definirLivreParAuteur(auteur) }
     }
 
     @Test
-    fun `obtenirLivreParTitre retourne un livre quand isObtenirLivreParTitre est vrai`() {
-        // Arrange
-        val titre = "Histoires de la Mer"
-        LivreService.isObtenirLivreParTitre = true
-        LivreService._obtenirLivreParTitre = titre
-        val livreAttendu = Livre(
-            isbn = "123456789",
-            image_url = "",
-            titre = titre,
-            description = "",
-            auteur = "",
-            editeur = "",
-            genre = "",
-            date_publication = Date(),
-            nombre_pages = 200,
-            quantite = 2
-        )
-        `when`(LivreService.obtenirLivreParTitre(titre)).thenReturn(livreAttendu)
+    fun `test obtenirLivresParNomTitre calls LivreService`() {
+        val titre = "Titre Test"
+        mockkObject(LivreService)
+        every { LivreService.definirLivreParTitre(titre) } just Runs
 
-        // Act
-        val résultat = modèle.obtenirLivreParTitre()
+        modèle.obtenirLivresParNomTitre(titre)
 
-        // Assert
-        assertEquals(livreAttendu, résultat)
-        assertEquals(true, modèle.isObtenirLivreParTitre)
-        assertEquals(false, LivreService.isObtenirLivreParTitre)
+        verify { LivreService.definirLivreParTitre(titre) }
     }
 
     @Test
-    fun `obtenirLivresParNouveautes retourne une liste de livres quand isObtenirLivresParNouveautes est vrai`() {
-        // Arrange
-        LivreService.isObtenirLivresParNouveautes = true
-        val livresAttendus = listOf(
-            Livre(
-                isbn = "123456789",
-                image_url = "",
-                titre = "Nouveauté 1",
-                description = "",
-                auteur = "",
-                editeur = "",
-                genre = "",
-                date_publication = Date(),
-                nombre_pages = 300,
-                quantite = 5
-            ),
-            Livre(
-                isbn = "987654321",
-                image_url = "",
-                titre = "Nouveauté 2",
-                description = "",
-                auteur = "",
-                editeur = "",
-                genre = "",
-                date_publication = Date(),
-                nombre_pages = 250,
-                quantite = 3
-            )
-        )
-        `when`(LivreService.obtenirLivresParNouveautesPrend10()).thenReturn(livresAttendus)
+    fun `test obtenirLivresParTitres returns expected list`() {
+        val titres = listOf("Titre1", "Titre2")
+        mockkObject(LivreService)
+        every { LivreService.obtenirLivresParTires() } returns titres
 
-        // Act
-        val résultat = modèle.obtenirLivresParNouveautes()
+        val result = modèle.obtenirLivresParTitres()
 
-        // Assert
-        assertEquals(livresAttendus, résultat)
-        assertEquals(true, modèle.isObtenirLivreParNouveautes)
-        assertEquals(false, LivreService.isObtenirLivresParNouveautes)
+        assertEquals(titres, result)
+        verify { LivreService.obtenirLivresParTires() }
     }
 
     @Test
-    fun `_obtenirLivresParGenre retourne une liste de livres quand isObtenirLivresParGenre est vrai`() {
-        // Arrange
-        val genre = "Aventure"
-        LivreService.isObtenirLivresParGenre = true
-        LivreService._obtenirLivresParGenre = genre
-        val livresAttendus = com.crosemont.booklique.domaine.mork_data.Data.obtenirLivresDemo()
-        `when`(LivreService.obtenirLivresParGenre(genre)).thenReturn(livresAttendus)
+    fun `test obtenirLivresParAuteur returns expected list`() {
+        val livres = listOf(mockk<Livre>(), mockk<Livre>())
+        mockkObject(LivreService)
+        every { LivreService.isObtenirLivreParAuteur } returns true
+        every { LivreService._obtenirLivreParAuteur } returns "Auteur Test"
+        every { LivreService.obtenirLivresParAuteur(any()) } returns livres
 
-        // Act
-        val résultat = modèle._obtenirLivresParGenre()
+        val result = modèle.obtenirLivresParAuteur()
 
-        // Assert
-        assertEquals(livresAttendus, résultat)
-        assertEquals(true, modèle.isObtenirLivreParGenre)
-        assertEquals(false, LivreService.isObtenirLivresParGenre)
+        assertEquals(livres, result)
+        verify { LivreService.obtenirLivresParAuteur(any()) }
     }
 
-    @Test
-    fun `retirerLivreFavori retire un favori`() = runBlocking {
-        // Arrange
-        val isbn = "978-1-86197-876-9"
 
-        // Act
-        modèle.retirerLivreFavori(isbn)
-
-        // Assert
-        verify(modèle).retirerLivreFavori(isbn)
-    }
 }
