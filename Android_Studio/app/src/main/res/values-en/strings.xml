@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App name -->
+    <string name="app_name" translatable="false">Booklique</string>
+
+    <!-- Genres -->
+    <string name="titre_genres">Genres</string>
+    <string name="genre_affaires">Business</string>
+    <string name="genre_biographies">Biographies</string>
+    <string name="genre_developpement_personnel">Personal Development</string>
+    <string name="genre_fiction">Fiction</string>
+    <string name="genre_histoire">History</string>
+
+    <!-- Main Menu -->
+    <string name="accueil">Home</string>
+    <string name="reservation">Reservation</string>
+    <string name="recherche">Search</string>
+    <string name="favoris">Favorites</string>
+    <string name="historique">History</string>
+
+    <!-- Home Page -->
+    <string name="titre_librairie">Library</string>
+    <string name="parcourir_genres">Browse genres</string>
+    <string name="parcourir_auteur">Browse by author</string>
+    <string name="nouveautes">New arrivals</string>
+
+    <!-- Search Page -->
+    <string name="search_hint">Search for a book or author</string>
+    <string name="search_label">Search: All categories</string>
+    <string name="no_books_found">No books found</string>
+
+    <!-- Book Page (in Search) -->
+    <string name="image_du_livre">Book image</string>
+    <string name="titre_du_livre">Book title</string>
+    <string name="auteur">Author</string>
+    <string name="genre">Genre</string>
+    <string name="icone_favoris">Favorite icon</string>
+
+    <!-- Details Page -->
+    <string name="details">Details</string>
+    <string name="statut">Status: </string>
+    <string name="description">Description</string>
+    <string name="auteur_texte">Author: </string>
+    <string name="echeance">Due date: </string>
+    <string name="reserver">Reserve</string>
+    <string name="disponible">Available</string>
+    <string name="indisponible">Unavailable</string>
+
+    <!-- Reservation Page -->
+    <string name="label_title">Title:</string>
+    <string name="label_reservation_date">Reservation Date:</string>
+    <string name="label_due_date">Due Date:</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_extend">Extend</string>
+    <string name="editeur">Publisher:</string>
+    <string name="date_publication">Publication Date:</string>
+    <string name="nombre_pages">Number of pages:</string>
+    <string name="confirmer_reservation">Confirm Reservation</string>
+
+    <!-- General -->
+    <string name="date">Date: </string>
+    <string name="reservations">Reservations</string>
+    <string name="message_no_favoris">No favorites on the list</string>
+    <string name="non_definit">Not defined</string>
+
+    <!-- Messages -->
+    <string name="message_description_calandar">Reminder to return the book before the deadline</string>
+</resources>

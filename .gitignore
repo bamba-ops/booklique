@@ -1,4 +1,3 @@
-# Fichiers système macOS
 .DS_Store
 
 # Fichiers système Windows
@@ -12,35 +11,3 @@ Thumbs.db
 .idea/
 .gradle/
 local.properties
-*.iml
-
-# Fichiers de configuration et caches
-/.cxx/
-/.externalNativeBuild/
-/captures/
-/output.json
-
-# Clés API sensibles (si elles sont dans le projet)
-*.keystore
-
-# Bibliothèques et dépendances
-/.gradle/
-/app/libs/
-
-# Fichiers de logs et de rapports
-*.log
-/crashlytics-build.properties
-
-# Fichiers de débogage
-*.apk
-*.ap_
-
-# Répertoires de tests et profils
-/test-results/
-/androidTest/
-
-# Autres caches et binaires générés
-/.firebase/
-/build_cache/
-/tmp/
-
