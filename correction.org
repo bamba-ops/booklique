@@ -1,0 +1,47 @@
+* Sprint 1
+|                                           | Note | Walid | Vanetta | Eloge | Handy |
+| Qualité du prototype d'interface :        | A    |       |         |       |       |
+|                                           |      |       |         |       |       |
+| Présentation :                            | A    |       |         |       |       |
+|                                           |      |       |         |       |       |
+| Évaluation du travail par les pairs (50%) | ×    | A     | A       | A     | A     |
+| Participation à la présentation     (50%) | ×    | A     | A       | A     | A     |
+|-------------------------------------------+------+-------+---------+-------+-------|
+| Total                                     |      | 10    | 10      | 10    | 10    |
+
+* Sprint 2
+|                                           | Note | Handy                | Vanetta | Walid | Eloge            | Commentaires                         |
+| Qualité du produit :                      | A    |                      |         |       |                  |                                      |
+|                                           |      |                      |         |       |                  |                                      |
+| Présentation :                            | B    |                      |         |       |                  | Quelques fonctionnalités prototypées |
+|                                           |      |                      |         |       |                  |                                      |
+| Évaluation du travail par les pairs (33%) | ×    | E - Pas d'évaluation | A       | A     | A                |                                      |
+| Participation à la présentation     (33%) | ×    | A                    | A       | A     | A                |                                      |
+| Participation au développement      (33%) | ×    | A                    | A       | A     | E - aucun commit |                                      |
+|-------------------------------------------+------+----------------------+---------+-------+------------------+--------------------------------------|
+| Total                                     |      | 6                    | 9       | 9     | 6                |                                      |
+
+* Sprint 3
+|                                           | Note | Handy                | Walid                | Eloge | Vanetta              | Commentaires |
+| Qualité du produit :                      | A    |                      |                      |       |                      |              |
+|                                           |      |                      |                      |       |                      |              |
+| Présentation :                            | A    |                      |                      |       |                      |              |
+|                                           |      |                      |                      |       |                      |              |
+| Évaluation du travail par les pairs (33%) | ×    | E - pas d'évaluation | E - pas d'évaluation | A     | E - pas d'évaluation |              |
+| Participation à la présentation     (33%) | ×    | A                    | A                    | A     | A                    |              |
+| Participation au développement      (33%) | ×    | A                    | A                    | A     | A                    |              |
+|-------------------------------------------+------+----------------------+----------------------+-------+----------------------+--------------|
+| Total                                     |      | 6.7                  | 6.7                  | 10    | 6.7                  |              |
+
+* Sprint 4
+|                                           | Note | Handy | Vanetta | Walid | Eloge             | Commentaires |
+| Qualité du produit :                      | A    |       |         |       |                   |              |
+|                                           |      |       |         |       |                   |              |
+| Présentation :                            | A    |       |         |       |                   |              |
+|                                           |      |       |         |       |                   |              |
+| Évaluation du travail par les pairs (33%) | ×    | A     | A       | A     | C                 |              |
+| Participation à la présentation     (33%) | ×    | A     | A       | A     | A                 |              |
+| Participation au développement      (33%) | ×    | A     | A       | A     | E - pas de commit |              |
+|-------------------------------------------+------+-------+---------+-------+-------------------+--------------|
+| Total                                     |      | 10    | 10      | 10    | 5.3               |              |
+    
