@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/accueil" android:id="@+id/accueil"
+        android:name="com.crosemont.booklique.Présentation.Accueil.Vue"
+        android:icon="@drawable/baseline_home_24" />
+    <item android:title="@string/reservation" android:id="@+id/reservation"
+        android:name="com.crosemont.booklique.Présentation.Réservation.Vue"
+        android:icon="@drawable/baseline_calendar_month_24" />
+    <item android:title="@string/recherche" android:id="@+id/recherche"
+        android:name="com.crosemont.booklique.Présentation.Recherche.Vue"
+        android:icon="@drawable/baseline_book_24" />
+    <item android:title="@string/favoris" android:id="@+id/favoris"
+        android:name="com.crosemont.booklique.Présentation.Favoris.Vue"
+        android:icon="@drawable/favoris_true" />
+    <item
+        android:id="@+id/historique"
+        android:name="com.crosemont.booklique.Présentation.Historique.Vue"
+        android:icon="@drawable/baseline_format_list_bulleted_24"
+        android:title="@string/historique" />
+</menu>
